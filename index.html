@@ -4,14 +4,14 @@
     <title>Translation</title>
 </head>
 <body>
-    <button id="phatnhac" >phat nhac</button>
-      <audio controls autoplay class="stAudio">
-      <source src="zzout.mp3" type="audio/ogg">
-      Your browser does not support the audio element.
-      </audio>
-
+    <button onclick="phatnhac();">phat nhac</button>
+    
     <script>
-      //
+    function phatnhac(){
+    var audio = new Audio();
+    audio.src ='my_audio.mp3';
+    audio.play();
+    }
     </script>
 </body>
 </html>
