@@ -1,28 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 <body>
-
-<h1>The button Element</h1>
-<audio id="myAudio">
-    <source src="https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
-
-<p>Click the buttons to play or pause the audio.</p>
-
-<button onclick="playAudio()" type="button">Play Audio</button>
-<button onclick="pauseAudio()" type="button">Pause Audio</button> 
+    <audio id="myAudio">
+        <source src="https://opengameart.org/sites/default/files/audio_preview/swing_0.mp3.ogg" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+      
+    <p>Click the buttons to play or pause the audio.</p>
+      
+    <button id="playaudio" type="button">Play Audio</button>
+    <button id="pauseaudio" type="button">Pause Audio</button> 
+      
 
 <script>
-    var x = document.getElementById("myAudio"); 
-    function playAudio() { 
-      x.play(); 
-    } 
-    function pauseAudio() { 
-      x.pause(); 
-    } 
-</script>
 
- 
+    var btn1 = document.getElementById("playaudio");
+    btn1.addEventListener("click", phat_ra_am);
+    function phat_ra_am(){
+        document.getElementById("myAudio").play();
+        }
+    var btn2 = document.getElementById("pauseaudio");
+    btn2.addEventListener("click", stop_phat_am);
+    function stop_phat_am(){
+        document.getElementById("myAudio").pause();
+        }
+        
+</script>
+        
 </body>
 </html>
+
