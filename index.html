@@ -243,11 +243,12 @@ function userSpeechToText(lang_noi){
         var content = event.results[lastResult][0].transcript;
         message.textContent = content;
         textnoi=message.textContent;
+        
         recognition.stop();
 
         //alert(textnoi);
-        //let from_l1=lang_noi;
-        //let to_l2=lang_dich;
+        //let from_l1='vi';
+        //let to_l2='en';
         //translate_froml1_tol2(message,from_l1,to_l2)
 
         document.querySelector("#circlein").style.backgroundColor = null;
@@ -285,12 +286,11 @@ function translate_froml1_tol2(message,from_l1,to_l2){
         toText.textContent = data.responseData.translatedText;
         data.matches.forEach(data => {
             if(data.id === 0) {
-                //toText.textContent = data.translation;
-                //message.textContent=data.translation
-                //alert(toText.textContent); //thong bao text da dich ra
+                toText.value = data.translation;
+                alert(toText.textContent); //thong bao text da dich ra
             }
         });
-        
+        toText.innerHTML=Translation;
     });
 
 }
