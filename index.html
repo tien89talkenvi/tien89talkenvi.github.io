@@ -1,136 +1,324 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Speech to Text</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Talkenvi</title>
+    
+<style>
+  /*<link rel="stylesheet" href="z10.css"> */
+
+:root{
+    --mau-f-grid-col: rgba(184,245,114,0.883);
+}
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+.fixed-header{
+    /* min-height: 33vh;
+    width: 100%;
+    background: linear-gradient(to bottom right, green, rgba(74, 207, 136));
+    background-position: center ;
+    background-size: cover;
+    position: fixed;        */
+    
+    top: 0;
+    width: 100%;
+    position: fixed;        
+    background-color:rgba(74, 207, 136);
+    padding: 15px 0;
+
+    
+}
+.strCuon{
+    color:white;
+    text-align:center;
+}
+.tenbai{
+    color:yellow;
+    text-align:center;
+}
+#circlein {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: auto;
+    box-shadow: 1px 1px 15px lightblue;
+    } 
+.mic-icon {
+    height: 24px;
+    position: center;
+    margin-top:4px;
+    margin-left:3px;
+}
+.mic-iconub {
+    height: 24px;
+    /* position: center; */
+    margin-top:4px;
+    margin-left:3px;
+}
+#words{
+    color:yellow;
+    text-align:center;
+}
+nav{
+    display: flex;
+    /* display: inline; */
+    padding: auto;
+    justify-content: space-between;
+    align-items: top;
+    color:brown;
+    margin-left: 10%;
+    margin-right: 10%;
+
+} 
+p{
+    color: brown;
+    font-weight: 300;
+    line-height: 22px;
+    padding: 10px ;
+}
+.cangiua-divActive{
+    text-align: center;
+}
+p {font-size: 14pt;}
+.f-grid {
+    display: flex;
+    justify-content: space-between;
+    margin-left:-0.5rem;
+    flex-flow: row wrap;}
+.f-grid-col {
+    flex: 3 0;
+    background-color: var(--mau-f-grid-col);
+    margin-left: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    font-size: 13pt;}
+.f-grid-colkhac{
+    flex: 3 0;
+    background-color: rgba(230, 208, 224, 0.883);
+    margin-left: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    font-size: 13pt;}
+.f-grid-1dong{
+    background-color: rgb(147, 147, 224);
+    color:yellow;
+    text-align: center;
+
+}
+  /* #user-icon:hover, #robot-icon:hover{
+    opacity: 1.0;  
+    filter: alpha(opacity=100);
+  }   */
+  #setlang-icon{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: none;
+  }
+
+</style>
+
 </head>
 <body>
-    <button id="startButton1">Say in Vietnamese</button>
-    <button id="startButton2">Say in English</button>
-    <br><br>
-
-    <div class="text-input">
-        <textarea spellcheck="false" readonly disabled class="text-noi" placeholder="Noi"></textarea>
-        <textarea spellcheck="false" readonly disabled class="text-dich" placeholder="Dich"></textarea>
-    </div>
-
-    <p id="result"></p>
-    <script>
-        //Khoi dong
+<header class="fixed-header">
+    <div class="tenbai";>
+        <br>
+        <label for="unit_1"><image src="./z10images/setting.png" id="setlang-icon"/>Talk in language : </label>
+        <select name="chonunit1" id="unit_1">
+            <option value="vi" selected>Vietnamese (Việt)</option>
+            <option value="en">English (Anh)</option>
+            <option value="es">Spanish (Mexico)</option>
+            <option value="zh-TW">Taiwan (Đài loan)</option>
+            <option value="da">Danish (Đan mạch)</option>
+            <option value="de">German (Đức)</option>
+            <option value="nl">Dutch (Hà lan)</option>
+            <option value="fr">French (Pháp)</option>
+            <option value="ja">Japanese (Nhật)</option>
+            <option value="ko">Korean (Hàn)</option>
+            <option value="th">Thai (Thái)</option>
+            <option value="km">Khmer (Miên)</option>
+        </select>&ensp; and &ensp; 
+                  
+        <select name="chonunit2" id="unit_2">
+            <option value="vi" >Vietnamese (Việt)</option>
+            <option value="en" selected>English (Anh)</option>
+            <option value="es">Spanish (Mexico)</option>
+            <option value="zh-TW">Taiwan (Đài loan)</option>
+            <option value="da">Danish (Đan mạch)</option>
+            <option value="de">German (Đức)</option>
+            <option value="nl">Dutch (Hà lan)</option>
+            <option value="fr">French (Pháp)</option>
+            <option value="ja">Japanese (Nhật)</option>
+            <option value="ko">Korean (Hàn)</option>
+            <option value="th">Thai (Thái)</option>
+            <option value="km">Khmer (Miên)</option>
+        </select>
+        <a>&ensp;</a>
         
-        const startButton1 = document.getElementById('startButton1');
-        const startButton2 = document.getElementById('startButton2');
-        const resultElement = document.getElementById('result');
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    </div>
+    <br>
 
-        // KHI CLICK startButton1:
-        //recognition.lang = 'vi-VN'; // Thiết lập ngôn ngữ là tiếng Việt cho nguoi noi khi click nut co id startButton1
-        startButton1.addEventListener('click', () => {
-            recognition.lang = 'vi-VN'; // Thiết lập ngôn ngữ là tiếng Việt
-            const fromText = document.querySelector(".text-noi"),
-            toText = document.querySelector(".text-dich");
+    <div class="button" id="circlein" onclick="userSpeechToText(lang_noi)">
+        <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-25-512.png" alt="mic-icon" class="mic-icon"/>
+    </div>
+    <nav>
+        <p>Chọn một ngôn ngữ để nói :</p>
+        <input type="radio" name="gender" id="radio1" value="vi" />
+        <label for="radio1">vi</label>
+        <input type="radio" name="gender" id="radio2" value="en" />
+        <label for="radio2">en</label>
+    </nav>
 
-            recognition.start();
+    <hr>
+    <p id="words"></p>
 
-            recognition.onresult = (event) => {
-                const resultnoi = event.results[0][0].transcript;
-                //resultElement.textContent = '' + result;
-                fromText.setAttribute("placeholder", resultnoi);
-                vi_dichra_en(resultnoi);
-
-            };
-
-            recognition.onend = () => {
-                startButton1.disabled = false;
-            };
-        });
-
-        // KHI CLICK startButton2:
-        //recognition.lang = 'vi-VN'; // Thiết lập ngôn ngữ là tiếng Việt cho nguoi noi khi click nut co id startButton1
-        startButton2.addEventListener('click', () => {
-            recognition.lang = 'en-US'; // Thiết lập ngôn ngữ là tiếng Việt
-            const fromText = document.querySelector(".text-noi"),
-            toText = document.querySelector(".text-dich");
-
-            recognition.start();
-
-            recognition.onresult = (event) => {
-                const resultnoi = event.results[0][0].transcript;
-                //resultElement.textContent = '' + result;
-                fromText.setAttribute("placeholder", resultnoi);
-                en_dichra_vi(resultnoi);
-
-            };
-
-            recognition.onend = () => {
-                startButton1.disabled = false;
-            };
-        });
+</header>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div id="divActive" class="cangiua-divActive">
 
 
-
-</script>
-
+</div>
 <script>
-function vi_dichra_en(text_dem_dich){
-    //alert('vao ham dich_ra_english')
-    const fromText = document.querySelector(".text-noi"),
-    toText = document.querySelector(".text-dich");
+//<script src="z10.js" >
+//---------cac bien global ---------
+var lang_noi='vi'; 
+var lang_dich='en'; 
 
-    let text = text_dem_dich.trim(),
-    //translateFrom = selectTag[0].value,
-    //translateTo = selectTag[1].value;
-    translateFrom = 'vi-VN',
-    translateTo = 'en-US';
-    //alert(text)
+var textnoi="";
+var textdadich="";
 
-    if(!text) return;
-    toText.setAttribute("placeholder", "Translating...");
+//---global neu co su thay doi unit thi ham nay chay----------------------
+var uchon1 = document.getElementById("unit_1");
+var radioBtn1 = document.getElementById('radio1'); 
+var label1 = document.querySelector("label[for='radio1']"); 
+uchon1.onchange=function(){
+    lang_code1=(this.value);
+    //alert(chonBaiStr);
+    label1.textContent = lang_code1; 
+};
+radioBtn1.addEventListener('change', (event) => { 
+    if (event.target.checked) {
+        //alert(label1.textContent); 
+        let lang_noi=label1.textContent
+        userSpeechToText(lang_noi)
+    };
+});    
+
+var uchon2 = document.getElementById("unit_2");
+var radioBtn2 = document.getElementById('radio2'); 
+var label2 = document.querySelector("label[for='radio2']"); 
+uchon2.onchange=function(){
+    lang_code2=(this.value);
+    //alert(chonBaiStr);
+    label2.textContent = lang_code2; 
+};
+radioBtn2.addEventListener('change', (event) => { 
+    if (event.target.checked) {
+        //alert(label2.textContent);
+        let lang_noi=label2.textContent
+        userSpeechToText(lang_noi)
+
+    };
+});    
+
+//------------Recognition----------
+function userSpeechToText(lang_noi){
+    var message = document.querySelector('#words');
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var recognition = new SpeechRecognition();
+    recognition.lang = lang_noi; //'vi-VN';
+    recognition.interimResults = false;
+
+    recognition.start();
+    message.textContent = "";
+    document.querySelector("#circlein").style.backgroundColor = "#6BD6E1";
+
+    recognition.onresult = function(event) {
+        var lastResult = event.results.length - 1;
+        var content = event.results[lastResult][0].transcript;
+        message.textContent = content;
+        textnoi=message.textContent;
+        recognition.stop();
+
+        //alert(textnoi);
+        //let from_l1=lang_noi;
+        //let to_l2=lang_dich;
+        //translate_froml1_tol2(message,from_l1,to_l2)
+
+        document.querySelector("#circlein").style.backgroundColor = null;
+    };
+    
+    // recognition.onspeechend = function() {
+    //     recognition.stop();
+    //     document.querySelector("#circlein").style.backgroundColor = null;
+    //     document.getElementById('user-icon').style.opacity = 0.5;
+    //     document.getElementById('user-icon').style.filter= "alpha(opacity=50)";
+    //     document.getElementById('robot-icon').style.opacity = 0.5;
+    //     document.getElementById('robot-icon').style.filter= "alpha(opacity=50)";
+    //     };
+    
+    recognition.onerror = function(event) {
+        message.textContent = 'Error occurred in recognition: ' + event.error;
+        document.querySelector("#circlein").style.backgroundColor = null
+        }
+    };
+//-----------------------
+function translate_froml1_tol2(message,from_l1,to_l2){
+    let text=message;
+    // if(!message) return;
+    // const countries = {"en-GB": "English","vi-VN": "Vietnamese"};   
+    const toText = document.querySelector("#words");
+    // translateBtn = document.querySelector("button");
+    
+    // translateBtn.addEventListener("click", () => {
+    //     text = document.querySelector("#p1").textContent;
+    let translateFrom = 'vi';
+    let translateTo = 'en';
     let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
+
     fetch(apiUrl).then(res => res.json()).then(data => {
-        toText.value = data.responseData.translatedText;
+        toText.textContent = data.responseData.translatedText;
         data.matches.forEach(data => {
             if(data.id === 0) {
-                toText.value = data.translation;
-                //alert(data.translation)
-
+                //toText.textContent = data.translation;
+                //message.textContent=data.translation
+                //alert(toText.textContent); //thong bao text da dich ra
             }
         });
-        toText.setAttribute("placeholder", toText.value);
+        
     });
 
 }
+//------------------------
+function chondochaydich(){
+    if (chonSlpaVl=='2'){    
+        if ((nDocDich % 2) == 0){
+            nDocDich = nDocDich + 1;
+            document.getElementById("docdich").innerHTML="For Reading & Translating (click on rows)";
+            document.getElementById("docdich").style.color = "blue";
+            document.getElementById("words").innerHTML="";
+        }else{
+            nDocDich = nDocDich + 1;
+            document.getElementById("docdich").innerHTML="Only for Reading (click on rows)";
+            document.getElementById("docdich").style.color = "green";
+            document.getElementById("words").innerHTML="";
+        }    
+    }
+}
+    
+//-----------ham chinh ---
+document.getElementById('speak-icon').style.opacity = .7;
+document.getElementById('speak-icon').style.filter= "alpha(opacity=50)";
+document.getElementById("circlein").style.display = "none";
+//api key for chatbot python 29-12-22
+//6872f5ecb8f26fe4bb0bd2cb0945ed08364d984f
+
 </script>
 
-<script>
-    function en_dichra_vi(text_dem_dich){
-        //alert('vao ham dich_ra_english')
-        const fromText = document.querySelector(".text-noi"),
-        toText = document.querySelector(".text-dich");
-    
-        let text = text_dem_dich.trim(),
-        //translateFrom = selectTag[0].value,
-        //translateTo = selectTag[1].value;
-        translateFrom = 'en-US',
-        translateTo = 'vi-VN';
-        //alert(text)
-    
-        if(!text) return;
-        toText.setAttribute("placeholder", "Translating...");
-        let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
-        fetch(apiUrl).then(res => res.json()).then(data => {
-            toText.value = data.responseData.translatedText;
-            data.matches.forEach(data => {
-                if(data.id === 0) {
-                    toText.value = data.translation;
-                    //alert(data.translation)
-    
-                }
-            });
-            toText.setAttribute("placeholder", toText.value);
-        });
-    
-    }
-</script>
-    
-    </body>
+</body> 
 </html>
