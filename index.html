@@ -278,10 +278,10 @@ function userSpeechToText(){
         //alert(textnoi);
     };
     
-    recognition.onspeechend = function() {
-        recognition.stop();
-        document.querySelector("#circlein").style.backgroundColor = null;
-        };
+//    recognition.onspeechend = function() {
+//        recognition.stop();
+//        document.querySelector("#circlein").style.backgroundColor = null;
+//        };
     
     recognition.onerror = function(event) {
         document.querySelector('#words').textContent = 'Error occurred in recognition: ' + event.error;
