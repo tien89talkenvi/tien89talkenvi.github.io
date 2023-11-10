@@ -81,6 +81,9 @@ p{
     line-height: 22px;
     padding: 10px ;
 }
+.text-input{
+    text-align:center;
+}
 .cangiua-divActive{
     text-align: center;
 }
@@ -128,7 +131,7 @@ p {font-size: 14pt;}
 <header class="fixed-header">
     <div class="tenbai";>
         <br>
-        <label for="unit_1"><image src="./icons/setting.png" id="setlang-icon"/>Talk in language : </label>
+        <label for="unit_1"><image src="./z10images/setting.png" id="setlang-icon"/>Talk in language : </label>
         <select name="chonunit1" id="unit_1">
             <option value="vi" selected>Vietnamese (Việt)</option>
             <option value="en">English (Anh)</option>
@@ -142,6 +145,7 @@ p {font-size: 14pt;}
             <option value="ko">Korean (Hàn)</option>
             <option value="th">Thai (Thái)</option>
             <option value="km">Khmer (Miên)</option>
+            <option value="lo">Lao (Lào)</option>
         </select>&ensp; and &ensp; 
                   
         <select name="chonunit2" id="unit_2">
@@ -157,6 +161,7 @@ p {font-size: 14pt;}
             <option value="ko">Korean (Hàn)</option>
             <option value="th">Thai (Thái)</option>
             <option value="km">Khmer (Miên)</option>
+            <option value="lo">Lao (Lào)</option>
         </select>
         <a>&ensp;</a>
         
@@ -176,7 +181,10 @@ p {font-size: 14pt;}
 
     <hr>
     <p id="words"></p>
-
+    <div class="text-input">
+        <textarea id="txt-noi" name="txtnoi" spellcheck="false" readonly disabled class="from-text" placeholder="Enter text" rows="4" cols="50"></textarea>
+        <textarea id="txt-dich" name="txtdich" spellcheck="false" readonly disabled class="to-text" placeholder="Translation" rows="4" cols="50"></textarea>
+    </div>
 </header>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <div id="divActive" class="cangiua-divActive">
@@ -195,16 +203,14 @@ var textdadich="";
 //---global neu co su thay doi unit thi ham nay chay----------------------
 var uchon1 = document.getElementById("unit_1");
 var radioBtn1 = document.getElementById('radio1'); 
-var label1 = document.querySelector("label[for='radio1']"); 
+var label1 = document.querySelector("label[for='radio1']");
 uchon1.onchange=function(){
     lang_code1=(this.value);
-    //alert(chonBaiStr);
     label1.textContent = lang_code1; 
 };
 radioBtn1.addEventListener('change', (event) => { 
     if (event.target.checked) {
-        //alert(label1.textContent); 
-        let lang_noi=label1.textContent
+        lang_noi=label1.textContent
         userSpeechToText(lang_noi)
     };
 });    
@@ -212,6 +218,7 @@ radioBtn1.addEventListener('change', (event) => {
 var uchon2 = document.getElementById("unit_2");
 var radioBtn2 = document.getElementById('radio2'); 
 var label2 = document.querySelector("label[for='radio2']"); 
+
 uchon2.onchange=function(){
     lang_code2=(this.value);
     //alert(chonBaiStr);
@@ -220,38 +227,45 @@ uchon2.onchange=function(){
 radioBtn2.addEventListener('change', (event) => { 
     if (event.target.checked) {
         //alert(label2.textContent);
-        let lang_noi=label2.textContent
+        lang_noi=label2.textContent
         userSpeechToText(lang_noi)
 
     };
 });    
+const fromText = document.querySelector(".from-text"),
+toText = document.querySelector(".to-text");
 
 //------------Recognition----------
 function userSpeechToText(lang_noi){
-    var message = document.querySelector('#words');
+
+    //var message = document.querySelector('#words');
+
     var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
     var recognition = new SpeechRecognition();
     recognition.lang = lang_noi; //'vi-VN';
     recognition.interimResults = false;
 
     recognition.start();
-    message.textContent = "";
+    fromText.textContent = "";
     document.querySelector("#circlein").style.backgroundColor = "#6BD6E1";
 
     recognition.onresult = function(event) {
         var lastResult = event.results.length - 1;
         var content = event.results[lastResult][0].transcript;
-        message.textContent = content;
-        textnoi=message.textContent;
-        
+        fromText.textContent = content;
+        textnoi=fromText.textContent;
         recognition.stop();
+        document.querySelector("#circlein").style.backgroundColor = null;
 
         //alert(textnoi);
-        //let from_l1='vi';
-        //let to_l2='en';
-        //translate_froml1_tol2(message,from_l1,to_l2)
+        let from_l1=lang_noi;
+        if (lang_noi==label1.textContent) {
+            to_l2=label2.textContent;
+        }else{
+            to_l2=label1.textContent;
+        }    
+        translate_froml1_tol2(from_l1,to_l2)
 
-        document.querySelector("#circlein").style.backgroundColor = null;
     };
     
     // recognition.onspeechend = function() {
@@ -264,52 +278,55 @@ function userSpeechToText(lang_noi){
     //     };
     
     recognition.onerror = function(event) {
-        message.textContent = 'Error occurred in recognition: ' + event.error;
+        fromText.textContent = 'Error occurred in recognition: ' + event.error;
         document.querySelector("#circlein").style.backgroundColor = null
         }
     };
 //-----------------------
-function translate_froml1_tol2(message,from_l1,to_l2){
-    let text=message;
+function translate_froml1_tol2(from_l1,to_l2){
+    let text = fromText.value.trim(),
+    translateFrom = from_l1,
+    translateTo = to_l2;
+    if(!text) return;
+    toText.setAttribute("placeholder", "Translating...");
+    let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
+    fetch(apiUrl).then(res => res.json()).then(data => {
+        toText.value = data.responseData.translatedText;
+        data.matches.forEach(data => {
+            if(data.id === 0) {
+                toText.value = data.translation;
+                txtdich_to_audio()
+            }
+        });
+        toText.setAttribute("placeholder", "Translation");
+    });
+}
+
+    //let text=message;
     // if(!message) return;
     // const countries = {"en-GB": "English","vi-VN": "Vietnamese"};   
-    const toText = document.querySelector("#words");
+    //const toText = document.querySelector("#words");
     // translateBtn = document.querySelector("button");
     
     // translateBtn.addEventListener("click", () => {
     //     text = document.querySelector("#p1").textContent;
-    let translateFrom = 'vi';
-    let translateTo = 'en';
-    let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
+    //let translateFrom = 'vi';
+    //let translateTo = 'en';
+    //let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
 
-    fetch(apiUrl).then(res => res.json()).then(data => {
-        toText.textContent = data.responseData.translatedText;
-        data.matches.forEach(data => {
-            if(data.id === 0) {
-                toText.value = data.translation;
-                alert(toText.textContent); //thong bao text da dich ra
-            }
-        });
-        toText.innerHTML=Translation;
-    });
+    //fetch(apiUrl).then(res => res.json()).then(data => {
+    //    toText.textContent = data.responseData.translatedText;
+    //    data.matches.forEach(data => {
+    //        if(data.id === 0) {
+    //            toText.value = data.translation;
+    //            alert(toText.textContent); //thong bao text da dich ra
+    //        }
+    //    });
+    //    toText.innerHTML=Translation;
+    //});
 
-}
+//}
 //------------------------
-function chondochaydich(){
-    if (chonSlpaVl=='2'){    
-        if ((nDocDich % 2) == 0){
-            nDocDich = nDocDich + 1;
-            document.getElementById("docdich").innerHTML="For Reading & Translating (click on rows)";
-            document.getElementById("docdich").style.color = "blue";
-            document.getElementById("words").innerHTML="";
-        }else{
-            nDocDich = nDocDich + 1;
-            document.getElementById("docdich").innerHTML="Only for Reading (click on rows)";
-            document.getElementById("docdich").style.color = "green";
-            document.getElementById("words").innerHTML="";
-        }    
-    }
-}
     
 //-----------ham chinh ---
 document.getElementById('speak-icon').style.opacity = .7;
@@ -317,7 +334,6 @@ document.getElementById('speak-icon').style.filter= "alpha(opacity=50)";
 document.getElementById("circlein").style.display = "none";
 //api key for chatbot python 29-12-22
 //6872f5ecb8f26fe4bb0bd2cb0945ed08364d984f
-
 </script>
 
 </body> 
