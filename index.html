@@ -231,20 +231,22 @@ var radioBtn2 = document.getElementById('radio2');
 var label2 = document.querySelector("label[for='radio2']"); 
 
 const fromText = document.querySelector(".from-text"),
-toText = document.querySelector(".to-text");
-
+toText = document.querySelector(".to-text"),
+tbLoi= document.querySelector('#words');
 
 uchon1.onchange=function(){
     label1.textContent=(this.value);
     document.querySelector("#circlein").style.backgroundColor = null;
     fromText.textContent = "";
     toText.textContent = "";
+    tbLoi.textContent = "";
 
 };
 radioBtn1.addEventListener('change', (event) => { 
-    document.querySelector("#circlein").style.backgroundColor = null;
+    tbLoi.textContent = "";
     fromText.textContent = "";
     toText.textContent = "";
+
 
 });    
 
@@ -252,18 +254,24 @@ radioBtn1.addEventListener('change', (event) => {
 uchon2.onchange=function(){
     label2.textContent=(this.value);
     document.querySelector("#circlein").style.backgroundColor = null;
+    tbLoi.textContent = "";
     fromText.textContent = "";
     toText.textContent = "";
 };
 
 radioBtn2.addEventListener('change', (event) => { 
     document.querySelector("#circlein").style.backgroundColor = null;
+    tbLoi.textContent = "";
     fromText.textContent = "";
     toText.textContent = "";
 });    
 
 //------------Recognition----------
 function userSpeechToText(){
+    tbLoi.textContent = "";
+    fromText.textContent = "";
+    toText.textContent = "";
+    document.querySelector('#words').textContent
     if (radioBtn1.checked) {
         from_l1=label1.textContent;
     }else{
