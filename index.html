@@ -123,7 +123,11 @@ p {font-size: 14pt;}
     border-radius: 50%;
     border: none;
   }
-
+textarea {
+    font-size: 18px;
+    line-height: 1.5;
+    resize: none;
+}
 </style>
 
 </head>
@@ -168,12 +172,12 @@ p {font-size: 14pt;}
     </div>
     <br>
 
-    <div class="button" id="circlein" onclick="userSpeechToText(lang_noi)">
+    <div class="button" id="circlein" onclick="userSpeechToText()">
         <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-25-512.png" alt="mic-icon" class="mic-icon"/>
     </div>
     <nav>
         <p>Chọn một ngôn ngữ để nói :</p>
-        <input type="radio" name="gender" id="radio1" value="vi" />
+        <input type="radio" name="gender" id="radio1" value="vi" checked />
         <label for="radio1">vi</label>
         <input type="radio" name="gender" id="radio2" value="en" />
         <label for="radio2">en</label>
@@ -194,55 +198,59 @@ p {font-size: 14pt;}
 <script>
 //<script src="z10.js" >
 //---------cac bien global ---------
-var lang_noi='vi'; 
-var lang_dich='en'; 
+//var lang_noi='vi'; 
+//var lang_dich='en'; 
 
-var textnoi="";
-var textdadich="";
 
 //---global neu co su thay doi unit thi ham nay chay----------------------
 var uchon1 = document.getElementById("unit_1");
 var radioBtn1 = document.getElementById('radio1'); 
 var label1 = document.querySelector("label[for='radio1']");
-uchon1.onchange=function(){
-    lang_code1=(this.value);
-    label1.textContent = lang_code1; 
-};
-radioBtn1.addEventListener('change', (event) => { 
-    if (event.target.checked) {
-        lang_noi=label1.textContent
-        userSpeechToText(lang_noi)
-    };
-});    
 
 var uchon2 = document.getElementById("unit_2");
 var radioBtn2 = document.getElementById('radio2'); 
 var label2 = document.querySelector("label[for='radio2']"); 
 
-uchon2.onchange=function(){
-    lang_code2=(this.value);
-    //alert(chonBaiStr);
-    label2.textContent = lang_code2; 
-};
-radioBtn2.addEventListener('change', (event) => { 
-    if (event.target.checked) {
-        //alert(label2.textContent);
-        lang_noi=label2.textContent
-        userSpeechToText(lang_noi)
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+var recognition = new SpeechRecognition();
 
-    };
+uchon1.onchange=function(){
+    label1.textContent=(this.value);
+    recognition.stop();
+    document.querySelector("#circlein").style.backgroundColor = null;
+
+};
+radioBtn1.addEventListener('change', (event) => { 
+    recognition.stop();
+    document.querySelector("#circlein").style.backgroundColor = null;
 });    
+
+
+uchon2.onchange=function(){
+    label2.textContent=(this.value);
+    recognition.stop();
+    document.querySelector("#circlein").style.backgroundColor = null;
+};
+
+radioBtn2.addEventListener('change', (event) => { 
+    recognition.stop();
+    document.querySelector("#circlein").style.backgroundColor = null;
+});    
+
 const fromText = document.querySelector(".from-text"),
 toText = document.querySelector(".to-text");
 
 //------------Recognition----------
-function userSpeechToText(lang_noi){
-
+function userSpeechToText(){
+    if (radioBtn1.checked) {
+        from_l1=label1.textContent;
+    }else{
+        from_l1=label2.textContent;
+    }
     //var message = document.querySelector('#words');
-
-    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-    var recognition = new SpeechRecognition();
-    recognition.lang = lang_noi; //'vi-VN';
+//    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+//    var recognition = new SpeechRecognition();
+    recognition.lang = from_l1;
     recognition.interimResults = false;
 
     recognition.start();
@@ -253,19 +261,11 @@ function userSpeechToText(lang_noi){
         var lastResult = event.results.length - 1;
         var content = event.results[lastResult][0].transcript;
         fromText.textContent = content;
-        textnoi=fromText.textContent;
         recognition.stop();
         document.querySelector("#circlein").style.backgroundColor = null;
+        translate_froml1_tol2()
 
         //alert(textnoi);
-        let from_l1=lang_noi;
-        if (lang_noi==label1.textContent) {
-            to_l2=label2.textContent;
-        }else{
-            to_l2=label1.textContent;
-        }    
-        translate_froml1_tol2(from_l1,to_l2)
-
     };
     
     // recognition.onspeechend = function() {
@@ -278,15 +278,20 @@ function userSpeechToText(lang_noi){
     //     };
     
     recognition.onerror = function(event) {
-        fromText.textContent = 'Error occurred in recognition: ' + event.error;
+        document.querySelector('#words').textContent = 'Error occurred in recognition: ' + event.error;
         document.querySelector("#circlein").style.backgroundColor = null
         }
     };
 //-----------------------
-function translate_froml1_tol2(from_l1,to_l2){
-    let text = fromText.value.trim(),
-    translateFrom = from_l1,
-    translateTo = to_l2;
+function translate_froml1_tol2(){
+    let text = fromText.value;
+    if (radioBtn1.checked) {
+        translateFrom=label1.textContent;
+        translateTo=label2.textContent;
+    }else{
+        translateFrom=label2.textContent;
+        translateTo=label1.textContent;
+    }
     if(!text) return;
     toText.setAttribute("placeholder", "Translating...");
     let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
