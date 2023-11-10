@@ -175,6 +175,7 @@ textarea {
     <div class="button" id="circlein" onclick="userSpeechToText()">
         <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-25-512.png" alt="mic-icon" class="mic-icon"/>
     </div>
+    <br>
     <nav>
         <p>Chọn một ngôn ngữ để nói :</p>
         <input type="radio" name="gender" id="radio1" value="vi" checked />
@@ -182,7 +183,7 @@ textarea {
         <input type="radio" name="gender" id="radio2" value="en" />
         <label for="radio2">en</label>
     </nav>
-
+    <br>
     <hr>
     <p id="words"></p>
     <div class="text-input">
@@ -210,9 +211,6 @@ var label1 = document.querySelector("label[for='radio1']");
 var uchon2 = document.getElementById("unit_2");
 var radioBtn2 = document.getElementById('radio2'); 
 var label2 = document.querySelector("label[for='radio2']"); 
-
-var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-var recognition = new SpeechRecognition();
 
 uchon1.onchange=function(){
     label1.textContent=(this.value);
@@ -248,8 +246,8 @@ function userSpeechToText(){
         from_l1=label2.textContent;
     }
     //var message = document.querySelector('#words');
-//    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-//    var recognition = new SpeechRecognition();
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var recognition = new SpeechRecognition();
     recognition.lang = from_l1;
     recognition.interimResults = false;
 
@@ -264,18 +262,13 @@ function userSpeechToText(){
         recognition.stop();
         document.querySelector("#circlein").style.backgroundColor = null;
         translate_froml1_tol2()
-
         //alert(textnoi);
     };
     
-    // recognition.onspeechend = function() {
-    //     recognition.stop();
-    //     document.querySelector("#circlein").style.backgroundColor = null;
-    //     document.getElementById('user-icon').style.opacity = 0.5;
-    //     document.getElementById('user-icon').style.filter= "alpha(opacity=50)";
-    //     document.getElementById('robot-icon').style.opacity = 0.5;
-    //     document.getElementById('robot-icon').style.filter= "alpha(opacity=50)";
-    //     };
+    recognition.onspeechend = function() {
+        recognition.stop();
+        document.querySelector("#circlein").style.backgroundColor = null;
+        };
     
     recognition.onerror = function(event) {
         document.querySelector('#words').textContent = 'Error occurred in recognition: ' + event.error;
@@ -306,33 +299,6 @@ function translate_froml1_tol2(){
         toText.setAttribute("placeholder", "Translation");
     });
 }
-
-    //let text=message;
-    // if(!message) return;
-    // const countries = {"en-GB": "English","vi-VN": "Vietnamese"};   
-    //const toText = document.querySelector("#words");
-    // translateBtn = document.querySelector("button");
-    
-    // translateBtn.addEventListener("click", () => {
-    //     text = document.querySelector("#p1").textContent;
-    //let translateFrom = 'vi';
-    //let translateTo = 'en';
-    //let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
-
-    //fetch(apiUrl).then(res => res.json()).then(data => {
-    //    toText.textContent = data.responseData.translatedText;
-    //    data.matches.forEach(data => {
-    //        if(data.id === 0) {
-    //            toText.value = data.translation;
-    //            alert(toText.textContent); //thong bao text da dich ra
-    //        }
-    //    });
-    //    toText.innerHTML=Translation;
-    //});
-
-//}
-//------------------------
-    
 //-----------ham chinh ---
 document.getElementById('speak-icon').style.opacity = .7;
 document.getElementById('speak-icon').style.filter= "alpha(opacity=50)";
