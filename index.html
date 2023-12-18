@@ -7,67 +7,26 @@
     <title>Document</title>
 </head>
 <body>
-
 <p onclick="ktra()">Click here to test</p>
-<select id="voiceSelect"></select>
-<br><br>
-<p onclick="docvb()">Click here to doc vb t viet</p>
-<br><br>
-<p onclick="docvb2()">Click here to doc vb t Anh</p>
-
+   
 <script>
 function ktra() {
-    function populateVoiceList() {
-  if (typeof speechSynthesis === "undefined") {
-    return;
-  }
-
-  const voices = speechSynthesis.getVoices();
-
-  for (let i = 0; i < voices.length; i++) {
-    const option = document.createElement("option");
-    option.textContent = `${voices[i].name} (${voices[i].lang})`;
-
-    if (voices[i].default) {
-      option.textContent += " — DEFAULT";
-    }
-
-    option.setAttribute("data-lang", voices[i].lang);
-    option.setAttribute("data-name", voices[i].name);
-    document.getElementById("voiceSelect").appendChild(option);
-  }
-}
-
-populateVoiceList();
-if (
-  typeof speechSynthesis !== "undefined" &&
-  speechSynthesis.onvoiceschanged !== undefined
-) {
-  speechSynthesis.onvoiceschanged = populateVoiceList;
-}
-
-}
-
-
-
-</script>
-<script>
-    function docvb(){
+// Kiểm tra xem trình duyệt hỗ trợ Web Speech API hay không 
+    if ('speechSynthesis' in window) { 
+        // Lấy danh sách các giọng đọc được hỗ trợ 
+        var voices = window.speechSynthesis.getVoices(); 
+        // Chọn giọng đọc tiếng Việt (Linh) 
+        var vietnameseVoice = voices.find(voice => voice.name === 'Linh'); 
+        // Tạo đối tượng utterance với văn bản cần đọc 
         var utterance = new SpeechSynthesisUtterance('Đây là một đoạn văn bản tiếng Việt.'); 
+        // Thiết lập giọng đọc 
+        utterance.voice = vietnameseVoice; 
+        // Đọc văn bản 
         window.speechSynthesis.speak(utterance); 
+    } else { 
+        console.error('Trình duyệt không hỗ trợ Web Speech API.'); 
     }
-    
-
-
-</script>
-<script>
-    function docvb2(){
-        var utterance = new SpeechSynthesisUtterance('I work as a teacher.'); 
-        window.speechSynthesis.speak(utterance); 
-    }
-    
-
-
-</script>
+}    
+</script>    
 </body>
 </html>
