@@ -1,27 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Auto Read Text</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+mark {
+  color: #000;
+  background-color: #f4d03f;
+}
+</style>    
 </head>
 <body>
-<p>Toi thu phat am tu dong doc to len van ban ma khong click</p>
+<div class='f-grid-col-left' id='l1'  onclick='layidvaplay(this.id)'>My name is Tien. I am a teacher.</div>
+<div class='f-grid-col-left' id='r2'  onclick='layidvaplay(this.id)'>Tên của tôi là Tien. Tôi là một giáo viên.</div>
+
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-// Chuyển đổi văn bản thành giọng nói
-    function speakText(text) {
-        var utterance = new SpeechSynthesisUtterance(text);
-        window.speechSynthesis.speak(utterance);
+function layidvaplay(idname){
+    function handleEnd() {
+        textEl.innerHTML = text;
     }
-    // Câu cần đọc
-    var textToRead = "I am learning English.";
-    // Đọc câu khi trang web tải xong
-    speakText(textToRead);
-});
 
-</script>
+    function handleBoundary(event) {
+        if (event.name === 'sentence') {
+            return;
+        }
 
+        const wordStart = event.charIndex;
+        let wordLength = event.charLength;
+        if (wordLength === undefined) {
+            // Safari doesn't provide charLength, so fall back to a regex to find the current word and its length (probably misses some edge cases, but good enough for this demo)
+            const match = text.substring(wordStart).match(/^[a-z\d']*/i);
+            wordLength = match[0].length;
+        }
+        // wrap word in <mark> tag
+        const wordEnd = wordStart + wordLength;
+        const word = text.substring(wordStart, wordEnd);
+        const markedText = text.substring(0, wordStart) + '<mark>' + word + '</mark>' + text.substring(wordEnd);
+        textEl.innerHTML = markedText;
+    }
+
+    function play(tenidl) {
+        if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.resume();
+        } else {
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.addEventListener('end', handleEnd);
+            utterance.addEventListener('boundary', handleBoundary);
+            let giongnoi;
+            if (tenidl.charAt(0) == 'l'){giongnoi='en-US';} else {giongnoi='vi-VN';}
+            utterance.lang = giongnoi;
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+    //
+    let text = document.getElementById(idname).innerHTML ;
+    let textEl = document.getElementById(idname);
+    textEl.innerHTML = text;
+    play(idname);
+}
+</script>      
 </body>
 </html>
-
