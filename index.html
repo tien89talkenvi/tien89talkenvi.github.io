@@ -1,73 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Read Text</title>
 </head>
 <body>
 
-<p onclick="ktra()">Click here to test</p>
-<select id="voiceSelect"></select>
-<br><br>
-<p onclick="docvb()">Click here to doc vb t viet</p>
-<br><br>
-<p onclick="docvb2()">Click here to doc vb t Anh</p>
-
 <script>
-function ktra() {
-    function populateVoiceList() {
-  if (typeof speechSynthesis === "undefined") {
-    return;
-  }
-
-  const voices = speechSynthesis.getVoices();
-
-  for (let i = 0; i < voices.length; i++) {
-    const option = document.createElement("option");
-    option.textContent = `${voices[i].name} (${voices[i].lang})`;
-
-    if (voices[i].default) {
-      option.textContent += " — DEFAULT";
+document.addEventListener("DOMContentLoaded", function() {
+// Chuyển đổi văn bản thành giọng nói
+    function speakText(text) {
+        var utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
     }
-
-    option.setAttribute("data-lang", voices[i].lang);
-    option.setAttribute("data-name", voices[i].name);
-    document.getElementById("voiceSelect").appendChild(option);
-  }
-}
-
-populateVoiceList();
-if (
-  typeof speechSynthesis !== "undefined" &&
-  speechSynthesis.onvoiceschanged !== undefined
-) {
-  speechSynthesis.onvoiceschanged = populateVoiceList;
-}
-
-}
-
-
+    // Câu cần đọc
+    var textToRead = "I am learning English.";
+    // Đọc câu khi trang web tải xong
+    speakText(textToRead);
+});
 
 </script>
-<script>
-    function docvb(){
-        var utterance = new SpeechSynthesisUtterance('Đây là một đoạn văn bản tiếng Việt.'); 
-        window.speechSynthesis.speak(utterance); 
-    }
-    
 
-
-</script>
-<script>
-    function docvb2(){
-        var utterance = new SpeechSynthesisUtterance('I work as a teacher.'); 
-        window.speechSynthesis.speak(utterance); 
-    }
-    
-
-
-</script>
 </body>
 </html>
+
