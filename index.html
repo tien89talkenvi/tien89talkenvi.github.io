@@ -6,296 +6,220 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 <style>
-    *, *::before, *::after {
-  box-sizing: border-box;
-}
+    body {
+        display: grid;
+        background-image: linear-gradient(0deg,gray,lightblue);
+        background-attachment: fixed;
+        background-size: cover;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 10px;
+        font: 1rem/1 'Poppins', sans-serif;
 
-body {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  padding: 20px;
-  color: #fff;
-  background-image: linear-gradient(45deg, #4158d0, #c850c0, #ffcc70);
-  font: 1.25rem/1 'Poppins', sans-serif;
-}
+    }
+    .wrapper {
+        display: grid;
+        gap: 20px;
+        width: 600px;
+        max-width: calc(100vw - 40px);
+        padding: 30px;
+        border-radius: 10px;
+        background-color: #0001}
+    .properties {
+        display: grid;
+        grid-template-columns: max-content minmax(0, auto) 40px;
+        gap: 20px;
+        padding: 20px;
+        background-color: #0003;
+        font-size: 20px;
+        border-radius: 10px;
+        }
+        .buttons1 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+        margin-top: 2px;
+        padding-top: 2px;
+        }
+        .buttons2 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        justify-content: center;
+        margin-top: 2px;
+        padding-top: 2px;
+        }
 
-.wrapper {
-  display: grid;
-  gap: 20px;
-  width: 600px;
-  max-width: calc(100vw - 40px);
-  padding: 30px;
-  border-radius: 10px;
-  background-color: #0003;
-}
-#text {
-  display: block;
-  line-height: 1.75;
-}
+        .buttons4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #fff3;
+        }
+    button {
+        padding: 5px;
+        border: 1px solid #fff;
+        border-radius: 999px;
+        color: #fff;
+        background-color: rgba(16, 16, 17, 0.253);
+        font-size: inherit;
+        font-family: inherit;
+        cursor: pointer;
+        appearance: none;
+        }
 
-.properties {
-  display: grid;
-  grid-template-columns: max-content minmax(0, auto) 40px;
-  gap: 20px;
-  padding: 20px;
-  background-color: #0003;
-}
+    button:disabled {
+        opacity: 0.25;
+        cursor: not-allowed;
+    }
+    .center{text-align: center;
+    color: brown}
 
-#voice {
-  font-size: 0.875rem;
-  font-family: inherit;
-}
-
-#speak {
-  padding: 10px;
-  border: 1px solid #fff;
-  color: #fff;
-  background-color: #0009;
-  font-size: inherit;
-  font-family: inherit;
-  cursor: pointer;
-  appearance: none;
-}
-.buttons {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-content: center;
-  gap: 10px;
-  margin-top: 30px;
-  padding-top: 30px;
-  border-top: 1px solid #fff3;
-}
-button {
-  padding: 5px;
-  border: 1px solid #fff;
-  border-radius: 999px;
-  color: #fff;
-  background-color: #0009;
-  font-size: inherit;
-  font-family: inherit;
-  cursor: pointer;
-  appearance: none;
-}
-
-button:disabled {
-  opacity: 0.25;
-  cursor: not-allowed;
-}
-mark {
-  color: #000;
-  background-color: #f4d03f;
-}
-textarea {
-  width: 100%;
-  height: 400px;
-  padding: 12px 10px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-image: linear-gradient(45deg, #4158d0, #c850c0, #ffcc70);
-  font-size: 16px;
-  resize: none;
-}
-</style>
+    
+</style>    
 </head>
 <body>
-<h1>Put text into below</h1>
-<textarea id="tienTextarea" spellcheck="false" >
-
-</textarea>
+<!--START code chon lang dich cua google-->  
+<div id="google_translate_element" class="center"><h1 class="center">Speak Text</h1></div>
+<span>
+    <script type="text/javascript">
+          //<![CDATA[
+          function googleTranslateElementInit() {
+              new google.translate.TranslateElement({
+              pageLanguage: '', includedLanguages: 'en,vi', autoDisplay: false,
+              layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+              }, 'google_translate_element');
+          }
+          //]]>
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
 <br>
-<button type="button" onclick="moveTextDownAppend()">Move text down for listening</button>
-<br>
+  
+<!--START textarea------------------------------------------------------------->  
 <div class="wrapper">
-        <div id="text"></div>
-        <div class="properties">
-          <label for="voice">Voice:</label>
-          <select id="voice"></select>
-          <div></div>
-      
-          <label for="pitch">Pitch:</label>
-          <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1">
-          <output for="pitch">1</output>
-      
-          <label for="rate">Rate:</label>
-          <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1">
-          <output for="rate">1</output>
-      
-          <label for="volume">Volume:</label>
-          <input id="volume" type="range" min="0" max="1" step="0.1" value="1">
-          <output for="volume">1</output>
-        </div>
-  <div class="buttons">
-    <button id="play">Speak</button>
-    <button id="pause" disabled>Pause</button>
-    <button id="stop" disabled>Stop</button>
-  </div>
+
+<label for="message">Put (paste, type) text into below:</label>
+
+<textarea id="message"  spellcheck="false" name="message" rows="5" cols="60"> </textarea>
+
+<!--Nhom nut dkhien 1----------------------------------------------------------->  
+
+<div class="buttons1">
+<button onclick="demxuong()">Move text down to speak:</button>
+<a>
+    <input type="radio" id="Sl_mot" onclick="chonSlso()" name="Slso" value=slso checked>   
+    <label for="Sl_mot">overwrite</label>
+    <input type="radio" id="Sl_hai" onclick="chonSlso()" name="Slso" value=slso>  
+    <label for="Sl_hai">append</label>
+</a>
+</div>
+<!--Nhom nut dkhien 2----------------------------------------------------------->  
+<div class="buttons1">
+<button id="English" onclick="speak_text_all(this.id)">Speak English voice</button>
+<button id="Vietnamese" onclick="speak_text_all(this.id)">Speak Vietnamese voice</button>
+</div>
+<!--Nhom nut dkhien 3----------------------------------------------------------->  
+<div class="buttons1">
+<button id="stop" onclick="stop()">Stop</button>
+<button  onclick="clearbelow()">Clear</button>
+</div>
+</div>
+<hr>
+
+<!-- div nay chua text de speak  ----------------------------------------------->
+<div id="textid"></div>
+<br>
+<hr>
+<!--Nhom nut dkhien 4 chi tiet them---------------------------------------------> 
+<div class="wrapper">
+
+    <div class="properties">
+      <label for="voice">Voice:</label>
+      <select id="voice"></select>
+      <div></div>
+    </div>  
+
+    <div class="properties">
+        <label for="pitch">Pitch:</label>
+        <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1">
+        <output for="pitch">1</output>
+        
+        <label for="rate">Rate:</label>
+        <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1">
+        <output for="rate">1</output>
+        
+        <label for="volume">Volume:</label>
+        <input id="volume" type="range" min="0" max="1" step="0.1" value="1">
+        <output for="volume">1</output>
+    </div>
+    
+    <div class="buttons4">
+        <button id="play">Speak</button>
+        <button id="pause" disabled>Pause</button>
+        <button id="stop" disabled>Stop</button>
+        <button id="download">Download</button>
+    </div>
 </div>
 
+<!--============ Phan chua javascript dieu khien  ==========================----->
 <script>
-function moveTextDownAppend(){
+    chonSlsoOA='1';
+    function chonSlso() {    
+        if(document.getElementById('Sl_mot').checked) {   
+            chonSlsoOA='1';
+        }
+        if(document.getElementById('Sl_hai').checked) {   
+            chonSlsoOA='2';
+        }
+//        alert(chonSlsoOA);
+    }       
+</script>   
+
+
+
+<script>
+function demxuong(){
+    if (chonSlsoOA=='1'){   //chep de
+        let text_in_textarea = document.getElementById('message').value;
+        document.getElementById('textid').innerHTML =  text_in_textarea;
+        document.getElementById('message').value = '';
+
+    }else{  //chep noi tiep vao 
     //chu y rang tag label co cong dung de API biet ma phan hoi khi bam nut xu li text trong do.
-    let text_in_textarea = document.getElementById('tienTextarea').value;
-    let text_in_text =  document.getElementById('text').innerHTML;
-    document.getElementById('text').innerHTML =  text_in_text + text_in_textarea;
-    //message.value += ' Appended text.';
-    document.getElementById('tienTextarea').value = '';
-}
-</script>
-
-<script>
-// grab the UI elements to work with
-//const textEl = document.getElementById('text');
-const voiceInEl = document.getElementById('voice');
-const pitchInEl = document.getElementById('pitch');
-const rateInEl = document.getElementById('rate');
-const volumeInEl = document.getElementById('volume');
-const pitchOutEl = document.querySelector('output[for="pitch"]');
-const rateOutEl = document.querySelector('output[for="rate"]');
-const volumeOutEl = document.querySelector('output[for="volume"]');
-//const speakEl = document.getElementById('speak');
-
-// add UI event handlers
-pitchInEl.addEventListener('change', updateOutputs);
-rateInEl.addEventListener('change', updateOutputs);
-volumeInEl.addEventListener('change', updateOutputs);
-//speakEl.addEventListener('click', speakText);
-
-// update voices immediately and whenever they are loaded
-updateVoices();
-window.speechSynthesis.onvoiceschanged = updateVoices;
-
-function updateOutputs() {
-  // display current values of all range inputs
-  pitchOutEl.textContent = pitchInEl.value;
-  rateOutEl.textContent = rateInEl.value;
-  volumeOutEl.textContent = volumeInEl.value;
-}
-
-function updateVoices() {
-  // add an option for each available voice that isn't already added
-  window.speechSynthesis.getVoices().forEach(voice => {
-    const isAlreadyAdded = [...voiceInEl.options].some(option => option.value === voice.voiceURI);
-    if (!isAlreadyAdded) {
-      const option = new Option(voice.name, voice.voiceURI, voice.default, voice.default);
-      voiceInEl.add(option);
+    let text_in_textarea = document.getElementById('message').value;
+    let text_in_text =  document.getElementById('textid').innerHTML;
+    if (text_in_text !== "") {
+        let daucham = ". ";
+    }else{
+        let daucham = "";
     }
-  });
+    document.getElementById('textid').innerHTML =  text_in_text + '. ' + text_in_textarea;
+    //message.value += ' Appended text.';
+    document.getElementById('message').value = '';
+    }
 }
-const textEl = document.getElementById('text'); //de dua text vao element nay cho viec doc dich (**)
-//const textEl = document.getElementById('tienTextarea');
-const playEl = document.getElementById('play');
-const pauseEl = document.getElementById('pause');
-const stopEl = document.getElementById('stop');
-
-// add UI event handlers
-playEl.addEventListener('click', play);
-pauseEl.addEventListener('click', pause);
-stopEl.addEventListener('click', stop);
-
-var text=""; //khoi dong text co gtri ''
-function moveTextDownAppend() {
-    //Buoc 1: lay text hien co trong element id 'text' luu vao bien idtextluu
-    let idtextluu = document.getElementById('text').innerHTML;
-    //Buoc 2: lay noi dung trong tienTextarea
-    let textlay = document.getElementById('tienTextarea').value;
-    //Buoc 3: gan tong 2 text cho getElementById('text').textContent, no xoa va de
-    text =  idtextluu + ' ' + textlay;
-    document.getElementById('text').innerHTML = text;
-    //Buoc 4: xoa text trong tienTextarea
-    document.getElementById('tienTextarea').value="";
-    //alert(text);
-}
-
-// set text
-textEl.innerHTML = text; //(**)
-
-function play() {
-  if (window.speechSynthesis.speaking) {
-    // there's an unfinished utterance
-    window.speechSynthesis.resume();
-  } else {
-    // start new utterance
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.addEventListener('start', handleStart);
-    utterance.addEventListener('pause', handlePause);
-    utterance.addEventListener('resume', handleResume);
-    utterance.addEventListener('end', handleEnd);
-    utterance.addEventListener('boundary', handleBoundary);
-utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
-utterance.pitch = pitchInEl.value;
-utterance.rate = rateInEl.value;
-utterance.volume = volumeInEl.value;
-
+function speak_text_all(idname){
+    let text_all = document.getElementById('textid').innerHTML ;
+    const utterance = new SpeechSynthesisUtterance(text_all);
+    let giongnoi='en-US'; 
+    if (idname.charAt(0) == 'English'){giongnoi='en-US';} else {giongnoi='vi-VN';}
+    utterance.lang = giongnoi;
     window.speechSynthesis.speak(utterance);
-  }
-}
-
-function pause() {
-  window.speechSynthesis.pause();
-}
-
+}    
 function stop() {
-  window.speechSynthesis.cancel();
-  
-  // Safari doesn't fire the 'end' event when cancelling, so call handler manually
-  handleEnd();
+    window.speechSynthesis.cancel();
 }
-
-function handleStart() {
-  playEl.disabled = true;
-  pauseEl.disabled = false;
-  stopEl.disabled = false;
+function clearbelow(){
+    document.getElementById('textid').innerHTML = "";
 }
-
-function handlePause() {
-  playEl.disabled = false;
-  pauseEl.disabled = true;
-  stopEl.disabled = false;
-}
-
-function handleResume() {
-  playEl.disabled = true;
-  pauseEl.disabled = false;
-  stopEl.disabled = false;
-}
-
-function handleEnd() {
-  playEl.disabled = false;
-  pauseEl.disabled = true;
-  stopEl.disabled = true;
-  
-  // reset text to remove mark
-  textEl.innerHTML = text;
-}
-
-function handleBoundary(event) {
-  if (event.name === 'sentence') {
-    // we only care about word boundaries
-    return;
-  }
-
-  const wordStart = event.charIndex;
-
-  let wordLength = event.charLength;
-  if (wordLength === undefined) {
-    // Safari doesn't provide charLength, so fall back to a regex to find the current word and its length (probably misses some edge cases, but good enough for this demo)
-    const match = text.substring(wordStart).match(/^[a-z\d']*/i);
-    wordLength = match[0].length;
-  }
-  
-  // wrap word in <mark> tag
-  const wordEnd = wordStart + wordLength;
-  const word = text.substring(wordStart, wordEnd);
-  const markedText = text.substring(0, wordStart) + '<mark>' + word + '</mark>' + text.substring(wordEnd);
-  textEl.innerHTML = markedText;
-}
-//////////////
 
 </script>
+
+</script>
+    
 </body>
 </html>
