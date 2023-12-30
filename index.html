@@ -23,7 +23,7 @@
     .wrapper {
         display: grid;
         gap: 20px;
-        width: 600px;
+        width: 400px;
         max-width: calc(100vw - 40px);
         padding: 30px;
         border-radius: 10px;
@@ -135,9 +135,11 @@
 <hr>
 
 <!-- div nay chua text de speak  ----------------------------------------------->
+<div class="wrapper">
 
-<div id="textid" translate="yes"></div>
+<div id="textid"></div>
 
+</div>
 <hr>
 <!--Nhom nut dkhien 4 chi tiet them---------------------------------------------> 
 <div class="wrapper">
@@ -190,7 +192,7 @@
 function demxuong(){
     if (chonSlsoOA=='1'){   //chep de
         let text_in_textarea = document.getElementById('message').value;
-        document.getElementById('textid').innerHTML =  text_in_textarea;
+        document.getElementById('textid').innerHTML =  '<p>' + text_in_textarea + '</p>';
         document.getElementById('message').value = '';
 
     }else{  //chep noi tiep vao 
@@ -202,7 +204,7 @@ function demxuong(){
     }else{
         let daucham = "";
     }
-    document.getElementById('textid').innerHTML =  text_in_text + ' ' + text_in_textarea;
+    document.getElementById('textid').innerHTML =  text_in_text + '<p>' + text_in_textarea + '</p>';
     //message.value += ' Appended text.';
     document.getElementById('message').value = '';
     }
