@@ -8,13 +8,15 @@
 <style>
     body {
         display: grid;
-        background-image: linear-gradient(0deg,gray,lightblue);
+        background-image: linear-gradient(-45deg, #f4d03f, #16a085);
+
         background-attachment: fixed;
         background-size: cover;
         justify-content: center;
         align-items: center;
         margin: 0;
-        padding: 10px;
+        padding: 20px;
+        color: #fff;
         font: 1rem/1 'Poppins', sans-serif;
 
     }
@@ -25,7 +27,7 @@
         max-width: calc(100vw - 40px);
         padding: 30px;
         border-radius: 10px;
-        background-color: #0001}
+        background-color: #0003}
     .properties {
         display: grid;
         grid-template-columns: max-content minmax(0, auto) 40px;
@@ -76,9 +78,11 @@
         cursor: not-allowed;
     }
     .center{text-align: center;
-    color: brown}
+        color: yellow}
+        #textid {
+        display: block;
+        line-height: 1.5;}
 
-    
 </style>    
 </head>
 <body>
@@ -109,7 +113,7 @@
 <!--Nhom nut dkhien 1----------------------------------------------------------->  
 
 <div class="buttons1">
-<button onclick="demxuong()">Move text down to speak:</button>
+<button onclick="demxuong()">Move text:</button>
 <a>
     <input type="radio" id="Sl_mot" onclick="chonSlso()" name="Slso" value=slso checked>   
     <label for="Sl_mot">overwrite</label>
@@ -119,8 +123,8 @@
 </div>
 <!--Nhom nut dkhien 2----------------------------------------------------------->  
 <div class="buttons1">
-<button id="English" onclick="speak_text_all(this.id)">Speak English voice</button>
-<button id="Vietnamese" onclick="speak_text_all(this.id)">Speak Vietnamese voice</button>
+<button id="English" onclick="speak_text_all(this.id)">Speak En</button>
+<button id="Vietnamese" onclick="speak_text_all(this.id)">Speak Vi</button>
 </div>
 <!--Nhom nut dkhien 3----------------------------------------------------------->  
 <div class="buttons1">
@@ -131,8 +135,11 @@
 <hr>
 
 <!-- div nay chua text de speak  ----------------------------------------------->
+<div class="wrapper">
+
 <div id="textid"></div>
-<br>
+
+</div>
 <hr>
 <!--Nhom nut dkhien 4 chi tiet them---------------------------------------------> 
 <div class="wrapper">
@@ -185,7 +192,7 @@
 function demxuong(){
     if (chonSlsoOA=='1'){   //chep de
         let text_in_textarea = document.getElementById('message').value;
-        document.getElementById('textid').innerHTML =  text_in_textarea;
+        document.getElementById('textid').innerHTML =  '<p>'+text_in_textarea+'</p>';
         document.getElementById('message').value = '';
 
     }else{  //chep noi tiep vao 
@@ -197,7 +204,7 @@ function demxuong(){
     }else{
         let daucham = "";
     }
-    document.getElementById('textid').innerHTML =  text_in_text + '. ' + text_in_textarea;
+    document.getElementById('textid').innerHTML =  text_in_text + '<p>'+text_in_textarea+'</p>';
     //message.value += ' Appended text.';
     document.getElementById('message').value = '';
     }
