@@ -213,7 +213,7 @@ function speak_text_all(idname){
     let text_all = document.getElementById('textid').innerHTML ;
     const utterance = new SpeechSynthesisUtterance(text_all);
     let giongnoi='en-US'; 
-    if (idname.charAt(0) == 'English'){giongnoi='en-US';} else {giongnoi='vi-VN';}
+    if (idname.charAt(0) == 'V'){giongnoi='vi-VN';} else {giongnoi='en-US';}
     utterance.lang = giongnoi;
     window.speechSynthesis.speak(utterance);
 }    
