@@ -106,30 +106,30 @@
 <!--START textarea------------------------------------------------------------->  
 <div class="wrapper">
 
-<label for="message">Put (paste, type) text into below:</label>
+<label for="message" translate="no">Put (paste, type) text into below:</label>
 
 <textarea id="message"  spellcheck="false" name="message" rows="5" cols="60"> </textarea>
 
 <!--Nhom nut dkhien 1----------------------------------------------------------->  
 
 <div class="buttons1">
-<button onclick="demxuong()">Move text:</button>
+<button onclick="demxuong()" translate="no">Move text:</button>
 <a>
     <input type="radio" id="Sl_mot" onclick="chonSlso()" name="Slso" value=slso checked>   
-    <label for="Sl_mot">overwrite</label>
+    <label for="Sl_mot" translate="no">overwrite</label>
     <input type="radio" id="Sl_hai" onclick="chonSlso()" name="Slso" value=slso>  
-    <label for="Sl_hai">append</label>
+    <label for="Sl_hai" translate="no">append</label>
 </a>
 </div>
 <!--Nhom nut dkhien 2----------------------------------------------------------->  
 <div class="buttons1">
-<button id="English" onclick="speak_text_all(this.id)">Speak En</button>
-<button id="Vietnamese" onclick="speak_text_all(this.id)">Speak Vi</button>
+<button id="English" onclick="speak_text_all(this.id)" translate="no">Speak En</button>
+<button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no">Speak Vi</button>
 </div>
 <!--Nhom nut dkhien 3----------------------------------------------------------->  
 <div class="buttons1">
-<button id="stop" onclick="stop()">Stop</button>
-<button  onclick="clearbelow()">Clear</button>
+<button id="stop" onclick="stop()" translate="no">Stop</button>
+<button  onclick="clearbelow()" translate="no">Clear</button>
 </div>
 </div>
 <hr>
@@ -145,30 +145,30 @@
 <div class="wrapper">
 
     <div class="properties">
-      <label for="voice">Voice:</label>
+      <label for="voice" translate="no">Voice:</label>
       <select id="voice"></select>
       <div></div>
     </div>  
 
     <div class="properties">
-        <label for="pitch">Pitch:</label>
+        <label for="pitch" translate="no">Pitch:</label>
         <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1">
         <output for="pitch">1</output>
         
-        <label for="rate">Rate:</label>
+        <label for="rate" translate="no">Rate:</label>
         <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1">
         <output for="rate">1</output>
         
-        <label for="volume">Volume:</label>
+        <label for="volume" translate="no">Volume:</label>
         <input id="volume" type="range" min="0" max="1" step="0.1" value="1">
         <output for="volume">1</output>
     </div>
     
     <div class="buttons4">
-        <button id="play">Speak</button>
+        <button id="play" translate="no">Speak</button>
         <button id="pause" disabled>Pause</button>
         <button id="stop" disabled>Stop</button>
-        <button id="download">Download</button>
+        <button id="download" translate="no">Download</button>
     </div>
 </div>
 
