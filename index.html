@@ -192,7 +192,7 @@
 function demxuong(){
     if (chonSlsoOA=='1'){   //chep de
         let text_in_textarea = document.getElementById('message').value;
-        document.getElementById('textid').innerHTML =  '<p>'+text_in_textarea+'</p>';
+        document.getElementById('textid').innerHTML =  text_in_textarea;
         document.getElementById('message').value = '';
 
     }else{  //chep noi tiep vao 
@@ -204,7 +204,7 @@ function demxuong(){
     }else{
         let daucham = "";
     }
-    document.getElementById('textid').innerHTML =  text_in_text + '<p>'+text_in_textarea+'</p>';
+    document.getElementById('textid').innerHTML =  text_in_text + ' ' + text_in_textarea;
     //message.value += ' Appended text.';
     document.getElementById('message').value = '';
     }
