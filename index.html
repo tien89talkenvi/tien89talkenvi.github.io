@@ -230,7 +230,8 @@ function demxuong(){
     }
 }
 function speak_text_all(idname){
-    if (idname.charAt(0) == 'V'){giongnoi='vi-VN';} else {giongnoi='en-US';}    //dung V de neu co dich ra thi no van la V
+    if (idname.charAt(0) == 'V'){giongnoi='vi-VN';} else {giongnoi='en-US';}//dung V de neu co dich ra thi no van la V
+    //cai lenh tren day khong lquan voice phia duoi
     var divElementCha = document.getElementById("wrapper-text");
     var paragraphs = divElementCha.getElementsByTagName("div"); //paragraphs la 1 list
     for (var i = 0; i < paragraphs.length; i++) {
@@ -247,6 +248,26 @@ function stop() {
 function clearbelow(){
     document.getElementById('textid').innerHTML = "";
 }
+//xu li voice --------------------------------------------------------------------------
+const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
+
+function updateVoices() {
+    // lay cac voice dat vao cac option
+    window.speechSynthesis.getVoices().forEach(voice => {
+    const isAlreadyAdded = [...voiceInEl.options].some(option => option.value === voice.voiceURI);
+    if (!isAlreadyAdded) {
+        const option = new Option(voice.name, voice.voiceURI, voice.default, voice.default);
+        voiceInEl.add(option);
+    }
+    });
+}
+//chay ham tren day updateVoices() de lay cac voice vao cac opption cua select
+updateVoices(); //goi chay ham nay voi bien voiceInEl va dinh nghia ham o phia tren
+
+//moi khi thay doi voice thi no cap nhat lai de co gtri moi 
+window.speechSynthesis.onvoiceschanged = updateVoices;
+//vi du de gan gtri voice hien hanh la voiceInEl.value cho dt utterance
+//utterance.voice=window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
 
 </script>
 
