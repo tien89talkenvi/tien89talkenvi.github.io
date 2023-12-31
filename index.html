@@ -26,11 +26,18 @@
     }
     .wrapper {
         display: grid;
-        gap: 20px;
+        gap: 10px;
         width: 600px;
         max-width: calc(100vw - 40px);
-        padding: 30px;
+        padding: 20px;
         border-radius: 10px;
+        background-color: #0003}
+    #wrapper-text {
+        display: grid;
+        gap: 10px;
+        width: 600px;
+        max-width: calc(100vw - 40px);
+        padding: 20px;
         background-color: #0003}
     .properties {
         display: grid;
@@ -147,9 +154,10 @@
 <hr>
 
 <!-- div nay chua text de speak  ----------------------------------------------->
-<div class="wrapper">
-
-<div id="textid"></div>
+<div id="wrapper-text">
+<div id="t1">I am a teacher. </div>
+<div id="t2">You are a doctor. I am a teacher. I am a teacher. I am a teacher. I am a teacher. I am a teacher. I am a teacher. </div>
+<div id="t3">She is a lawyer</div>
 
 </div>
 <hr>
@@ -222,12 +230,16 @@ function demxuong(){
     }
 }
 function speak_text_all(idname){
-    let text_all = document.getElementById('textid').innerHTML ;
-    const utterance = new SpeechSynthesisUtterance(text_all);
-    let giongnoi='en-US'; 
     if (idname.charAt(0) == 'V'){giongnoi='vi-VN';} else {giongnoi='en-US';}    //dung V de neu co dich ra thi no van la V
-    utterance.lang = giongnoi;
-    window.speechSynthesis.speak(utterance);
+    var divElementCha = document.getElementById("wrapper-text");
+    var paragraphs = divElementCha.getElementsByTagName("div"); //paragraphs la 1 list
+    for (var i = 0; i < paragraphs.length; i++) {
+        var paragraphText = paragraphs[i].textContent;
+        //console.log(paragraphs[i].id);
+        const utterance = new SpeechSynthesisUtterance(paragraphText);
+        utterance.lang = giongnoi;
+        window.speechSynthesis.speak(utterance);
+    }
 }    
 function stop() {
     window.speechSynthesis.cancel();
