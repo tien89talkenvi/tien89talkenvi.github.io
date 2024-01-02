@@ -97,16 +97,51 @@
         font-family: Arial;
         font-size: 14pt;
         }
-    #textid {
+    #t1 {
         font-family: Arial;
         font-size: 14pt;
+        gap: 20px;
+
         }
 
 </style>    
 </head>
 <body>
+<h1 class="center" translate="no">Speak Text</h1>  
+<!--START textarea------------------------------------------------------------->  
+<div class="wrapper">
+
+<label for="message" translate="no">Put (paste, type) text into below:</label>
+
+<textarea id="message"  spellcheck="false" name="message" rows="4" cols="60"> </textarea>
+
+<!--Nhom nut dkhien 2----------------------------------------------------------->  
+<div class="buttons1">
+<button id="English" onclick="speak_text_all(this.id)" translate="no">Speak En</button>
+<button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no">Speak Vi</button>
+</div>
+<!--Nhom nut dkhien 3----------------------------------------------------------->  
+<div class="buttons1">
+<button id="stop1" onclick="stop1()" translate="no">Stop</button>
+<button  onclick="clearbelow()" translate="no">Clear</button>
+</div>
+<!--Nhom nut dkhien 1----------------------------------------------------------->  
+
+<div class="buttons1">
+    <button onclick="demxuong()" translate="no">Move text:</button>
+    <a>
+        <input type="radio" id="Sl_mot" onclick="chonSlso()" name="Slso" value=slso >   
+        <label for="Sl_mot" translate="no">over</label>
+        <input type="radio" id="Sl_hai" onclick="chonSlso()" name="Slso" value=slso checked>  
+        <label for="Sl_hai" translate="no">append</label>
+    </a>
+</div>
+
+</div>
+<hr>
+
 <!--START code chon lang dich cua google-->  
-<div id="google_translate_element" class="center" translate="no"><h1 class="center" translate="no">Speak Text</h1></div>
+<div id="google_translate_element" class="center" translate="no"><a translate="no">Translate text below to </a></div>
 <span>
     <script type="text/javascript">
           //<![CDATA[
@@ -121,45 +156,15 @@
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </span>
 <br>
-  
-<!--START textarea------------------------------------------------------------->  
-<div class="wrapper">
-
-<label for="message" translate="no">Put (paste, type) text into below:</label>
-
-<textarea id="message"  spellcheck="false" name="message" rows="4" cols="60"> </textarea>
-
-<!--Nhom nut dkhien 1----------------------------------------------------------->  
-
-<div class="buttons1">
-<button onclick="demxuong()" translate="no">Move text:</button>
-<a>
-    <input type="radio" id="Sl_mot" onclick="chonSlso()" name="Slso" value=slso >   
-    <label for="Sl_mot" translate="no">over</label>
-    <input type="radio" id="Sl_hai" onclick="chonSlso()" name="Slso" value=slso checked>  
-    <label for="Sl_hai" translate="no">append</label>
-</a>
-</div>
-<!--Nhom nut dkhien 2----------------------------------------------------------->  
-<div class="buttons1">
-<button id="English" onclick="speak_text_all(this.id)" translate="no">Speak En</button>
-<button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no">Speak Vi</button>
-</div>
-<!--Nhom nut dkhien 3----------------------------------------------------------->  
-<div class="buttons1">
-<button id="stop" onclick="stop()" translate="no">Stop</button>
-<button  onclick="clearbelow()" translate="no">Clear</button>
-</div>
-</div>
-<hr>
 
 <!-- div nay chua text de speak  ----------------------------------------------->
+
 <div id="wrapper-text">
-<div id="t1">I am a teacher. </div>
-<div id="t2">You are a doctor. I am a teacher. I am a teacher. I am a teacher. I am a teacher. I am a teacher. I am a teacher. </div>
-<div id="t3">She is a lawyer</div>
+
+    <div id="t1" ></div>
 
 </div>
+
 <hr>
 <!--Nhom nut dkhien 4 chi tiet them---------------------------------------------> 
 <div class="wrapper">
@@ -185,15 +190,34 @@
     </div>
     
     <div class="buttons4">
-        <button id="play" translate="no">Speak</button>
+        <button id="play" translate="no">Play</button>
         <button id="pause" disabled translate="no">Pause</button>
         <button id="stop" disabled translate="no">Stop</button>
-        <button id="download" translate="no">Download</button>
+        <button id="download" translate="no">Help</button>
     </div>
 </div>
 
 <!--============ Phan chua javascript dieu khien  ==========================----->
+
+
+
 <script>
+function speak_text_all(idname){
+    if (idname.charAt(0) == 'V'){giongnoi='vi-VN';} else {giongnoi='en-US';}//dung V de neu co dich ra thi no van la V
+    //cai lenh tren day khong lien quan voice phia duoi
+    const textintextarea = document.getElementById("message").value;
+    const utterance = new SpeechSynthesisUtterance(textintextarea);
+    utterance.lang = giongnoi;
+    window.speechSynthesis.speak(utterance);
+}
+    
+function stop1() {
+    window.speechSynthesis.cancel();
+}
+function clearbelow(){
+    document.getElementById('message').value = "";
+}
+//----------------------------------
     chonSlsoOA='2';
     function chonSlso() {    
         if(document.getElementById('Sl_mot').checked) {   
@@ -204,49 +228,26 @@
         }
 //        alert(chonSlsoOA);
     }       
-</script>   
-
-
-
-<script>
+//--------------------------------------------
 function demxuong(){
     if (chonSlsoOA=='1'){   //chep de
         let text_in_textarea = document.getElementById('message').value;
-        document.getElementById('textid').innerHTML =  '<p>' + text_in_textarea + '</p>';
+        document.getElementById('t1').textContent =  text_in_textarea;
         document.getElementById('message').value = '';
 
     }else{  //chep noi tiep vao 
     //chu y rang tag label co cong dung de API biet ma phan hoi khi bam nut xu li text trong do.
     let text_in_textarea = document.getElementById('message').value;
-    let text_in_text =  document.getElementById('textid').innerHTML;
+    let text_in_text =  document.getElementById('t1').textContent;
     if (text_in_text !== "") {
         let daucham = ". ";
     }else{
         let daucham = "";
     }
-    document.getElementById('textid').innerHTML =  text_in_text + '<p>' + text_in_textarea + '</p>';
+    document.getElementById('t1').textContent =  text_in_text + ' ' + text_in_textarea;
     //message.value += ' Appended text.';
     document.getElementById('message').value = '';
     }
-}
-function speak_text_all(idname){
-    if (idname.charAt(0) == 'V'){giongnoi='vi-VN';} else {giongnoi='en-US';}//dung V de neu co dich ra thi no van la V
-    //cai lenh tren day khong lquan voice phia duoi
-    var divElementCha = document.getElementById("wrapper-text");
-    var paragraphs = divElementCha.getElementsByTagName("div"); //paragraphs la 1 list
-    for (var i = 0; i < paragraphs.length; i++) {
-        var paragraphText = paragraphs[i].textContent;
-        //console.log(paragraphs[i].id);
-        const utterance = new SpeechSynthesisUtterance(paragraphText);
-        utterance.lang = giongnoi;
-        window.speechSynthesis.speak(utterance);
-    }
-}    
-function stop() {
-    window.speechSynthesis.cancel();
-}
-function clearbelow(){
-    document.getElementById('textid').innerHTML = "";
 }
 //xu li voice --------------------------------------------------------------------------
 const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
@@ -268,8 +269,31 @@ updateVoices(); //goi chay ham nay voi bien voiceInEl va dinh nghia ham o phia t
 window.speechSynthesis.onvoiceschanged = updateVoices;
 //vi du de gan gtri voice hien hanh la voiceInEl.value cho dt utterance
 //utterance.voice=window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+//xu li pit/rate/vol ----------------------------------------------------------------------------------
+//khai bao cac bien toan cuc va gan gitri dau
+const pitchInEl = document.getElementById('pitch');
+const rateInEl = document.getElementById('rate');
+const volumeInEl = document.getElementById('volume');
 
-</script>
+const pitchOutEl = document.querySelector('output[for="pitch"]');
+const rateOutEl = document.querySelector('output[for="rate"]');
+const volumeOutEl = document.querySelector('output[for="volume"]');
+
+function updateOutputs() {//---------
+    // display current values of all range inputs, phoi bay gtri hien huu
+    pitchOutEl.textContent = pitchInEl.value;
+    rateOutEl.textContent = rateInEl.value;
+    volumeOutEl.textContent = volumeInEl.value;
+}
+
+// add UI event handlers, khi pit/rate/vol thay doi thi chay ham updateOutputs() o tren de lay gt moi
+pitchInEl.addEventListener('change', updateOutputs);
+rateInEl.addEventListener('change', updateOutputs);
+volumeInEl.addEventListener('change', updateOutputs);
+
+//Xu li 3 nut play/pause/stop2 phia duoi ======================================================
+
+
 
 </script>
     
