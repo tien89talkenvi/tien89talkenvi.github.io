@@ -183,7 +183,7 @@
         <button id="play" onclick="play()" translate="no"><span style="color:yellow">Play</span></button>
         <button id="pause" disabled translate="no">Pause</button>
         <button id="stop" disabled translate="no">Stop</button>
-        <button  translate="no"><span style="color:lightblue">Help</span></button>
+        <button onclick="xoaduoi()" translate="no"><span style="color:lightblue">Clear</span></button>
     </div>
 </div>
 
@@ -354,6 +354,10 @@ function play(){
         const markedText = text.substring(0, wordStart) + '<mark>' + word + '</mark>' + text.substring(wordEnd);
         textEl.innerHTML = markedText;
     }
+}
+//-------------------------------xoa text phan duoi------------------------
+function xoaduoi(){
+    document.getElementById('t1').innerHTML = "";
 }
 </script>
     
