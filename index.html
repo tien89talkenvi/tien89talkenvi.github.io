@@ -47,6 +47,7 @@
         background-color: #0003;
         font-size: 20px;
         border-radius: 10px;
+        color: lightgreen;
         }
         .buttons1 {
         display: grid;
@@ -57,7 +58,7 @@
         }
         .buttons2 {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(1, 1fr);
         justify-content: center;
         margin-top: 2px;
         padding-top: 2px;
@@ -96,12 +97,7 @@
     textarea {
         font-family: Arial;
         font-size: 14pt;
-        }
-    #t1 {
-        font-family: Arial;
-        font-size: 14pt;
-        gap: 20px;
-
+        background-color: rgb(226, 247, 236);
         }
 
 </style>    
@@ -116,9 +112,9 @@
 <textarea id="message"  spellcheck="false" name="message" rows="4" cols="60"> </textarea>
 
 <!--Nhom nut dkhien 2----------------------------------------------------------->  
-<div class="buttons1">
-<button id="English" onclick="speak_text_all(this.id)" translate="no">Speak En</button>
-<button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no">Speak Vi</button>
+<div class="buttons1"> 
+<button id="English" onclick="speak_text_all(this.id)" translate="no"><span style="color:lightblue">Speak En</span></button>
+<button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no"><span style="color:orange">Speak Vi</span></button>
 </div>
 <!--Nhom nut dkhien 3----------------------------------------------------------->  
 <div class="buttons1">
@@ -127,14 +123,8 @@
 </div>
 <!--Nhom nut dkhien 1----------------------------------------------------------->  
 
-<div class="buttons1">
-    <button onclick="demxuong()" translate="no">Move text:</button>
-    <a>
-        <input type="radio" id="Sl_mot" onclick="chonSlso()" name="Slso" value=slso >   
-        <label for="Sl_mot" translate="no">over</label>
-        <input type="radio" id="Sl_hai" onclick="chonSlso()" name="Slso" value=slso checked>  
-        <label for="Sl_hai" translate="no">append</label>
-    </a>
+<div class="buttons2">
+    <button  onclick="demtextxuong()" translate="no"><span style="color:lightgreen">Move text below to translate</span></button>
 </div>
 
 </div>
@@ -190,10 +180,10 @@
     </div>
     
     <div class="buttons4">
-        <button id="play" translate="no">Play</button>
+        <button id="play" onclick="play()" translate="no"><span style="color:yellow">Play</span></button>
         <button id="pause" disabled translate="no">Pause</button>
         <button id="stop" disabled translate="no">Stop</button>
-        <button id="download" translate="no">Help</button>
+        <button  translate="no"><span style="color:lightblue">Help</span></button>
     </div>
 </div>
 
@@ -218,36 +208,10 @@ function clearbelow(){
     document.getElementById('message').value = "";
 }
 //----------------------------------
-    chonSlsoOA='2';
-    function chonSlso() {    
-        if(document.getElementById('Sl_mot').checked) {   
-            chonSlsoOA='1';
-        }
-        if(document.getElementById('Sl_hai').checked) {   
-            chonSlsoOA='2';
-        }
-//        alert(chonSlsoOA);
-    }       
-//--------------------------------------------
-function demxuong(){
-    if (chonSlsoOA=='1'){   //chep de
-        let text_in_textarea = document.getElementById('message').value;
-        document.getElementById('t1').textContent =  text_in_textarea;
-        document.getElementById('message').value = '';
-
-    }else{  //chep noi tiep vao 
-    //chu y rang tag label co cong dung de API biet ma phan hoi khi bam nut xu li text trong do.
+function demtextxuong(){
     let text_in_textarea = document.getElementById('message').value;
-    let text_in_text =  document.getElementById('t1').textContent;
-    if (text_in_text !== "") {
-        let daucham = ". ";
-    }else{
-        let daucham = "";
-    }
-    document.getElementById('t1').textContent =  text_in_text + ' ' + text_in_textarea;
-    //message.value += ' Appended text.';
-    document.getElementById('message').value = '';
-    }
+    document.getElementById('t1').textContent =  text_in_textarea;
+    //document.getElementById('message').value = '';
 }
 //xu li voice --------------------------------------------------------------------------
 const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
@@ -294,7 +258,103 @@ volumeInEl.addEventListener('change', updateOutputs);
 //Xu li 3 nut play/pause/stop2 phia duoi ======================================================
 
 
+function play(){
+    const text = document.getElementById('t1').innerHTML; 
+    const textEl = document.getElementById('t1');
+    textEl.innerHTML=text;
+    //alert(text);
+    const playEl = document.getElementById('play');
+    const pauseEl = document.getElementById('pause');
+    const stopEl = document.getElementById('stop');
 
+    // add UI event handlers
+    playEl.addEventListener('click', play);
+    pauseEl.addEventListener('click', pause);
+    stopEl.addEventListener('click', stop);
+
+    function playtrong(){
+        if (window.speechSynthesis.speaking) {
+            // there's an unfinished utterance
+            window.speechSynthesis.resume();
+        } else {
+            // start new utterance
+            const utterance = new SpeechSynthesisUtterance(text);
+
+            utterance.addEventListener('start', handleStart);
+            utterance.addEventListener('pause', handlePause);
+            utterance.addEventListener('resume', handleResume);
+            utterance.addEventListener('end', handleEnd);
+            utterance.addEventListener('boundary', handleBoundary);
+
+            utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+            utterance.pitch = pitchInEl.value;
+            utterance.rate = rateInEl.value;
+            utterance.volume = volumeInEl.value;
+
+            window.speechSynthesis.speak(utterance);
+    
+        }
+    }
+    playtrong(text);
+
+    function pause() {
+        window.speechSynthesis.pause();
+    }
+
+    function stop() {
+        window.speechSynthesis.cancel();
+        // Safari doesn't fire the 'end' event when cancelling, so call handler manually
+        handleEnd();
+    }
+
+    function handleStart() {
+        playEl.disabled = true;
+        pauseEl.disabled = false;
+        stopEl.disabled = false;
+    }
+
+    function handlePause() {
+        playEl.disabled = false;
+        pauseEl.disabled = true;
+        stopEl.disabled = false;
+    }
+
+    function handleResume() {
+        playEl.disabled = true;
+        pauseEl.disabled = false;
+        stopEl.disabled = false;
+    }
+
+    function handleEnd() {
+        playEl.disabled = false;
+        pauseEl.disabled = true;
+        stopEl.disabled = true;
+        // reset text to remove mark
+        textEl.innerHTML = text;
+    }
+
+    function handleBoundary(event) {
+        if (event.name === 'sentence') {
+            // we only care about word boundaries
+            return;
+        }
+
+        const wordStart = event.charIndex;
+
+        let wordLength = event.charLength;
+        if (wordLength === undefined) {
+            // Safari doesn't provide charLength, so fall back to a regex to find the current word and its length (probably misses some edge cases, but good enough for this demo)
+            const match = text.substring(wordStart).match(/^[a-z\d']*/i);
+            wordLength = match[0].length;
+        }
+  
+        // wrap word in <mark> tag
+        const wordEnd = wordStart + wordLength;
+        const word = text.substring(wordStart, wordEnd);
+        const markedText = text.substring(0, wordStart) + '<mark>' + word + '</mark>' + text.substring(wordEnd);
+        textEl.innerHTML = markedText;
+    }
+}
 </script>
     
 </body>
