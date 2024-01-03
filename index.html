@@ -107,7 +107,7 @@
 <!--START textarea------------------------------------------------------------->  
 <div class="wrapper">
 
-<label for="message" translate="no">Put (paste, type) text into below:</label>
+<label for="message" translate="no" onclick="hdofTien89()">❓❓</label>
 
 <textarea id="message"  spellcheck="false" name="message" rows="4" cols="60"> </textarea>
 
@@ -373,6 +373,14 @@ function play(){
 //-------------------------------xoa text phan duoi------------------------
 function xoaduoi(){
     document.getElementById('t1').innerHTML = "";
+}
+function hdofTien89(){
+    var  vbhd="App này dùng để nghe văn bản Anh/Việt được đọc bởi trình duyệt và thiết bị. Sử dụng như sau:\n ";
+    vbhd=vbhd+'- Bước 1: Nhập văn bản từ bàn phím hoặc copy từ thiết bị rồi paste vào trong khung hình chữ nhật.\n ';
+    vbhd=vbhd+'- Bước 2: Nhấp nút "Speak En" hoặc "Speak Vi" để nghe văn bản vừa nhập bằng giọng đọc tiếng Anh hoặc Việt tùy văn bản trên.\n ';
+    vbhd=vbhd+'- Bước 3: Nếu muốn dịch ra ngữ khác thì nhấp nút "Move text below to translate" ';
+    vbhd=vbhd+'để đưa văn bản nhập ở phần trên xuống bên dưới rồi thao tác tiếp bằng các nút ở phần dưới. ';
+    alert(vbhd);
 }
 </script>
     
