@@ -283,6 +283,15 @@ function play(){
             // there's an unfinished utterance
             window.speechSynthesis.resume();
         } else {
+            //sua lai neu co
+            var vt1 = text.search(">");
+            var vt2 = text.search("</");
+            if (vt1>0 && vt2>0){
+                text = text.substring(vt1+1, vt2);
+                textElement.innerHTML = text;
+                text = textElement.innerHTML;
+            }    
+
             // start new utterance
             const utterance = new SpeechSynthesisUtterance(text);
 
