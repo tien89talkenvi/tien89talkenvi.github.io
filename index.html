@@ -260,7 +260,7 @@ volumeInEl.addEventListener('change', updateOutputs);
 
 function play(){
     var text = document.getElementById('t1').innerHTML; 
-    text=text.replaceAll('style="vertical-align:inherit;">','');
+    text=text.replaceAll('<style="vertical-align:inherit;">','');
     const textEl = document.getElementById('t1');
     textEl.innerHTML=text;
     //alert(text);
