@@ -261,9 +261,13 @@ volumeInEl.addEventListener('change', updateOutputs);
 function play(){
     var textElement = document.getElementById('t1');
     var text = textElement.innerHTML;
-    text = text.replaceAll('style="vertical-align:inherit;"', '');
-    textElement.innerHTML = text;
-
+    var vt1 = text.search(">");
+    var vt2 = text.search("</");
+    if (vt1>0 && vt2>0){
+        text = text.substring(vt1+1, vt2);
+        textElement.innerHTML = text;
+        text = textElement.innerHTML;
+    }    
     //alert(text);
     const playEl = document.getElementById('play');
     const pauseEl = document.getElementById('pause');
