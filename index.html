@@ -49,6 +49,16 @@
         border-radius: 10px;
         color: lightgreen;
         }
+    .properties2 {
+        display: grid;
+        grid-template-columns: max-content minmax(0, auto) 40px;
+        gap: 20px;
+        padding: 20px;
+        background-color: #0005;
+        font-size: 18px;
+        border-radius: 10px;
+        color: lightblue;
+        }
         .buttons1 {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -107,7 +117,7 @@
 <!--START textarea------------------------------------------------------------->  
 <div class="wrapper">
 
-<label for="message" translate="no" onclick="hdofTien89()">🙋‍♂️</label>
+<label for="message" translate="no" onclick="hdofTien89()">❓🙋‍♂️</label>
 
 <textarea id="message"  spellcheck="false" name="message" rows="4" cols="60"> </textarea>
 
@@ -161,7 +171,7 @@
 
     <div class="properties">
       <label for="voice" translate="no">Voice:</label>
-      <select id="voice"></select>
+      <select id="voice" translate="no"></select>
       <div></div>
     </div>  
 
@@ -186,6 +196,12 @@
         <button onclick="xoaduoi()" translate="no"><span style="color:lightblue">Clear</span></button>
     </div>
 </div>
+<br>
+<div class="properties2">
+    <label for="vanban" translate="no">For examples Text input:</label>
+    <select id="vanban" translate="no"></select>
+    <div></div>
+</div>  
 
 <!--============ Phan chua javascript dieu khien  ==========================----->
 
@@ -215,7 +231,6 @@ function demtextxuong(){
 }
 //xu li voice --------------------------------------------------------------------------
 const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
-
 function updateVoices() {
     // lay cac voice dat vao cac option
     window.speechSynthesis.getVoices().forEach(voice => {
@@ -383,6 +398,36 @@ function hdofTien89(){
     vbhd=vbhd+'để đưa văn bản nhập ở phần trên xuống bên dưới rồi thao tác tiếp bằng các nút ở phần dưới. ';
     alert(vbhd);
 }
+//-----------------------dang lam
+const vbanInEl = document.getElementById('vanban'); //bien global,vanban la id cua <select>
+const lVanbans=['--Select--','Bài thơ của Thánh Dũng Lạc', 'Story 1','Quán Ông Cầm'];
+lVanbans.forEach((element, key) => {
+    vbanInEl[key] = new Option(element, key);
+
+});
+
+vbanInEl.addEventListener('change', getVanban);
+
+function getVanban(){
+    var keyOfVbchon = document.getElementById("vanban").value;
+    var elTextarea = document.getElementById("mesage");
+    if (keyOfVbchon == 1) {
+        var elTextarea=document.getElementById('message');
+        textduavao = 'Tiến rầy đã rõ Dũng Thanh Xuân \n';
+        textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử \n';
+        textduavao=textduavao+'Bút chép thơ này gửi thở than \n';
+        textduavao=textduavao+'Dạ thương Dũng chạy đi xa rồi \n';
+        textduavao=textduavao+'Đông qua tiết lại thời xuân tới \n';
+        textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an \n';
+        textduavao=textduavao+'Làm người bạn hiền không quản khó \n';
+        textduavao=textduavao+'Nguyện xin em hưởng chốn thanh an! \n';
+        textdua=textduavao;
+        elTextarea.value = textdua;
+    }
+}
+//--------------
+
+
 </script>
     
 </body>
