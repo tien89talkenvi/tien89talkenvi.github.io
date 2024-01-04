@@ -406,7 +406,7 @@ function hdofTien89(){
 }
 //-----------------------dang lam
 const vbanInEl = document.getElementById('vanban'); //bien global,vanban la id cua <select>
-const lVanbans=['--Select--','Bài thơ của Thánh Dũng Lạc', 'Nhớ Phước','Quán Ông Cầm'];
+const lVanbans=['--Select--','Bài thơ của Thánh Dũng Lạc', 'Thăm Dũng','Nhớ Phước'];
 lVanbans.forEach((element, key) => {
     vbanInEl[key] = new Option(element, key);
 
@@ -419,6 +419,19 @@ function getVanban(){
     var elTextarea = document.getElementById("mesage");
     if (keyOfVbchon == 1) {
         var elTextarea=document.getElementById('message');
+        textduavao = 'Lạc rầy đã rõ chốn quân quan. \n';
+        textduavao=textduavao+'Bút chép thơ này gửi thở than.  \n';
+        textduavao=textduavao+'Lòng nhớ bạn non còn vất vả. \n';
+        textduavao=textduavao+'Dạ thương khách chạy chưa yên hàn. \n';
+        textduavao=textduavao+'Đông qua tiết lại thời xuân tới.  \n';
+        textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an.  \n';
+        textduavao=textduavao+'Làm kẻ anh hùng chi quản khó. \n';
+        textduavao=textduavao+'Nguyện xin cùng gặp chốn thanh nhàn. \n';
+        textdua=textduavao;
+        elTextarea.value = textdua;
+    }
+    if (keyOfVbchon == 2) {
+        var elTextarea=document.getElementById('message');
         textduavao = 'Tiến rầy đã rõ Dũng Thanh Xuân.  \n';
         textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n';
         textduavao=textduavao+'Bút chép thơ này gửi thở than.  \n';
@@ -426,11 +439,11 @@ function getVanban(){
         textduavao=textduavao+'Đông qua tiết lại thời xuân tới.  \n';
         textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an.  \n';
         textduavao=textduavao+'Làm người bạn hiền không quản khó.  \n';
-        textduavao=textduavao+'Nguyện xin em hưởng chốn thanh an!.  \n';
+        textduavao=textduavao+'Nguyện xin em hưởng chốn thanh nhàn.  \n';
         textdua=textduavao;
         elTextarea.value = textdua;
     }
-    if (keyOfVbchon == 2) {
+    if (keyOfVbchon == 3) {
         var elTextarea=document.getElementById('message');
         textduavao = 'Chúng rầy lại giỗ Phước Mận Môn.  \n';
         textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n';
@@ -439,14 +452,12 @@ function getVanban(){
         textduavao=textduavao+'Đông qua tiết lại thời xuân tới.  \n';
         textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an.  \n';
         textduavao=textduavao+'Làm người bạn hiền không quản khó.  \n';
-        textduavao=textduavao+'Nguyện xin Phước hưởng chốn thanh an!.  \n';
+        textduavao=textduavao+'Nguyện xin Phước hưởng chốn thanh nhàn.  \n';
         textdua=textduavao;
         elTextarea.value = textdua;
     }
 }
 //--------------
-
-
 </script>
     
 </body>
