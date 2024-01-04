@@ -39,6 +39,12 @@
         max-width: calc(100vw - 40px);
         padding: 20px;
         background-color: #0003}
+    .f-grid {
+        display: flex;
+        justify-content: space-between;
+        margin-left: 0.0rem;
+        flex-flow: row wrap;}
+
     .properties {
         display: grid;
         grid-template-columns: max-content minmax(0, auto) 40px;
@@ -109,13 +115,6 @@
         font-size: 14pt;
         background-color: rgb(226, 247, 236);
         }
-    .f-grid {
-        display: flex;
-        justify-content: space-between;
-        margin-left: 0.0rem;
-        flex-flow: row wrap;
-        font-size: 20px; }
-
 </style>    
 </head>
 <body>
@@ -406,7 +405,7 @@ function hdofTien89(){
 }
 //-----------------------dang lam
 const vbanInEl = document.getElementById('vanban'); //bien global,vanban la id cua <select>
-const lVanbans=['--Select--','Bài thơ của Thánh Dũng Lạc', 'Story 1','Quán Ông Cầm'];
+const lVanbans=['--Select--','Bài thơ của Thánh Dũng Lạc', 'Nhớ Phước','Quán Ông Cầm'];
 lVanbans.forEach((element, key) => {
     vbanInEl[key] = new Option(element, key);
 
@@ -419,14 +418,27 @@ function getVanban(){
     var elTextarea = document.getElementById("mesage");
     if (keyOfVbchon == 1) {
         var elTextarea=document.getElementById('message');
-        textduavao = 'Tiến rầy đã rõ Dũng Thanh Xuân.  \n\n';
-        textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n\n';
-        textduavao=textduavao+'Bút chép thơ này gửi thở than.  \n\n';
-        textduavao=textduavao+'Dạ thương Dũng chạy đi xa rồi.  \n\n';
-        textduavao=textduavao+'Đông qua tiết lại thời xuân tới.  \n\n';
-        textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an.  \n\n';
-        textduavao=textduavao+'Làm người bạn hiền không quản khó.  \n\n';
-        textduavao=textduavao+'Nguyện xin em hưởng chốn thanh an!.  \n\n';
+        textduavao = 'Tiến rầy đã rõ Dũng Thanh Xuân.  \n';
+        textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n';
+        textduavao=textduavao+'Bút chép thơ này gửi thở than.  \n';
+        textduavao=textduavao+'Dạ thương Dũng chạy đi xa rồi.  \n';
+        textduavao=textduavao+'Đông qua tiết lại thời xuân tới.  \n';
+        textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an.  \n';
+        textduavao=textduavao+'Làm người bạn hiền không quản khó.  \n';
+        textduavao=textduavao+'Nguyện xin em hưởng chốn thanh an!.  \n';
+        textdua=textduavao;
+        elTextarea.value = textdua;
+    }
+    if (keyOfVbchon == 2) {
+        var elTextarea=document.getElementById('message');
+        textduavao = 'Chúng rầy lại giỗ Phước Mận Môn.  \n';
+        textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n';
+        textduavao=textduavao+'Bút chép thơ này tí thở than.  \n';
+        textduavao=textduavao+'Dạ thương Phước đã đi xa rồi.  \n';
+        textduavao=textduavao+'Đông qua tiết lại thời xuân tới.  \n';
+        textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an.  \n';
+        textduavao=textduavao+'Làm người bạn hiền không quản khó.  \n';
+        textduavao=textduavao+'Nguyện xin Phước hưởng chốn thanh an!.  \n';
         textdua=textduavao;
         elTextarea.value = textdua;
     }
