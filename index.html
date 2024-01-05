@@ -312,6 +312,7 @@ function play() {
     window.speechSynthesis.resume();
   } else {
     // start new utterance
+    if (text==''){return;}
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.addEventListener('start', handleStart);
     utterance.addEventListener('pause', handlePause);
