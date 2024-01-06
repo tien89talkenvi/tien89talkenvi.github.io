@@ -240,6 +240,14 @@ function demtextxuong(){
     text_in_textarea = text_in_textareaEl.value;
     textEl.innerHTML =  text_in_textarea;
     text = textEl.innerHTML;
+    var vt1 = text.search(">");
+    var vt2 = text.search("</");
+    if (vt1>0 && vt2>0){
+        text = text.substring(vt1+1, vt2);
+    //    textEl.innerHTML = text;
+    //    text = textEl.innerHTML;
+    }    
+    
 }
 //xu li voice --------------------------------------------------------------------------
 const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
@@ -306,7 +314,7 @@ pauseEl.addEventListener('click', pause);
 stopEl.addEventListener('click', stop);
 
 // set text
-textEl.innerHTML = text;
+//textEl.innerHTML = text;
 
 
 function play() {
