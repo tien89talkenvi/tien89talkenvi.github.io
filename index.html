@@ -244,8 +244,8 @@ function demtextxuong(){
     var vt2 = text.search("</");
     if (vt1>0 && vt2>0){
         text = text.substring(vt1+1, vt2);
-    //    textEl.innerHTML = text;
-    //    text = textEl.innerHTML;
+        textEl.innerHTML = text;
+        text = textEl.innerHTML;
     }    
     
 }
@@ -324,8 +324,8 @@ function play() {
     var vt2 = text.search("</");
     if (vt1>0 && vt2>0){
         text = text.substring(vt1+1, vt2);
-        //textEl.innerHTML = text;
-        //text = textEl.innerHTML;
+        textEl.innerHTML = text;
+        text = textEl.innerHTML;
     }    
   
     if (window.speechSynthesis.speaking) {
