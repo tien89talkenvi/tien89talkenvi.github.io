@@ -123,7 +123,7 @@
 <!--START textarea------------------------------------------------------------->  
 <div class="wrapper">
 
-<label for="message" translate="no" onclick="hdofTien89()">???</label>
+<label for="message" translate="no" onclick="hdofTien89()">🙋‍♂️</label>
 
 <textarea id="message"  spellcheck="false" name="message" rows="4" cols="60"> </textarea>
 
@@ -314,20 +314,11 @@ pauseEl.addEventListener('click', pause);
 stopEl.addEventListener('click', stop);
 
 // set text
-//textEl.innerHTML = text;
+textEl.innerHTML = text;
 
 
 function play() {
-    text = textEl.innerHTML;
-    //xuli lai text neu co ma xau do dich-----
-    var vt1 = text.search(">");
-    var vt2 = text.search("</");
-    if (vt1>0 && vt2>0){
-        text = text.substring(vt1+1, vt2);
-        textEl.innerHTML = text;
-        text = textEl.innerHTML;
-    }    
-  
+    text=textEl.innerHTML;
     if (window.speechSynthesis.speaking) {
     // there's an unfinished utterance
     window.speechSynthesis.resume();
@@ -455,8 +446,8 @@ function getVanban(){
         var elTextarea=document.getElementById('message');
         textduavao = 'Tiến rầy đã rõ Dũng Thanh Xuân.  \n';
         textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n';
-        textduavao=textduavao+'Bút chép thơ này gửi thở than.  \n';
-        textduavao=textduavao+'Dạ thương Dũng chạy đi xa rồi.  \n';
+        textduavao=textduavao+'Bút chép thơ này tí thở than.  \n';
+        textduavao=textduavao+'Dạ thương Dũng đã đi xa rồi.  \n';
         textduavao=textduavao+'Đông qua tiết lại thời xuân tới.  \n';
         textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an.  \n';
         textduavao=textduavao+'Làm người bạn hiền không quản khó.  \n';
@@ -473,7 +464,7 @@ function getVanban(){
         textduavao=textduavao+'Đông qua tiết lại thời xuân tới.  \n';
         textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an.  \n';
         textduavao=textduavao+'Làm người bạn hiền không quản khó.  \n';
-        textduavao=textduavao+'Nguyện xin Phước hưởng chốn thanh nhàn.  \n';
+        textduavao=textduavao+'Nguyện xin người hưởng chốn thanh nhàn.  \n';
         textdua=textduavao;
         elTextarea.value = textdua;
     }
