@@ -311,6 +311,14 @@ textEl.innerHTML = text;
 
 function play() {
     text = textEl.innerHTML;
+    //xuli lai text neu co ma xau do dich-----
+    var vt1 = text.search(">");
+    var vt2 = text.search("</");
+    if (vt1>0 && vt2>0){
+        text = text.substring(vt1+1, vt2);
+        textEl.innerHTML = text;
+        text = textEl.innerHTML;
+    }    
   
     if (window.speechSynthesis.speaking) {
     // there's an unfinished utterance
