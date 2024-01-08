@@ -40,6 +40,11 @@
         max-width: calc(100vw - 40px);
         padding: 20px;
         background-color: #0003}
+    #sophie {
+        
+        display: grid;
+        justify-content: center;
+        }
     .f-grid {
         display: flex;
         justify-content: space-between;
@@ -147,17 +152,13 @@
 <hr>
 
 <!--START code chon lang dich cua google-->  
+
 <div id="google_translate_element" class="center" translate="no"><a translate="no">Translate text below to </a></div>
 <span>
     <script type="text/javascript">
-          //<![CDATA[
-          function googleTranslateElementInit() {
-              new google.translate.TranslateElement({
-              pageLanguage: '', includedLanguages: 'en,vi', autoDisplay: false,
-              layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-              }, 'google_translate_element');
-          }
-          //]]>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </span>
@@ -167,7 +168,8 @@
 
 <div class="f-grid" id="wrapper-text">
 
-    <div id="t1" ></div>
+    <div id="t1" onclick="layxvadoc()"></div>
+    <div id="t2" translate="no"></div>
 
 </div>
 
@@ -183,15 +185,15 @@
 
     <div class="properties">
         <label for="pitch" translate="no">Pitch:</label>
-        <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
+        <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1">
         <output for="pitch">1</output>
         
         <label for="rate" translate="no">Rate:</label>
-        <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
+        <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1">
         <output for="rate">1</output>
         
         <label for="volume" translate="no">Volume:</label>
-        <input id="volume" type="range" min="0" max="1" step="0.1" value="1" translate="no">
+        <input id="volume" type="range" min="0" max="1" step="0.1" value="1">
         <output for="volume">1</output>
     </div>
     
@@ -209,17 +211,13 @@
     <div></div>
 </div>  
 
+
 <!--============ Phan chua javascript dieu khien  ==========================----->
 
 
 
 <script>
-//khai bao bien global
-const textEl = document.getElementById('t1');
 var text = '';
-const text_in_textareaEl = document.getElementById('message');
-
-//---
 function speak_text_all(idname){
     if (idname.charAt(0) == 'V'){giongnoi='vi-VN';} else {giongnoi='en-US';}//dung V de neu co dich ra thi no van la V
     //cai lenh tren day khong lien quan voice phia duoi
@@ -237,17 +235,19 @@ function clearbelow(){
 }
 //----------------------------------
 function demtextxuong(){
-    text_in_textarea = text_in_textareaEl.value;
-    textEl.innerHTML =  text_in_textarea;
-    text = textEl.innerHTML;
-    var vt1 = text.search(">");
-    var vt2 = text.search("</");
-    if (vt1>0 && vt2>0){
-        text = text.substring(vt1+1, vt2);
-        textEl.innerHTML = text;
-        text = textEl.innerHTML;
-    }    
-    
+    document.getElementById('t2').textContent='';
+    let text_in_textarea = document.getElementById('message').value;
+    text = text_in_textarea
+    document.getElementById('t1').textContent =  text_in_textarea;
+}
+function layxvadoc(){
+    document.getElementById('t2').textContent='';
+    let text_in_t1 = document.getElementById('t1').textContent;
+    document.getElementById('t2').textContent =  text_in_t1;
+    document.getElementById('t1').textContent ='';
+    text=document.getElementById('t2').textContent;
+    play();
+
 }
 //xu li voice --------------------------------------------------------------------------
 const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
@@ -291,19 +291,12 @@ rateInEl.addEventListener('change', updateOutputs);
 volumeInEl.addEventListener('change', updateOutputs);
 
 //Xu li 3 nut play/pause/stop2 phia duoi ======================================================
-//text = textEl.innerHTML;
-//xuli lai text neu co ma xau do dich-----
-//var vt1 = text.search(">");
-//var vt2 = text.search("</");
-//if (vt1>0 && vt2>0){
-//    text = text.substring(vt1+1, vt2);
-//    textEl.innerHTML = text;
-//    text = textEl.innerHTML;
-//}    
+
+
 //----------------------------------------
 
 // grab the UI elements to work with
-//co o tren roiconst textEl = document.getElementById('t1');
+const textEl = document.getElementById('t2');
 const playEl = document.getElementById('play');
 const pauseEl = document.getElementById('pause');
 const stopEl = document.getElementById('stop');
@@ -316,10 +309,17 @@ stopEl.addEventListener('click', stop);
 // set text
 textEl.innerHTML = text;
 
+//xuli lai text neu co ma xau do dich-----
+var vt1 = text.search(">");
+var vt2 = text.search("</");
+if (vt1>0 && vt2>0){
+    text = text.substring(vt1+1, vt2);
+    textElement.innerHTML = text;
+    text = textElement.innerHTML;
+}    
 
 function play() {
-    text=textEl.innerHTML;
-    if (window.speechSynthesis.speaking) {
+  if (window.speechSynthesis.speaking) {
     // there's an unfinished utterance
     window.speechSynthesis.resume();
   } else {
@@ -400,7 +400,6 @@ function handleBoundary(event) {
   textEl.innerHTML = markedText;
 }
 
-//cu---------------------------------------------------------------------------------------------
 //-------------------------------xoa text phan duoi------------------------
 function xoaduoi(){
     document.getElementById('message').value = ""; //xoa text phia tre ra trong
@@ -418,7 +417,7 @@ function hdofTien89(){
 }
 //-----------------------dang lam
 const vbanInEl = document.getElementById('vanban'); //bien global,vanban la id cua <select>
-const lVanbans=['--Select--','Bài thơ của Thánh Dũng Lạc', 'Thăm Dũng','Nhớ Phước'];
+const lVanbans=['--Select--','Nhớ mẹ', 'Bài thơ của Thánh Dũng Lạc', 'Thăm Dũng','Nhớ Phước'];
 lVanbans.forEach((element, key) => {
     vbanInEl[key] = new Option(element, key);
 
@@ -431,6 +430,19 @@ function getVanban(){
     var elTextarea = document.getElementById("mesage");
     if (keyOfVbchon == 1) {
         var elTextarea=document.getElementById('message');
+        textduavao = 'Tìm dáng năm xưa bóng mẹ hiền. \n';
+        textduavao=textduavao+'Vòng tay êm ái buổi truân chuyên.  \n';
+        textduavao=textduavao+'Âm thầm gạt lệ buồn muôn thuở. \n';
+        textduavao=textduavao+'Khắc khoải dòng châu khóc vạn niên. \n';
+        textduavao=textduavao+'Lặng lẽ gần con trong giấc điệp.  \n';
+        textduavao=textduavao+'Bồi hồi cạnh trẻ giữa cung tiên.  \n';
+        textduavao=textduavao+'Trần gian con chẳng tìm đâu thấy. \n';
+        textduavao=textduavao+'Thương nhớ bên mồ mẹ ngủ yên. \n';
+        textdua=textduavao;
+        elTextarea.value = textdua;
+    }
+    if (keyOfVbchon == 2) {
+        var elTextarea=document.getElementById('message');
         textduavao = 'Lạc rầy đã rõ chốn quân quan. \n';
         textduavao=textduavao+'Bút chép thơ này gửi thở than.  \n';
         textduavao=textduavao+'Lòng nhớ bạn non còn vất vả. \n';
@@ -442,7 +454,7 @@ function getVanban(){
         textdua=textduavao;
         elTextarea.value = textdua;
     }
-    if (keyOfVbchon == 2) {
+    if (keyOfVbchon == 3) {
         var elTextarea=document.getElementById('message');
         textduavao = 'Tiến rầy đã rõ Dũng Thanh Xuân.  \n';
         textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n';
@@ -455,7 +467,7 @@ function getVanban(){
         textdua=textduavao;
         elTextarea.value = textdua;
     }
-    if (keyOfVbchon == 3) {
+    if (keyOfVbchon == 4) {
         var elTextarea=document.getElementById('message');
         textduavao = 'Chúng rầy lại giỗ Phước Mận Môn.  \n';
         textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n';
@@ -475,6 +487,6 @@ function getVanban(){
 
 
 </script>
-    
+
 </body>
 </html>
