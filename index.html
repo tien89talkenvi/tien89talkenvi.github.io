@@ -30,9 +30,10 @@
         width: 600px;
         max-width: calc(100vw - 40px);
         padding: 20px;
-        font-size: 20px
+        font-size: 20px;
         border-radius: 10px;
-        background-color: #0003}
+        background-color: #0003;
+    }
     #wrapper-text {
         display: grid;
         gap: 10px;
@@ -44,6 +45,13 @@
         
         display: grid;
         justify-content: center;
+        gap: 10px;
+        width: 600px;
+        max-width: calc(100vw - 40px);
+        padding: 20px;
+        background-color: #0006;
+        border-radius: 10px;
+
         }
     .f-grid {
         display: flex;
@@ -429,7 +437,7 @@ vbanInEl.addEventListener('change', getVanban);
 function getVanban(){
     var keyOfVbchon = document.getElementById("vanban").value;
     var elTextarea = document.getElementById("mesage");
-    if (keyOfVbchon == 1) {
+    if (keyOfVbchon == 5) {
         var elTextarea=document.getElementById('message');
         textduavao = 'Tìm dáng năm xưa bóng mẹ hiền. \n';
         textduavao=textduavao+'Vòng tay êm ái buổi truân chuyên.  \n';
@@ -442,7 +450,7 @@ function getVanban(){
         textdua=textduavao;
         elTextarea.value = textdua;
     }
-    if (keyOfVbchon == 2) {
+    if (keyOfVbchon == 6) {
         var elTextarea=document.getElementById('message');
         textduavao = 'Lạc rầy đã rõ chốn quân quan. \n';
         textduavao=textduavao+'Bút chép thơ này gửi thở than.  \n';
@@ -455,7 +463,7 @@ function getVanban(){
         textdua=textduavao;
         elTextarea.value = textdua;
     }
-    if (keyOfVbchon == 3) {
+    if (keyOfVbchon == 7) {
         var elTextarea=document.getElementById('message');
         textduavao = 'Tiến rầy đã rõ Dũng Thanh Xuân.  \n';
         textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n';
@@ -468,7 +476,7 @@ function getVanban(){
         textdua=textduavao;
         elTextarea.value = textdua;
     }
-    if (keyOfVbchon == 4) {
+    if (keyOfVbchon == 8) {
         var elTextarea=document.getElementById('message');
         textduavao = 'Chúng rầy lại giỗ Phước Mận Môn.  \n';
         textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n';
@@ -488,6 +496,11 @@ function getVanban(){
 
 
 </script>
-
+<br>
+<div id="sophie">
+<video controls loop="true" muted="true">
+    <source src="sophie-boi-8124.mp4" type="video/mp4">
+</video>    
+</div>
 </body>
 </html>
