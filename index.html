@@ -153,7 +153,7 @@
 
 <!--START code chon lang dich cua google-->  
 
-<div id="google_translate_element" class="center" translate="no"><a translate="no">Translate text then click on text to listen </a></div>
+<div id="google_translate_element" class="center" translate="no"><a translate="no">Translate text then click to listen </a></div>
 <span>
     <script type="text/javascript">
     function googleTranslateElementInit() {
@@ -403,7 +403,7 @@ function handleBoundary(event) {
 //-------------------------------xoa text phan duoi------------------------
 function xoaduoi(){
     document.getElementById('message').value = ""; //xoa text phia tre ra trong
-    document.getElementById('t2').textContent = ""; //xoa text phia tre ra trong
+    document.getElementById('t2').innerHTML = ""; //xoa text phia tre ra trong
     text_in_textarea = document.getElementById('message').value;
     text = text_in_textarea
     document.getElementById('t1').textContent =  text_in_textarea;
