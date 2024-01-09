@@ -42,16 +42,8 @@
         padding: 20px;
         background-color: #0003}
     #sophie {
-        
         display: grid;
         justify-content: center;
-        gap: 10px;
-        width: 600px;
-        max-width: calc(100vw - 40px);
-        padding: 20px;
-        background-color: #0006;
-        border-radius: 10px;
-
         }
     .f-grid {
         display: flex;
@@ -129,6 +121,7 @@
         font-size: 14pt;
         background-color: rgb(226, 247, 236);
         }
+
 </style>    
 </head>
 <body>
@@ -496,11 +489,20 @@ function getVanban(){
 
 
 </script>
+<!-- ----------------dem len github khong the hien video duoc
 <br>
 <div id="sophie">
 <video controls loop="true" muted="true">
     <source src="./Sophie-boi-8124.mp4" type="video/mp4">
 </video>    
 </div>
+-------------------------------------------------------- -->
+<div id="sophie">
+    <video controls loop="true">
+        <source src="sophie-boi-8124.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>    
+</div>
+
 </body>
 </html>
