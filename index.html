@@ -315,13 +315,13 @@ stopEl.addEventListener('click', stop);
 textEl.innerHTML = text;
 
 //xuli lai text neu co ma xau do dich-----
-var vt1 = text.search(">");
-var vt2 = text.search("</");
-if (vt1>0 && vt2>0){
-    text = text.substring(vt1+1, vt2);
-    textElement.innerHTML = text;
-    text = textElement.innerHTML;
-}    
+//var vt1 = text.search(">");
+//var vt2 = text.search("</");
+//if (vt1>0 && vt2>0){
+//    text = text.substring(vt1+1, vt2);
+//    textElement.innerHTML = text;
+//    text = textElement.innerHTML;
+//}    
 
 function play() {
   if (window.speechSynthesis.speaking) {
