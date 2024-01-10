@@ -255,12 +255,16 @@ const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien 
 function updateVoices() {
     // lay cac voice dat vao cac option
     window.speechSynthesis.getVoices().forEach(voice => {
-    const isAlreadyAdded = [...voiceInEl.options].some(option => option.value === voice.voiceURI);
-    if (!isAlreadyAdded) {
+    if (voice.lang==='en-US' || voice.lang==='vi-VN'){
         const option = new Option(voice.name, voice.voiceURI, voice.default, voice.default);
         voiceInEl.add(option);
     }
-    });
+    //const isAlreadyAdded = [...voiceInEl.options].some(option => option.value === voice.voiceURI);
+    //if (!isAlreadyAdded) {
+    //    const option = new Option(voice.name, voice.voiceURI, voice.default, voice.default);
+    //    voiceInEl.add(option);
+    }
+    );
 }
 //chay ham tren day updateVoices() de lay cac voice vao cac opption cua select
 updateVoices(); //goi chay ham nay voi bien voiceInEl va dinh nghia ham o phia tren
