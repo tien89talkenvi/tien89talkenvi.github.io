@@ -125,6 +125,9 @@
 </style>    
 </head>
 <body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
 <h1 class="center" translate="no">Text to Speech</h1>  
 <!--START textarea------------------------------------------------------------->  
 <div class="wrapper">
@@ -206,13 +209,63 @@
     </div>
 </div>
 <br>
+<div class="wrapper">
+
 <div class="properties2">
-    <label for="vanban" translate="no">For examples Text input:</label>
+    <label for="vanban" translate="no">For examples get text input from :</label>
     <select id="vanban" translate="no"></select>
     <div></div>
 </div>  
+<div class="properties2">
+    <label for="file" translate="no">Get text from LOCAL file :</label>
+    <input type="file" id="fileInput" accept="png, gif, webp, jpeg, pdf" onchange="loadFile(this.files[0])">
+</div>  
 
-
+</div>
+<script>
+    async function loadFile(file) {
+        let fileName = file.name;
+        let duoiFile = fileName.split('.').pop();
+        const messageEl = document.getElementById('message')
+        if (duoiFile.toUpperCase()=='TXT'){
+            let text = await file.text();
+            messageEl.value = text;
+        }
+        if (duoiFile.toUpperCase()=='PNG'){
+            // (B) CREATE VIETNAMESE TESSERACT WORKER
+            const worker = await Tesseract.createWorker();
+            await worker.loadLanguage("vie");
+            await worker.initialize("vie");
+            // (CC) ON FILE SELECT - IMAGE TO TEXT
+            const res = await worker.recognize(file);
+            messageEl.value = res.data.text;
+        }
+        if (duoiFile.toUpperCase()=='PDF'){
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(file);
+            reader.onload = async () => {
+                const pdf = await pdfjsLib.getDocument({ data: reader.result }).promise;
+                const maxPages = pdf.numPages;
+                let text = '';
+                for (let pageNum = 1; pageNum <= maxPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const content = await page.getTextContent();
+                    const pageText = content.items.map(item => item.str).join('\n');
+                    text += pageText + '\n';
+                }
+                messageEl.value = text;
+            };
+        }
+    }
+</script>
+<script>
+function  from_camera(){
+    console.log('from_camera');
+}
+function  from_capture(){
+    console.log('from_capture');
+}
+</script>
 <!--============ Phan chua javascript dieu khien  ==========================----->
 
 
@@ -238,13 +291,13 @@ function clearbelow(){
 function demtextxuong(){
     document.getElementById('t2').textContent='';
     let text_in_textarea = document.getElementById('message').value;
-    text = text_in_textarea
+    text = text_in_textarea;
     document.getElementById('t1').textContent =  text_in_textarea;
 }
 function layxvadoc(){
     document.getElementById('t2').textContent='';
     let text_in_t1 = document.getElementById('t1').textContent;
-    document.getElementById('t2').textContent =  text_in_t1;
+    document.getElementById('t2').textContent =  text_in_t1.replaceAll('.','. <br/>');
     document.getElementById('t1').textContent ='';
     text=document.getElementById('t2').textContent;
     play();
@@ -315,13 +368,13 @@ stopEl.addEventListener('click', stop);
 textEl.innerHTML = text;
 
 //xuli lai text neu co ma xau do dich-----
-//var vt1 = text.search(">");
-//var vt2 = text.search("</");
-//if (vt1>0 && vt2>0){
-//    text = text.substring(vt1+1, vt2);
-//    textElement.innerHTML = text;
-//    text = textElement.innerHTML;
-//}    
+var vt1 = text.search(">");
+var vt2 = text.search("</");
+if (vt1>0 && vt2>0){
+    text = text.substring(vt1+1, vt2);
+    textElement.innerHTML = text;
+    text = textElement.innerHTML;
+}    
 
 function play() {
   if (window.speechSynthesis.speaking) {
@@ -336,7 +389,7 @@ function play() {
     utterance.addEventListener('resume', handleResume);
     utterance.addEventListener('end', handleEnd);
     utterance.addEventListener('boundary', handleBoundary);
-
+    
     utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
     utterance.pitch = pitchInEl.value;
     utterance.rate = rateInEl.value;
@@ -486,11 +539,11 @@ function getVanban(){
         textdua=textduavao;
         elTextarea.value = textdua;
     }
-        if (keyOfVbchon == 5) {
+    if (keyOfVbchon == 5) {
         var elTextarea=document.getElementById('message');
         textduavao = "Hai vợ chồng nọ có 5 đứa con: 4 đứa đầu thì trắng trẻo xinh đẹp, chỉ có đứa út đen đủi, xấu xí tệ. Người chồng nghi ngờ lắm nhưng không dám nói ra. Đến lúc lâm chung, mới ra hiệu gọi bà vợ lại hỏi: ";
         textduavao=textduavao+"- Tôi sắp đi đây, trước khi chết tôi hỏi thật bà một điều. Thằng út… ";
-        textduavao=textduavao+"- Thằng út làm sao... - Nó có thật sự… là con của tôi không?... ";
+        textduavao=textduavao+"- Thằng út làm sao - Nó có thật sự… là con của tôi không? ";
         textduavao=textduavao+"- Đến giờ phút này thì tôi cũng không giấu giếm gì ông. Thằng út… mới thật sự là con của ông. ";
         textduavao=textduavao+"Ông chồng, tai đã lãng đãng, nên đã mỉm cười ra đi. ";
         textdua=textduavao;
@@ -499,12 +552,20 @@ function getVanban(){
     }
 
 }
-
-
 //--------------
 
 
 </script>
+<!-- ----------------dem len github khong the hien video duoc
+<br>
+<div id="sophie">
+<video controls loop="true" muted="true">
+    <source src="./Sophie-boi-8124.mp4" type="video/mp4">
+</video>    
+</div>
+-------------------------------------------------------- -->
+
+
 
 </body>
 </html>
