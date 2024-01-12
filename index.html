@@ -212,12 +212,12 @@
 <div class="wrapper">
 
 <div class="properties2">
-    <label for="vanban" translate="no">For examples get text input from :</label>
+    <label for="vanban" translate="no">Text input from :</label>
     <select id="vanban" translate="no"></select>
     <div></div>
 </div>  
 <div class="properties2">
-    <label for="file" translate="no">Get text from LOCAL file :</label>
+    <label for="file" translate="no">from local File :</label>
     <input type="file" id="fileInput" accept="png, gif, webp, jpeg, pdf" onchange="loadFile(this.files[0])">
 </div>  
 
@@ -258,14 +258,6 @@
         }
     }
 </script>
-<script>
-function  from_camera(){
-    console.log('from_camera');
-}
-function  from_capture(){
-    console.log('from_capture');
-}
-</script>
 <!--============ Phan chua javascript dieu khien  ==========================----->
 
 
@@ -297,7 +289,7 @@ function demtextxuong(){
 function layxvadoc(){
     document.getElementById('t2').textContent='';
     let text_in_t1 = document.getElementById('t1').textContent;
-    document.getElementById('t2').textContent =  text_in_t1.replaceAll('.','. <br/>');
+    document.getElementById('t2').textContent =  text_in_t1;
     document.getElementById('t1').textContent ='';
     text=document.getElementById('t2').textContent;
     play();
