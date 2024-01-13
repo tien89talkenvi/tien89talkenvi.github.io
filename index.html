@@ -113,14 +113,17 @@
     }
     .center{text-align: center;
         color: yellow}
-        #textid {
+    #t2 {
         display: block;
-        line-height: 1.25;}
+        font-size: 20px;
+        line-height: 1.5;}
     textarea {
         font-family: Arial;
         font-size: 14pt;
-        background-color: rgb(226, 247, 236);
-        }
+        background-color: rgb(226, 247, 236);}
+    #t3{
+        visibility:hidden;
+    }
 
 </style>    
 </head>
@@ -161,7 +164,7 @@
 <span>
     <script type="text/javascript">
     function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        new google.translate.TranslateElement({pageLanguage: '/en/vi'}, 'google_translate_element');
     }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -172,8 +175,8 @@
 
 <div class="f-grid" id="wrapper-text">
 
-    <div id="t1" onclick="layxvadoc()"></div>
-    <div id="t2" translate="no"></div>
+    <div  id="t1" onclick="layxvadoc()"></div>
+    <div  id="t2" translate="no"></div>
 
 </div>
 
@@ -189,16 +192,16 @@
 
     <div class="properties">
         <label for="pitch" translate="no">Pitch:</label>
-        <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1">
-        <output for="pitch">1</output>
+        <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
+        <output for="pitch" translate="no">1</output>
         
         <label for="rate" translate="no">Rate:</label>
-        <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1">
-        <output for="rate">1</output>
+        <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
+        <output for="rate" translate="no">1</output>
         
         <label for="volume" translate="no">Volume:</label>
-        <input id="volume" type="range" min="0" max="1" step="0.1" value="1">
-        <output for="volume">1</output>
+        <input id="volume" type="range" min="0" max="1" step="0.1" value="1" translate="no">
+        <output for="volume" translate="no">1</output>
     </div>
     
     <div class="buttons4">
@@ -220,9 +223,11 @@
     <label for="file" translate="no">from local File :</label>
     <input type="file" id="fileInput" accept="png, gif, webp, jpeg, pdf" onchange="loadFile(this.files[0])">
 </div>  
-
 </div>
-<script>
+<br>
+<div id="t3"></div>
+
+<script>//======================================= javascript tu day ===================================
     async function loadFile(file) {
         let fileName = file.name;
         let duoiFile = fileName.split('.').pop();
@@ -466,6 +471,47 @@ function hdofTien89(){
     vbhd=vbhd+'để đưa văn bản nhập ở phần trên xuống bên dưới rồi thao tác tiếp bằng các nút ở phần dưới. ';
     alert(vbhd);
 }
+//--dich doc nhom tu khi boi den va click vao------------------------------------------------
+const textdichEl = document.getElementById('t3');
+var textlay = '';
+var textdadich = '';
+//them su kien click cho phan tu co id "t2" de khi click vao do 
+//thi ham vo danh function() thuc hien nhiem vu cua ham nhu dinh nghia duoi day
+//no se thuc hien ham lay text chon
+document.getElementById('t2').addEventListener('click', function() {
+    //khi click vao 't2' thi chay ham getSelectedText de lay text roi dan vao t3
+    var selectedRange = window.getSelection();
+    if (selectedRange.rangeCount > 0) {
+        textlay = selectedRange.toString().trim();
+        //dat text vao t3 de no dich
+        textdichEl.innerHTML=textlay;
+    } 
+    setTimeout(function() {
+        textdadich = textdichEl.innerHTML;
+        chdau='<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">';
+        chcuoi='</font></font>';
+        chphu='<font style="vertical-align: inherit;">';
+        chphu2='</font>';
+        textdadich = textdadich.replaceAll(chdau,'');
+        textdadich = textdadich.replaceAll(chcuoi,'');
+        textdadich = textdadich.replaceAll(chphu,'');
+        textdadich = textdadich.replaceAll(chphu2,'');
+        if (textdadich !== ''){
+            ReadTextDich(textdadich);    
+            alert(textdadich);
+        }else{
+            alert('No selected text!');
+        }
+        //textdichEl.innerHTML = ''; //neu cai nay dat o ngoai thi alert ra trong
+
+    }, 1000); 
+})    
+// doc text dich
+function ReadTextDich(textdadich){
+    const utterance = new SpeechSynthesisUtterance(textdadich);
+    window.speechSynthesis.speak(utterance);
+}
+
 //-----------------------dang lam
 const vbanInEl = document.getElementById('vanban'); //bien global,vanban la id cua <select>
 const lVanbans=['--Select--','Nhớ mẹ', 'Bài thơ của Thánh Dũng Lạc', 'Thăm Dũng','Nhớ Phước','Đến chết vẫn còn lầm lẫn'];
@@ -544,9 +590,9 @@ function getVanban(){
     }
 
 }
-//--------------
-
-
+//--------------tien89talkenvi.github.io------
+//Link toi tra tu dien tieng viet ra tieng khac
+//https://www.lexilogos.com/english/vietnamese_dictionary.htm
 </script>
 <!-- ----------------dem len github khong the hien video duoc
 <br>
@@ -555,6 +601,18 @@ function getVanban(){
     <source src="./Sophie-boi-8124.mp4" type="video/mp4">
 </video>    
 </div>
+
+đây là một cách hack nhanh de loai bo dich.
+JavaScript
+jQuery.removeCookie('googtrans', { path: 'www.baberich.de' });
+jQuery.removeCookie('googtrans', { domain: '.baberich.de' });
+window.document.location.href = "/";
+
+<div>Toi ten la <span class='notranslate'>CON COP</span> co phai khong</div>
+khi dich ra En thi CON COP khong dc dich
+
+chu teacher dem vao <div id='t3'></div> no ra kq nhu sau
+<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">giáo viên.</font></font>
 -------------------------------------------------------- -->
 
 
