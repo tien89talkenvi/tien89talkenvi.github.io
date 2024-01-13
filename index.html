@@ -113,7 +113,7 @@
     }
     .center{text-align: center;
         color: yellow}
-    #t2 {
+    #t2 #t1 {
         display: block;
         font-size: 20px;
         line-height: 1.5;}
@@ -121,9 +121,6 @@
         font-family: Arial;
         font-size: 14pt;
         background-color: rgb(226, 247, 236);}
-    #t3{
-        visibility:hidden;
-    }
 
 </style>    
 </head>
@@ -484,6 +481,7 @@ document.getElementById('message').addEventListener('dblclick', function() {
         textlay = selectedRange.toString().trim();
         //dat text vao t1 de no dich
         document.getElementById('t1').textContent =  textlay;
+        document.getElementById('t2').textContent =  '';
     } 
 })
 //-----------------------dang lam
