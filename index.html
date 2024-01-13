@@ -231,7 +231,7 @@
             let text = await file.text();
             messageEl.value = text;
         }
-        if (duoiFile.toUpperCase()=='PNG'){
+        if (duoiFile.toUpperCase()=='PNG' || duoiFile.toUpperCase()=='JPG' || duoiFile.toUpperCase()=='JPEG'){
             // (B) CREATE VIETNAMESE TESSERACT WORKER
             const worker = await Tesseract.createWorker();
             await worker.loadLanguage("vie");
