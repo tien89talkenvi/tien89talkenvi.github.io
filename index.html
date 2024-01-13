@@ -485,32 +485,7 @@ document.getElementById('message').addEventListener('dblclick', function() {
         //dat text vao t1 de no dich
         document.getElementById('t1').textContent =  textlay;
     } 
-    setTimeout(function() {
-        textdadich = document.getElementById('t1').innerHTML;
-        chdau='<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">';
-        chcuoi='</font></font>';
-        chphu='<font style="vertical-align: inherit;">';
-        chphu2='</font>';
-        textdadich = textdadich.replaceAll(chdau,'');
-        textdadich = textdadich.replaceAll(chcuoi,'');
-        textdadich = textdadich.replaceAll(chphu,'');
-        textdadich = textdadich.replaceAll(chphu2,'');
-        if (textdadich !== ''){
-            ReadTextDich(textdadich);    
-            alert(textdadich);
-        }else{
-            alert('No selected text!');
-        }
-        //textdichEl.innerHTML = ''; //neu cai nay dat o ngoai thi alert ra trong
-
-    }, 1000); 
-})    
-// doc text dich
-function ReadTextDich(textdadich){
-    const utterance = new SpeechSynthesisUtterance(textdadich);
-    window.speechSynthesis.speak(utterance);
-}
-
+})
 //-----------------------dang lam
 const vbanInEl = document.getElementById('vanban'); //bien global,vanban la id cua <select>
 const lVanbans=['--Select--','Nhớ mẹ', 'Bài thơ của Thánh Dũng Lạc', 'Thăm Dũng','Nhớ Phước','Đến chết vẫn còn lầm lẫn'];
