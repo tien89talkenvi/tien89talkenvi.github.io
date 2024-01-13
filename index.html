@@ -225,7 +225,7 @@
 </div>  
 </div>
 <br>
-<div id="t3"></div>
+
 
 <script>//======================================= javascript tu day ===================================
     async function loadFile(file) {
@@ -472,7 +472,6 @@ function hdofTien89(){
     alert(vbhd);
 }
 //--dich doc nhom tu khi boi den va click vao------------------------------------------------
-const textdichEl = document.getElementById('t3');
 var textlay = '';
 var textdadich = '';
 //them su kien click cho phan tu co id "t2" de khi click vao do 
@@ -483,11 +482,11 @@ document.getElementById('message').addEventListener('dblclick', function() {
     var selectedRange = window.getSelection();
     if (selectedRange.rangeCount > 0) {
         textlay = selectedRange.toString().trim();
-        //dat text vao t3 de no dich
-        textdichEl.innerHTML=textlay;
+        //dat text vao t1 de no dich
+        document.getElementById('t1').textContent =  textlay;
     } 
     setTimeout(function() {
-        textdadich = textdichEl.innerHTML;
+        textdadich = document.getElementById('t1').innerHTML;
         chdau='<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">';
         chcuoi='</font></font>';
         chphu='<font style="vertical-align: inherit;">';
