@@ -71,14 +71,14 @@
         border-radius: 10px;
         color: lightblue;
         }
-        .buttons1 {
+    .buttons1 {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         justify-content: center;
         margin-top: 2px;
         padding-top: 2px;
         }
-        .buttons2 {
+    .buttons2 {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
         justify-content: center;
@@ -86,7 +86,7 @@
         padding-top: 2px;
         }
 
-        .buttons4 {
+    .buttons4 {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         justify-content: center;
@@ -113,13 +113,13 @@
     }
     .center{text-align: center;
         color: yellow}
-    #t2 #t1 {
+    #t2, #t1 {
         display: block;
         font-size: 20px;
         line-height: 1.5;}
     textarea {
         font-family: Arial;
-        font-size: 14pt;
+        font-size: 20px;
         background-color: rgb(226, 247, 236);}
 
 </style>    
@@ -138,8 +138,8 @@
 
 <!--Nhom nut dkhien 2----------------------------------------------------------->  
 <div class="buttons1"> 
-<button id="English" onclick="speak_text_all(this.id)" translate="no"><span style="color:lightblue">Speak En</span></button>
-<button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no"><span style="color:orange">Speak Vi</span></button>
+<button id="English" onclick="speak_text_all(this.id)" translate="no"><span style="color:lightblue">🎧 En</span></button>
+<button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no"><span style="color:orange">🎧 Vi</span></button>
 </div>
 <!--Nhom nut dkhien 3----------------------------------------------------------->  
 <div class="buttons1">
@@ -161,8 +161,15 @@
 <span>
     <script type="text/javascript">
     function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: '/en/vi'}, 'google_translate_element');
+        new google.translate.TranslateElement({
+        pageLanguage: '/en/vi', includedLanguages: 'en,vi', autoDisplay: true,
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
     }
+    
+    //function googleTranslateElementInit() {
+    //    new google.translate.TranslateElement({pageLanguage: '/en/vi'}, 'google_translate_element');
+    //}
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </span>
@@ -217,12 +224,11 @@
     <div></div>
 </div>  
 <div class="properties2">
-    <label for="file" translate="no">from local File :</label>
+    <label for="file" translate="no">From 📁 :</label>
     <input type="file" id="fileInput" accept="png, gif, webp, jpeg, pdf" onchange="loadFile(this.files[0])">
 </div>  
 </div>
 <br>
-
 
 <script>//======================================= javascript tu day ===================================
     async function loadFile(file) {
@@ -437,19 +443,18 @@ function handleBoundary(event) {
   }
 
   const wordStart = event.charIndex;
-
   let wordLength = event.charLength;
   if (wordLength === undefined) {
     // Safari doesn't provide charLength, so fall back to a regex to find the current word and its length (probably misses some edge cases, but good enough for this demo)
     const match = text.substring(wordStart).match(/^[a-z\d']*/i);
     wordLength = match[0].length;
   }
-  
   // wrap word in <mark> tag
   const wordEnd = wordStart + wordLength;
   const word = text.substring(wordStart, wordEnd);
   const markedText = text.substring(0, wordStart) + '<mark>' + word + '</mark>' + text.substring(wordEnd);
   textEl.innerHTML = markedText;
+
 }
 
 //-------------------------------xoa text phan duoi------------------------
@@ -469,21 +474,40 @@ function hdofTien89(){
     alert(vbhd);
 }
 //--dich doc nhom tu khi boi den va click vao------------------------------------------------
-var textlay = '';
-var textdadich = '';
 //them su kien click cho phan tu co id "t2" de khi click vao do 
 //thi ham vo danh function() thuc hien nhiem vu cua ham nhu dinh nghia duoi day
 //no se thuc hien ham lay text chon
-document.getElementById('message').addEventListener('dblclick', function() {
-    //khi dblclick vao 'message' thi chay ham getSelectedText de lay text roi dan vao t3
+document.getElementById('message').addEventListener('select' , function() {
+    //khi click vao 't2' thi chay ham getSelectedText de lay text roi dan vao t3
     var selectedRange = window.getSelection();
     if (selectedRange.rangeCount > 0) {
         textlay = selectedRange.toString().trim();
-        //dat text vao t1 de no dich
-        document.getElementById('t1').textContent =  textlay;
-        document.getElementById('t2').textContent =  '';
-    } 
-})
+        //dat text vao t3 de no dich
+        document.getElementById('t2').innerHTML = '';
+        document.getElementById('t1').innerHTML = textlay;
+        document.getElementById("t1").style.color = "yellow";
+        //setTimeout(function() {
+        //    console.log(textdichEl.innerHTML);
+
+        //    textdadich = textdichEl.innerHTML;
+        //    chdau='<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">';
+        //    chcuoi='</font></font>';
+        //    chphu='<font style="vertical-align: inherit;">';
+        //    chphu2='</font>';
+        //    textdadich = textdadich.replaceAll(chdau,'');
+        //    textdadich = textdadich.replaceAll(chcuoi,'');
+        //    textdadich = textdadich.replaceAll(chphu,'');
+        //    textdadich = textdadich.replaceAll(chphu2,'');
+        //    alert(textdadich);
+        //}, 1000); 
+    }
+})    
+// doc text dich
+//function ReadTextDich(textdadich){
+//    const utterance = new SpeechSynthesisUtterance(textdadich);
+//    window.speechSynthesis.speak(utterance);
+//}
+
 //-----------------------dang lam
 const vbanInEl = document.getElementById('vanban'); //bien global,vanban la id cua <select>
 const lVanbans=['--Select--','Nhớ mẹ', 'Bài thơ của Thánh Dũng Lạc', 'Thăm Dũng','Nhớ Phước','Đến chết vẫn còn lầm lẫn'];
