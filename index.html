@@ -141,7 +141,7 @@
         
 
 
-<textarea id="message"  spellcheck="false" name="message" rows="4" cols="60"> </textarea>
+<textarea id="message"  spellcheck="false" name="message" rows="4" cols="60" onclick="demtextxuong()"> </textarea>
 
 <!--Nhom nut dkhien 2----------------------------------------------------------->  
 <div class="buttons1"> 
@@ -300,6 +300,11 @@ function demtextxuong(){
     let text_in_textarea = document.getElementById('message').value;
     text = text_in_textarea;
     document.getElementById('t1').textContent =  text_in_textarea;
+    //tu dong click vao ptu 't1' sau 1 giay (de cho t1 dich xong do no co ham layxvadoc)
+    setTimeout(function() {
+        document.getElementById('t1').click();
+        //layxvadoc();
+    }, 1000);
 }
 function layxvadoc(){
     document.getElementById('t2').textContent='';
