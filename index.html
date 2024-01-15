@@ -135,8 +135,8 @@
         <tr>
             <td><a ><label for="message" translate="no" onclick="hdofTien89()">🙋‍♂️</label></a></td>
             <td><a >&nbsp;&nbsp;&nbsp; </a></td>
-            <td><a href="https://talkenvi-b5vypm7itcecxnkuvne7h9.streamlit.app"><span style="font-size: 12px; color:pink">🎤</span></a></td>
-            <td><a href="https://tien89.streamlit.app"><span style="font-size: 12px; color:pink">🎥</span></a></td>
+            <td><a onclick="recognition.start()" translate="no"><span style="font-size: 14px; color:white" translate="no">🎤</span></a></td>
+            <td><a translate="no"><span style="font-size: 14px; color:white" translate="no">🎥</span></a></td>
     </table>
         
 
@@ -236,6 +236,26 @@
 </div>  
 </div>
 <br>
+<script>
+// uu tien len dau de nhanh
+    //const btn = document.getElementById('btn');
+    const messageEl = document.getElementById('message');
+    
+    //ham sau duoc khoi dong ngay khi trang web tai xong de khoi tao doi tuong recognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    //cho nen khi click micro thi ham recognition.start() bat dau chay, nen ham sau nghe ngong va nhan thuc
+    recognition.onstart = function(){
+        console.log('Listening . . .');
+    }
+    recognition.onresult = function(event){ //ham nay nhan thuc rra khi co ket qua no se lay kq in vao
+        var text = event.results[0][0].transcript;
+        console.log(text);
+        messageEl.value = text;
+        demtextxuong();
+        // ham tren da co layxvadoc();
+    }
+</script>
 
 <script>//======================================= javascript tu day ===================================
     async function loadFile(file) {
@@ -303,7 +323,7 @@ function demtextxuong(){
     //tu dong click vao ptu 't1' sau 1 giay (de cho t1 dich xong do no co ham layxvadoc)
     setTimeout(function() {
         document.getElementById('t1').click();
-        //layxvadoc();
+        //khi click la co layxvadoc();
     }, 1000);
 }
 function layxvadoc(){
