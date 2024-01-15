@@ -29,9 +29,9 @@
         gap: 10px;
         width: 600px;
         max-width: calc(100vw - 40px);
-        padding: 20px;
-        font-size: 20px;
-        border-radius: 10px;
+        padding: 18px;
+        font-size: 18px;
+        border-radius: 4px;
         background-color: #0003;
     }
     #wrapper-text {
@@ -121,7 +121,12 @@
         font-family: Arial;
         font-size: 20px;
         background-color: rgb(226, 247, 236);}
-
+.alignL { text-align: left; color:lightgreen;}
+.alignC { text-align: center; color:pink;}
+.alignR { text-align: right; color:orange;}
+#butmicro {
+ background-color: none;   
+}
 </style>    
 </head>
 <body>
@@ -133,20 +138,21 @@
 <div class="wrapper">
     <table>
         <tr>
-            <td><a ><label for="message" translate="no" onclick="hdofTien89()">🙋‍♂️</label></a></td>
-            <td><a >&nbsp;&nbsp;&nbsp; </a></td>
-            <td><a onclick="recognition.start()" translate="no"><span style="font-size: 14px; color:white" translate="no">🎤</span></a></td>
-            <td><a translate="no"><span style="font-size: 14px; color:white" translate="no">🎥</span></a></td>
+            <td class="alignL" translate="no" ><button id="butPersonVi">😎<span style="color:orange">vi</span></button></td>
+            <td class="alignC" translate="no" ><button id="butMicro" onclick='recognition.start()'>🎤</button></td>
+            <td class="alignR" translate="no" ><button id="butPersonEn"><span style="color:lightblue">en</span>🙋‍♂️</button></td>
+        </tr>    
     </table>
-        
+         
 
+    <label for="message" translate="no" onclick="hdofTien89()"></label>
 
 <textarea id="message"  spellcheck="false" name="message" rows="4" cols="60" onclick="demtextxuong()"> </textarea>
 
 <!--Nhom nut dkhien 2----------------------------------------------------------->  
 <div class="buttons1"> 
-<button id="English" onclick="speak_text_all(this.id)" translate="no"><span style="color:lightblue">🎧 En</span></button>
-<button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no"><span style="color:orange">🎧 Vi</span></button>
+    <button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no"><span style="color:orange">🎧 Vi</span></button>
+    <button id="English" onclick="speak_text_all(this.id)" translate="no"><span style="color:lightblue">🎧 En</span></button>
 </div>
 <!--Nhom nut dkhien 3----------------------------------------------------------->  
 <div class="buttons1">
@@ -236,7 +242,28 @@
 </div>  
 </div>
 <br>
-<script>
+
+<script>//======================================= javascript tu day ===================================
+const viSayEl=document.getElementById("butPersonEn");
+const microEl=document.getElementById("butMicro");
+const enSayEl=document.getElementById("butPersonVi");
+enSayEl.addEventListener('click',enSayElWork);
+viSayEl.addEventListener('click',viSayElWork);
+
+
+function enSayElWork(){
+    enSayEl.style.backgroundColor="yellowgreen";
+    viSayEl.style.backgroundColor="#0003";
+    microEl.style.backgroundColor="pink";
+    microEl.click();
+}
+function viSayElWork(){
+    viSayEl.style.backgroundColor="yellowgreen";
+    enSayEl.style.backgroundColor="#0003";
+    microEl.style.backgroundColor="pink";
+    microEl.click();
+}
+
 // uu tien len dau de nhanh
     //const btn = document.getElementById('btn');
     const messageEl = document.getElementById('message');
@@ -247,18 +274,29 @@
     //cho nen khi click micro thi ham recognition.start() bat dau chay, nen ham sau nghe ngong va nhan thuc
     recognition.onstart = function(){
         console.log('Listening . . .');
-    }
+        microEl.style.backgroundColor="pink";
+
+    };
     recognition.onresult = function(event){ //ham nay nhan thuc rra khi co ket qua no se lay kq in vao
         var text = event.results[0][0].transcript;
         console.log(text);
         messageEl.value = text;
         demtextxuong();
         // ham tren da co layxvadoc();
-    }
-</script>
+    };
 
-<script>//======================================= javascript tu day ===================================
-    async function loadFile(file) {
+    recognition.onend = () => { //khi bi ngat ket noi thi
+        microEl.style.backgroundColor="#0003";
+        console.log("Speech recognition service disconnected");
+    };
+    recognition.onerror = (event) => {//khi co loi xay ra thi
+        console.error(`Speech recognition error detected: ${event.error}`);
+        microEl.style.backgroundColor="#0003";
+    };
+
+
+    //----------------------------------------------------------------------------------------
+async function loadFile(file) {
         let fileName = file.name;
         let duoiFile = fileName.split('.').pop();
         const messageEl = document.getElementById('message')
