@@ -121,12 +121,15 @@
         font-family: Arial;
         font-size: 20px;
         background-color: rgb(226, 247, 236);}
-.alignL { text-align: left; color:lightgreen;}
-.alignC { text-align: center; color:pink;}
-.alignR { text-align: right; color:orange;}
-#butmicro {
- background-color: none;   
-}
+    .alignL { text-align: left; color:lightgreen;}
+    .alignC { text-align: center; color:pink;}
+    .alignR { text-align: right; color:orange;}
+    #butmicro {
+        border: none;
+        padding: 20px;
+        margin: 4px 2px;
+        border-radius: 50%;
+    }
 </style>    
 </head>
 <body>
@@ -138,9 +141,19 @@
 <div class="wrapper">
     <table>
         <tr>
-            <td class="alignL" translate="no" ><button id="butPersonVi">😎<span style="color:orange">vi</span></button></td>
+            <td class="alignL" translate="no">.
+            <div id="google_translate_element" translate="no"></div>
+            <span>
+                <script type="text/javascript">
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement({pageLanguage: '/en/vi'}, 'google_translate_element');
+                }//😎
+                </script>
+                <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+            </span>    
+            </td>
             <td class="alignC" translate="no" ><button id="butMicro" onclick='recognition.start()'>🎤</button></td>
-            <td class="alignR" translate="no" ><button id="butPersonEn"><span style="color:lightblue">en</span>🙋‍♂️</button></td>
+            <td class="alignR" onclick="hdofTien89()" translate="no">🙋‍♂️</td>
         </tr>    
     </table>
          
@@ -151,8 +164,8 @@
 
 <!--Nhom nut dkhien 2----------------------------------------------------------->  
 <div class="buttons1"> 
-    <button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no"><span style="color:orange">🎧 Vi</span></button>
     <button id="English" onclick="speak_text_all(this.id)" translate="no"><span style="color:lightblue">🎧 En</span></button>
+    <button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no"><span style="color:orange">🎧 Vi</span></button>
 </div>
 <!--Nhom nut dkhien 3----------------------------------------------------------->  
 <div class="buttons1">
@@ -170,22 +183,6 @@
 
 <!--START code chon lang dich cua google-->  
 
-<div id="google_translate_element" class="center" translate="no"><a translate="no">Translate text then click on text to listen </a></div>
-<span>
-    <script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-        pageLanguage: '/en/vi', includedLanguages: 'en,vi', autoDisplay: true,
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element');
-    }
-    
-    //function googleTranslateElementInit() {
-    //    new google.translate.TranslateElement({pageLanguage: '/en/vi'}, 'google_translate_element');
-    //}
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</span>
 <br>
 
 <!-- div nay chua text de speak  ----------------------------------------------->
@@ -244,26 +241,13 @@
 <br>
 
 <script>//======================================= javascript tu day ===================================
-const viSayEl=document.getElementById("butPersonEn");
 const microEl=document.getElementById("butMicro");
-const enSayEl=document.getElementById("butPersonVi");
-enSayEl.addEventListener('click',enSayElWork);
-viSayEl.addEventListener('click',viSayElWork);
+microEl.addEventListener('click',microElWork);
 
 
-function enSayElWork(){
-    enSayEl.style.backgroundColor="yellowgreen";
-    viSayEl.style.backgroundColor="#0003";
+function microElWork(){
     microEl.style.backgroundColor="pink";
-    microEl.click();
 }
-function viSayElWork(){
-    viSayEl.style.backgroundColor="yellowgreen";
-    enSayEl.style.backgroundColor="#0003";
-    microEl.style.backgroundColor="pink";
-    microEl.click();
-}
-
 // uu tien len dau de nhanh
     //const btn = document.getElementById('btn');
     const messageEl = document.getElementById('message');
