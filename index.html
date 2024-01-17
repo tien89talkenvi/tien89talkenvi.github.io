@@ -296,12 +296,12 @@ function microElWork(){
     const recognition = new SpeechRecognition();
     //recognition.grammars = speechRecognitionList;
     //recognition.continuous = false;
+    //let sourceLanguage = document.getElementById("source-languages");
+    //const sourceValue = sourceLanguage.value;
+    recognition.lang = 'vi-VN'; //sourceValue;
 
     //cho nen khi click micro thi ham recognition.start() bat dau chay, nen ham sau nghe ngong va nhan thuc
     recognition.onstart = function(){
-        let sourceLanguage = document.getElementById("source-languages");
-        const sourceValue = sourceLanguage.value;
-        recognition.lang = sourceValue;
 
         console.log('Listening . . .');
         microEl.style.backgroundColor="pink";
