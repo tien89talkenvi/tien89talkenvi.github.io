@@ -130,8 +130,8 @@
         margin: 4px 2px;
         border-radius: 50%;
     }
-    #source-languages{background-color: silver; }
-    #target-languages{background-color: silver; }
+    #source-languages{color:lightblue; background-color: #0003; }
+    #target-languages{color:orange; background-color: #0003; }
 </style>    
 </head>
 <body>
@@ -143,7 +143,7 @@
 <div class="wrapper">
     <table>
         <tr>
-            <td class="alignL" translate="no">🎤<button id="butMicro" onclick='recognition.start()'></button>
+            <td class="alignL" translate="no"><button id="butMicro" onclick='recognition.start()'></button>🎤
                 <select id="source-languages">
                     <option value="zh">Chinese</option>
                     <option value="en" selected>English</option>
@@ -294,15 +294,9 @@ function microElWork(){
     //ham sau duoc khoi dong ngay khi trang web tai xong de khoi tao doi tuong recognition
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
-    //recognition.grammars = speechRecognitionList;
-    //recognition.continuous = false;
-    //let sourceLanguage = document.getElementById("source-languages");
-    //const sourceValue = sourceLanguage.value;
-    recognition.lang = 'vi-VN'; //sourceValue;
-
+    
     //cho nen khi click micro thi ham recognition.start() bat dau chay, nen ham sau nghe ngong va nhan thuc
     recognition.onstart = function(){
-
         console.log('Listening . . .');
         microEl.style.backgroundColor="pink";
 
@@ -316,15 +310,23 @@ function microElWork(){
     };
 
     recognition.onend = () => { //khi bi ngat ket noi thi
+        //console.log("Speech recognition service disconnected");
         microEl.style.backgroundColor="#0003";
-        console.log("Speech recognition service disconnected");
     };
     recognition.onerror = (event) => {//khi co loi xay ra thi
-        console.error(`Speech recognition error detected: ${event.error}`);
+        //console.error(`Speech recognition error detected: ${event.error}`);
         microEl.style.backgroundColor="#0003";
     };
+    recognition.onnomatch = (event) => {//neu khong nhan ra duoc loi noi
+        //diagnostic.textContent = "I didn't recognize that color.";
+        microEl.style.backgroundColor="#0003";
 
+    };
+    recognition.onerror = (event) => { //neu xay ra loi
+        //diagnostic.textContent = `Error occurred in recognition: ${event.error}`;
+        microEl.style.backgroundColor="#0003";
 
+    };
     //----------------------------------------------------------------------------------------
 async function loadFile(file) {
         let fileName = file.name;
