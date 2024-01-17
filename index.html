@@ -130,6 +130,8 @@
         margin: 4px 2px;
         border-radius: 50%;
     }
+    #source-languages{background-color: silver; }
+    #target-languages{background-color: silver; }
 </style>    
 </head>
 <body>
@@ -137,24 +139,38 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
 <h1 class="center" translate="no">Text Can Speak</h1>  
-<!--START textarea------------------------------------------------------------->  
+<!--START textarea-----😎🎤🙋‍♂️🎧↩️↪️⇄---recognition.lang = "en-US"; de chi cho js loi noi la ngon ngu en-Us cho le va phan ung mau hon----------------------------------------------->  
 <div class="wrapper">
     <table>
         <tr>
-            <td class="alignL" translate="no">.
-            <div id="google_translate_element" translate="no"></div>
-            <span>
-                <script type="text/javascript">
-                function googleTranslateElementInit() {
-                    new google.translate.TranslateElement({pageLanguage: '/en/vi'}, 'google_translate_element');
-                }//😎
-                </script>
-                <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-            </span>    
+            <td class="alignL" translate="no">🎤<button id="butMicro" onclick='recognition.start()'></button>
+                <select id="source-languages">
+                    <option value="zh">Chinese</option>
+                    <option value="en" selected>English</option>
+                    <option value="fr">French</option>  
+                    <option value="de">German</option>
+                    <option value="el">Greek</option>
+                    <option value="vi-VN">Vietnamese</option>
+                    <option value="ja">Japanese</option>
+                    <option value="es">Spanish</option>
+                </select>
             </td>
-            <td class="alignC" translate="no" ><button id="butMicro" onclick='recognition.start()'>🎤</button></td>
-            <td class="alignR" onclick="hdofTien89()" translate="no">🙋‍♂️</td>
-        </tr>    
+            <td class="alignL" translate="no" id="hoanviLangs">⇄</td>
+
+            <td class="alignR" translate="no">
+                <select id="target-languages">
+                    <option value="zh">Chinese</option>
+                    <option value="en" >English</option>
+                    <option value="fr">French</option>  
+                    <option value="de">German</option>
+                    <option value="el">Greek</option>
+                    <option value="vi-VN" selected>Vietnamese</option>
+                    <option value="ja">Japanese</option>
+                    <option value="es">Spanish</option>
+                </select>
+                🎧
+            </td>
+    
     </table>
          
 
@@ -241,6 +257,29 @@
 <br>
 
 <script>//======================================= javascript tu day ===================================
+
+document.querySelector("#hoanviLangs").addEventListener("click",switchLang);
+
+function switchLang(){
+    const inputTextEle = document.getElementById("message") ;
+    const outputTextEle = document.getElementById("t2");
+
+    let sourceLanguage = document.getElementById("source-languages");
+    let targetLanguage = document.getElementById("target-languages");
+
+    const sourceValue = sourceLanguage.value;
+    const targetValue = targetLanguage.value;
+
+    sourceLanguage.value = targetValue;
+    targetLanguage.value = sourceValue;
+
+    inputTextEle.value = outputTextEle.textContent;
+    outputTextEle.textContent = "";
+
+    //translate();
+}
+
+
 const microEl=document.getElementById("butMicro");
 microEl.addEventListener('click',microElWork);
 
@@ -255,8 +294,15 @@ function microElWork(){
     //ham sau duoc khoi dong ngay khi trang web tai xong de khoi tao doi tuong recognition
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
+    //recognition.grammars = speechRecognitionList;
+    //recognition.continuous = false;
+
     //cho nen khi click micro thi ham recognition.start() bat dau chay, nen ham sau nghe ngong va nhan thuc
     recognition.onstart = function(){
+        let sourceLanguage = document.getElementById("source-languages");
+        const sourceValue = sourceLanguage.value;
+        recognition.lang = sourceValue;
+
         console.log('Listening . . .');
         microEl.style.backgroundColor="pink";
 
@@ -316,11 +362,39 @@ async function loadFile(file) {
     }
 </script>
 <!--============ Phan chua javascript dieu khien  ==========================----->
-
-
-
 <script>
 var text = '';
+    
+function translate() {
+    const inputTextEle = document.getElementById("message") ;
+    const outputTextEle = document.getElementById("t2");
+    inputText = inputTextEle.value;
+    //const inputText = inputTextEle.value;
+    const sourceLanguage = document.querySelector("#source-languages").value;
+    const targetLanguage = document.querySelector("#target-languages").value;
+  
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
+  
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200)
+      {
+          const responseReturned = JSON.parse(this.responseText);
+          const translations = responseReturned[0].map((text) => text[0]);
+          const outputText = translations.join(" ");
+  
+          outputTextEle.textContent = outputText;
+          text = outputTextEle.textContent;
+          play();
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.send();
+  }
+//----------------------------  
+
+
 function speak_text_all(idname){
     if (idname.charAt(0) == 'V'){giongnoi='vi-VN';} else {giongnoi='en-US';}//dung V de neu co dich ra thi no van la V
     //cai lenh tren day khong lien quan voice phia duoi
@@ -334,7 +408,9 @@ function stop1() {
     window.speechSynthesis.cancel();
 }
 function clearbelow(){
-    document.getElementById('message').value = "";
+    console.log('kkk');
+    translate();
+    //document.getElementById('message').value = "";
 }
 //----------------------------------
 function demtextxuong(){
@@ -354,8 +430,9 @@ function layxvadoc(){
     document.getElementById('t2').textContent =  text_in_t1;
     document.getElementById('t1').textContent ='';
     text=document.getElementById('t2').textContent;
-    play();
-
+    //dich va doc
+    translate();
+    //play();
 }
 //xu li voice --------------------------------------------------------------------------
 const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
