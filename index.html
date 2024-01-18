@@ -2,73 +2,821 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Anonystick - example speech to text javasctipt</title>
-    <style>
-        .btn-start{
-            color:black;
+    <title>Tiensg89's App</title>
+<style>
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    body {
+        display: grid;
+        background-image: linear-gradient(-45deg, #f4d03f, #16a085);
+
+        background-attachment: fixed;
+        background-size: cover;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 20px;
+        color: #fff;
+        font: 1rem/1 'Poppins', sans-serif;
+    }
+    .wrapper {
+        display: grid;
+        gap: 10px;
+        width: 600px;
+        max-width: calc(100vw - 40px);
+        padding: 18px;
+        font-size: 18px;
+        border-radius: 4px;
+        background-color: #0003;
+    }
+    #wrapper-text {
+        display: grid;
+        gap: 10px;
+        width: 600px;
+        max-width: calc(100vw - 40px);
+        padding: 20px;
+        background-color: #0003}
+    #sophie {
+        display: grid;
+        justify-content: center;
         }
-    </style>
+    .f-grid {
+        display: flex;
+        justify-content: space-between;
+        margin-left: 0.0rem;
+        flex-flow: row wrap;}
+
+    .properties {
+        display: grid;
+        grid-template-columns: max-content minmax(0, auto) 40px;
+        gap: 20px;
+        padding: 20px;
+        background-color: #0003;
+        font-size: 20px;
+        border-radius: 10px;
+        color: lightgreen;
+        }
+    .properties2 {
+        display: grid;
+        grid-template-columns: max-content minmax(0, auto) 40px;
+        gap: 20px;
+        padding: 20px;
+        background-color: #0005;
+        font-size: 18px;
+        border-radius: 10px;
+        color: lightblue;
+        }
+    .buttons1 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+        margin-top: 2px;
+        padding-top: 2px;
+        }
+    .buttons2 {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        justify-content: center;
+        margin-top: 2px;
+        padding-top: 2px;
+        }
+
+    .buttons4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #fff3;
+        }
+    button {
+        padding: 5px;
+        border: 1px solid #fff;
+        border-radius: 999px;
+        color: #fff;
+        background-color: rgba(16, 16, 17, 0.253);
+        font-size: inherit;
+        font-family: inherit;
+        cursor: pointer;
+        appearance: none;
+        }
+
+    button:disabled {
+        opacity: 0.25;
+        cursor: not-allowed;
+    }
+    .center{text-align: center;
+        color: yellow}
+    #t2, #t1 {
+        display: block;
+        font-size: 20px;
+        line-height: 1.5;}
+    textarea {
+        font-family: Arial;
+        font-size: 20px;
+        background-color: rgb(226, 247, 236);}
+    .alignL { text-align: left; color:lightgreen;}
+    .alignC { text-align: center; color:pink;}
+    .alignR { text-align: right; color:orange;}
+    #butmicro {
+        border: none;
+        padding: 20px;
+        margin: 4px 2px;
+        border-radius: 50%;
+    }
+    #source-languages{color:lightyellow; background-color: green; }
+    #target-languages{color:lightyellow; background-color: green; }
+</style>    
 </head>
 <body>
-    <button class="btn-start">Micro</button>
-    <button class="btn-stop">Stop</button>
-    <textarea class="output" cols="30" rows="10"></textarea>
-    <script src="./app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
-<script>
-class SpeechRecognitionApi{
-    constructor(options) {
-        const SpeechToText = window.speechRecognition || window.webkitSpeechRecognition;
-        this.speechApi = new SpeechToText();
-        this.speechApi.continuous = true;
-        this.speechApi.interimResults = false;
-        this.speechApi.lang = 'vi-VN';
-        this.output = options.output ? options.output : document.createElement('div');
-        console.log(this.output)
-        this.speechApi.onresult = (event)=> { 
-            console.log(event);
-            var resultIndex = event.resultIndex;
-            var transcript = event.results[resultIndex][0].transcript;
+<h1 class="center" id="tieude" translate="no">Text Can Speak</h1>  
+<!--START textarea-----😎🎤🙋‍♂️🎧↩️↪️⇄---recognition.lang = "en-US"; de chi cho js loi noi la ngon ngu en-Us cho le va phan ung mau hon----------------------------------------------->  
+<div class="wrapper">
+    <table> 
+        <tr>
+            <td class="alignL" translate="no"><button id="butMicro"></button>🎤
+                <select id="source-languages">
+                    <option value="zh (zh-CN)">Chinese</option>
+                    <option value="da (da-DK)">Danish</option>
+                    <option value="nl (nl-NL)">Dutch</option>
+                    <option value="en (en-US)" selected>English</option>
+                    <option value="fr (fr-FR)">French</option>
+                    <option value="he (he-IL)">Israel</option>
+                    <option value="ja (ja-JP)">Japanese</option>
+                    <option value="de (de-DE)">German</option>
+                    <option value="el (el-EL)">Greek</option>
+                    <option value="ko (ko-KR)">Korean</option>
+                    <option value="es (es-MX)">Mexico</option>  
+                    <option value="ru (ru-RU)">Russia</option>  
+                    <option value="zh (zh-TW)">Taiwan</option>
+                    <option value="th (th-TH)">Thai</option>
+                    <option value="vi (vi-VN)">Vietnamese</option>
+                </select>
+            </td>
+            <td class="alignL" translate="no" id="hoanviLangs">⇄</td>
 
-            console.log('transcript>>', transcript);
-            console.log(this.output)
-            this.output.textContent = transcript;
+            <td class="alignR" translate="no">
+                <select id="target-languages">
+                    <option value="zh (zh-CN)">Chinese</option>
+                    <option value="da (da-DK)">Danish</option>
+                    <option value="nl (nl-NL)">Dutch</option>
+                    <option value="en (en-US)">English</option>
+                    <option value="fr (fr-FR)">French</option>
+                    <option value="he (he-IL)">Israel</option>
+                    <option value="ja (ja-JP)">Japanese</option>
+                    <option value="de (de-DE)">German</option>
+                    <option value="el (el-EL)">Greek</option>
+                    <option value="ko (ko-KR)">Korean</option>
+                    <option value="es (es-MX)">Mexico</option>  
+                    <option value="ru (ru-RU)">Russia</option>  
+                    <option value="zh (zh-TW)">Taiwan</option>
+                    <option value="th (th-TH)">Thai</option>
+                    <option value="vi (vi-VN)" selected>Vietnamese</option>
+                </select>
+                <a onclick="play()">🎧</a>
+            </td>
+    
+    </table>
+         
+
+    <label for="message" translate="no"></label>
+
+<textarea id="message"  spellcheck="false" name="message" rows="4" cols="60" onclick="demtextxuong()"> </textarea>
+
+<!--Nhom nut dkhien 2----------------------------------------------------------->  
+<div class="buttons1"> 
+    <button id="English" onclick="speak_text_all(this.id)" translate="no"><span style="color:lightblue">🎧 En</span></button>
+    <button id="Vietnamese" onclick="speak_text_all(this.id)" translate="no"><span style="color:orange">🎧 Vi</span></button>
+</div>
+<!--Nhom nut dkhien 3----------------------------------------------------------->  
+<div class="buttons1">
+<button id="stop1" onclick="stop1()" translate="no">Stop</button>
+<button  onclick="clearbelow()" translate="no">Clear</button>
+</div>
+<!--Nhom nut dkhien 1----------------------------------------------------------->  
+
+<div class="buttons2">
+    <button  onclick="demtextxuong()" translate="no"><span style="color:lightgreen">↙️ Clone text down to play</span></button>
+</div>
+
+</div>
+<hr>
+
+<!--START code chon lang dich cua google-->  
+
+<br>
+
+<!-- div nay chua text de speak  ----------------------------------------------->
+
+<div class="f-grid" id="wrapper-text">
+
+    <div  id="t1" onclick="layxvadoc()"></div>
+    <div  id="t2" translate="no"></div>
+
+</div>
+
+<hr>
+<!--Nhom nut dkhien 4 chi tiet them---------------------------------------------> 
+<div class="wrapper">
+
+    <div class="properties">
+      <label for="voice" translate="no">Voice:</label>
+      <select id="voice" translate="no"></select>
+      <div></div>
+    </div>  
+
+    <div class="properties">
+        <label for="pitch" translate="no">Pitch:</label>
+        <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
+        <output for="pitch" translate="no">1</output>
+        
+        <label for="rate" translate="no">Rate:</label>
+        <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
+        <output for="rate" translate="no">1</output>
+        
+        <label for="volume" translate="no">Volume:</label>
+        <input id="volume" type="range" min="0" max="1" step="0.1" value="1" translate="no">
+        <output for="volume" translate="no">1</output>
+    </div>
+    
+    <div class="buttons4">
+        <button id="play" onclick="play()" translate="no"><span style="color:yellow">Play</span></button>
+        <button id="pause" disabled translate="no">Pause</button>
+        <button id="stop" disabled translate="no">Stop</button>
+        <button onclick="xoaduoi()" translate="no"><span style="color:lightblue">Clear</span></button>
+    </div>
+</div>
+<br>
+<div class="wrapper">
+
+<div class="properties2">
+    <label for="vanban" translate="no">Text input from :</label>
+    <select id="vanban" translate="no"></select>
+    <div></div>
+</div>  
+<div class="properties2">
+    <label for="file" translate="no">From 📁 :</label>
+    <input type="file" id="fileInput" accept="png, gif, webp, jpeg, pdf" onchange="loadFile(this.files[0])">
+</div>  
+</div>
+<br>
+
+<script>//======================================= javascript tu day ===================================
+var text = ''; //bien global cho vien doc text
+
+// 1 - khi click tieu de thi hdan -----------------------------------------------------------
+document.querySelector("#tieude").addEventListener("click",hdOfTien89);
+function hdOfTien89(){
+    var  vbhd="App này dùng để nghe văn bản Anh/Việt được đọc bởi trình duyệt và thiết bị. Sử dụng như sau:\n ";
+    vbhd=vbhd+'- Bước 1: Nhập văn bản từ bàn phím hoặc copy từ thiết bị rồi paste vào trong khung hình chữ nhật.\n ';
+    vbhd=vbhd+'- Bước 2: Nhấp nút "Speak En" hoặc "Speak Vi" để nghe văn bản vừa nhập bằng giọng đọc tiếng Anh hoặc Việt tùy văn bản trên.\n ';
+    vbhd=vbhd+'- Bước 3: Nếu muốn dịch ra ngữ khác thì nhấp nút "Move text below to translate" ';
+    vbhd=vbhd+'để đưa văn bản nhập ở phần trên xuống bên dưới rồi thao tác tiếp bằng các nút ở phần dưới. ';
+    alert(vbhd);
+}
+// 2 - khi click vao nut tron empty (neu co click mic thi cung khong sao)--------------------------------
+document.querySelector("#butMicro").addEventListener("click",khoiDongRecognition);
+function khoiDongRecognition(){
+    const messageEl = document.getElementById('message');
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    //let sourceLanguage = document.getElementById("source-languages");
+    //const sourceValue = sourceLanguage.value;   //day la ngon ngu chu phai la giong noi. vdu en khi dich ngu, en-US khi phat am, vi vi-VN
+    //let vt1 = sourceValue.indexOf('(');
+    //let vt2 = sourceValue.indexOf(')');
+    //voicelang=sourceValue.substring(vt1+1,vt2);
+    //alert(voicelang.length);
+    //alert(sourceValue.length);
+    //recognition.lang = voicelang; //ngay sau new SpeechRecognition la start()
+    recognition.start();
+    
+    //cho nen khi click micro thi ham recognition.start() bat dau chay, nen ham sau nghe ngong va nhan thuc
+    recognition.onstart = function(){
+        console.log('Listening . . .');
+        microEl.style.backgroundColor="pink";
+    };
+    recognition.onresult = function(event){ //ham nay nhan thuc rra khi co ket qua no se lay kq in vao
+        var text = event.results[0][0].transcript;
+        console.log(text);
+        messageEl.value = text;
+        demtextxuong(); // (3)
+        // ham tren da co layxvadoc();  (4)
+    };
+    recognition.onend = () => { //khi bi ngat ket noi thi
+        //console.log("Speech recognition service disconnected");
+        microEl.style.backgroundColor="#0003";
+    };
+    recognition.onerror = (event) => {//khi co loi xay ra thi
+        //console.error(`Speech recognition error detected: ${event.error}`);
+        microEl.style.backgroundColor="#0003";
+    };
+    recognition.onnomatch = (event) => {//neu khong nhan ra duoc loi noi
+        //diagnostic.textContent = "I didn't recognize that color.";
+        microEl.style.backgroundColor="#0003";
+    };
+    recognition.onerror = (event) => { //neu xay ra loi
+        //diagnostic.textContent = `Error occurred in recognition: ${event.error}`;
+        microEl.style.backgroundColor="#0003";
+    };
+}
+//------------------------------
+function demtextxuong(){ // (3)
+    document.getElementById('t2').textContent='';
+    let text_in_textarea = document.getElementById('message').value;
+    text = text_in_textarea;
+    document.getElementById('t1').textContent =  text_in_textarea;
+    //tu dong click vao ptu 't1' sau 1 giay (de cho t1 dich xong do no co ham layxvadoc)
+    setTimeout(function() {
+        document.getElementById('t1').click();
+        //khi click la co layxvadoc();
+    }, 1000);
+}
+//--------------------------
+function layxvadoc(){   //(4)
+    document.getElementById('t2').textContent='';
+    let text_in_t1 = document.getElementById('t1').textContent;
+    document.getElementById('t2').textContent =  text_in_t1;
+    document.getElementById('t1').textContent ='';
+    text=document.getElementById('t2').textContent;
+    //dich va doc
+    translate();        //(5)
+    //play();
+}
+//------------------------    
+function translate() { //(5)
+    const inputTextEle = document.getElementById("message") ;
+    const outputTextEle = document.getElementById("t2");
+    inputText = inputTextEle.value;
+    //const inputText = inputTextEle.value;
+    const sourceLanguaget = document.querySelector("#source-languages").value;
+    const targetLanguaget = document.querySelector("#target-languages").value;
+    let vtdL1 = sourceLanguaget.indexOf('(');
+    let sourceLanguage = sourceLanguaget.substring(0,vtdL1-1);
+    
+    let vtdL2 = targetLanguaget.indexOf('(');
+    let targetLanguage = targetLanguaget.substr(0,vtdL2-1);
+    //alert(sourceLanguage.length);
+    //alert(targetLanguage.length);
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
+  
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200)
+      {
+          const responseReturned = JSON.parse(this.responseText);
+          const translations = responseReturned[0].map((text) => text[0]);
+          const outputText = translations.join(" ");
+  
+          outputTextEle.textContent = outputText;
+          text = outputTextEle.textContent;
+          play();
+
+      }
+    };
+    xhttp.open("GET", url);
+    xhttp.send();
+}
+//--------------------------------------------------------------
+
+document.querySelector("#hoanviLangs").addEventListener("click",switchLang);
+
+function switchLang(){
+    const inputTextEle = document.getElementById("message") ;
+    const outputTextEle = document.getElementById("t2");
+
+    let sourceLanguage = document.getElementById("source-languages");
+    let targetLanguage = document.getElementById("target-languages");
+
+    const sourceValue = sourceLanguage.value;
+    const targetValue = targetLanguage.value;
+
+    sourceLanguage.value = targetValue;
+    targetLanguage.value = sourceValue;
+
+    inputTextEle.value = outputTextEle.textContent;
+    outputTextEle.textContent = "";
+
+    //translate();
+}
+
+
+const microEl=document.getElementById("butMicro");
+microEl.addEventListener('click',microElWork);
+
+
+function microElWork(){
+    microEl.style.backgroundColor="pink";
+}
+// uu tien len dau de nhanh
+    //const btn = document.getElementById('btn');
+    const messageEl = document.getElementById('message');
+    
+    //ham sau duoc khoi dong ngay khi trang web tai xong de khoi tao doi tuong recognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    
+    //cho nen khi click micro thi ham recognition.start() bat dau chay, nen ham sau nghe ngong va nhan thuc
+    recognition.onstart = function(){
+        console.log('Listening . . .');
+        microEl.style.backgroundColor="pink";
+
+    };
+    recognition.onresult = function(event){ //ham nay nhan thuc rra khi co ket qua no se lay kq in vao
+        var text = event.results[0][0].transcript;
+        console.log(text);
+        messageEl.value = text;
+        demtextxuong();
+        // ham tren da co layxvadoc();
+    };
+
+    recognition.onend = () => { //khi bi ngat ket noi thi
+        //console.log("Speech recognition service disconnected");
+        microEl.style.backgroundColor="#0003";
+    };
+    recognition.onerror = (event) => {//khi co loi xay ra thi
+        //console.error(`Speech recognition error detected: ${event.error}`);
+        microEl.style.backgroundColor="#0003";
+    };
+    recognition.onnomatch = (event) => {//neu khong nhan ra duoc loi noi
+        //diagnostic.textContent = "I didn't recognize that color.";
+        microEl.style.backgroundColor="#0003";
+
+    };
+    recognition.onerror = (event) => { //neu xay ra loi
+        //diagnostic.textContent = `Error occurred in recognition: ${event.error}`;
+        microEl.style.backgroundColor="#0003";
+
+    };
+    //----------------------------------------------------------------------------------------
+async function loadFile(file) {
+        let fileName = file.name;
+        let duoiFile = fileName.split('.').pop();
+        const messageEl = document.getElementById('message')
+        if (duoiFile.toUpperCase()=='TXT'){
+            let text = await file.text();
+            messageEl.value = text;
+        }
+        if (duoiFile.toUpperCase()=='PNG' || duoiFile.toUpperCase()=='JPG' || duoiFile.toUpperCase()=='JPEG'){
+            // (B) CREATE VIETNAMESE TESSERACT WORKER
+            const worker = await Tesseract.createWorker();
+            await worker.loadLanguage("vie");
+            await worker.initialize("vie");
+            // (CC) ON FILE SELECT - IMAGE TO TEXT
+            const res = await worker.recognize(file);
+            messageEl.value = res.data.text;
+        }
+        if (duoiFile.toUpperCase()=='PDF'){
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(file);
+            reader.onload = async () => {
+                const pdf = await pdfjsLib.getDocument({ data: reader.result }).promise;
+                const maxPages = pdf.numPages;
+                let text = '';
+                for (let pageNum = 1; pageNum <= maxPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const content = await page.getTextContent();
+                    const pageText = content.items.map(item => item.str).join('\n');
+                    text += pageText + '\n';
+                }
+                messageEl.value = text;
+            };
         }
     }
-    init(){
-        this.speechApi.start();
-    }
-    stop(){
-        this.speechApi.stop();
-    }
+</script>
+<!--============ Phan chua javascript dieu khien  ==========================----->
+<script>
 
-}
-//khi trang web duoc tai len thi lam cac viec
-window.onload = function(){
-    var speech = new SpeechRecognitionApi({             //gan lop SpeechRecognitionApi vao doi tuong speech
-        output: document.querySelector('.output')       //voi dau ra la phan tu co ten lop la .output
-    })
 
-    document.querySelector('.btn-start').addEventListener('click', function () { //khi click nut .btn-start thi
-        speech.init();                                                               //khoi dong speech
-        document.querySelector('.btn-start').style.color="red";
-    })
 
-    document.querySelector('.btn-stop').addEventListener('click', function () {   //khi click nut .btn-stop
-        speech.stop();
-        document.querySelector('.btn-start').style.color="black";
-    })
-}
-//xu li <textarea class="output" cols="30" rows="10"></textarea>
-document.querySelector('.output').addEventListener('click', readText);
-function readText(){
-    const text = document.querySelector('.output').value;
-    const utterance = new SpeechSynthesisUtterance(text);
+//----------------------------  
+
+
+function speak_text_all(idname){
+    if (idname.charAt(0) == 'V'){giongnoi='vi-VN';} else {giongnoi='en-US';}//dung V de neu co dich ra thi no van la V
+    //cai lenh tren day khong lien quan voice phia duoi
+    const textintextarea = document.getElementById("message").value;
+    const utterance = new SpeechSynthesisUtterance(textintextarea);
+    utterance.lang = giongnoi;
     window.speechSynthesis.speak(utterance);
 }
+    
+function stop1() {
+    window.speechSynthesis.cancel();
+}
+function clearbelow(){
+    document.getElementById('message').value = "";
+}
+//----------------------------------
+//xu li voice --------------------------------------------------------------------------
+const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
+function updateVoices() {
+    // lay cac voice dat vao cac option
+    window.speechSynthesis.getVoices().forEach(voice => {
+        if (voice.lang==='en-US' || voice.lang==='vi-VN'){
+        const option = new Option(voice.name, voice.voiceURI, voice.default, voice.default);
+        voiceInEl.add(option);
+    
+    //const isAlreadyAdded = [...voiceInEl.options].some(option => option.value === voice.voiceURI);
+    //if (!isAlreadyAdded) {
+    //    const option = new Option(voice.name, voice.voiceURI, voice.default, voice.default);
+    //    voiceInEl.add(option);
+    }
+    });
+}
+//chay ham tren day updateVoices() de lay cac voice vao cac opption cua select
+updateVoices(); //goi chay ham nay voi bien voiceInEl va dinh nghia ham o phia tren
+
+//moi khi thay doi voice thi no cap nhat lai de co gtri moi 
+window.speechSynthesis.onvoiceschanged = updateVoices;
+//vi du de gan gtri voice hien hanh la voiceInEl.value cho dt utterance
+//utterance.voice=window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+//xu li pit/rate/vol ----------------------------------------------------------------------------------
+//khai bao cac bien toan cuc va gan gitri dau
+const pitchInEl = document.getElementById('pitch');
+const rateInEl = document.getElementById('rate');
+const volumeInEl = document.getElementById('volume');
+
+const pitchOutEl = document.querySelector('output[for="pitch"]');
+const rateOutEl = document.querySelector('output[for="rate"]');
+const volumeOutEl = document.querySelector('output[for="volume"]');
+
+function updateOutputs() {//---------
+    // display current values of all range inputs, phoi bay gtri hien huu
+    pitchOutEl.textContent = pitchInEl.value;
+    rateOutEl.textContent = rateInEl.value;
+    volumeOutEl.textContent = volumeInEl.value;
+}
+
+// add UI event handlers, khi pit/rate/vol thay doi thi chay ham updateOutputs() o tren de lay gt moi
+pitchInEl.addEventListener('change', updateOutputs);
+rateInEl.addEventListener('change', updateOutputs);
+volumeInEl.addEventListener('change', updateOutputs);
+
+//Xu li 3 nut play/pause/stop2 phia duoi ======================================================
+
+
+//----------------------------------------
+
+// grab the UI elements to work with
+const textEl = document.getElementById('t2');
+const playEl = document.getElementById('play');
+const pauseEl = document.getElementById('pause');
+const stopEl = document.getElementById('stop');
+
+// add UI event handlers
+playEl.addEventListener('click', play);
+pauseEl.addEventListener('click', pause);
+stopEl.addEventListener('click', stop);
+
+// set text
+textEl.innerHTML = text;
+
+//xuli lai text neu co ma xau do dich-----
+var vt1 = text.search(">");
+var vt2 = text.search("</");
+if (vt1>0 && vt2>0){
+    text = text.substring(vt1+1, vt2);
+    textElement.innerHTML = text;
+    text = textElement.innerHTML;
+}    
+
+function play() {
+  if (window.speechSynthesis.speaking) {
+    // there's an unfinished utterance
+    window.speechSynthesis.resume();
+  } else {
+    // start new utterance
+    if (text==''){return;}  // de tranh giat giat khi text trong
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.addEventListener('start', handleStart);
+    utterance.addEventListener('pause', handlePause);
+    utterance.addEventListener('resume', handleResume);
+    utterance.addEventListener('end', handleEnd);
+    utterance.addEventListener('boundary', handleBoundary);
+    
+    utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+    utterance.pitch = pitchInEl.value;
+    utterance.rate = rateInEl.value;
+    utterance.volume = volumeInEl.value;
+
+    window.speechSynthesis.speak(utterance);
+  }
+}
+
+function pause() {
+  window.speechSynthesis.pause();
+}
+
+function stop() {
+  window.speechSynthesis.cancel();
+  // Safari doesn't fire the 'end' event when cancelling, so call handler manually
+  handleEnd();
+}
+
+function handleStart() {
+  playEl.disabled = true;
+  pauseEl.disabled = false;
+  stopEl.disabled = false;
+}
+
+function handlePause() {
+  playEl.disabled = false;
+  pauseEl.disabled = true;
+  stopEl.disabled = false;
+}
+
+function handleResume() {
+  playEl.disabled = true;
+  pauseEl.disabled = false;
+  stopEl.disabled = false;
+}
+
+function handleEnd() {
+  playEl.disabled = false;
+  pauseEl.disabled = true;
+  stopEl.disabled = true;
+  
+  // reset text to remove mark
+  textEl.innerHTML = text;
+}
+
+function handleBoundary(event) {
+  if (event.name === 'sentence') {
+    // we only care about word boundaries
+    return;
+  }
+
+  const wordStart = event.charIndex;
+  let wordLength = event.charLength;
+  if (wordLength === undefined) {
+    // Safari doesn't provide charLength, so fall back to a regex to find the current word and its length (probably misses some edge cases, but good enough for this demo)
+    const match = text.substring(wordStart).match(/^[a-z\d']*/i);
+    wordLength = match[0].length;
+  }
+  // wrap word in <mark> tag
+  const wordEnd = wordStart + wordLength;
+  const word = text.substring(wordStart, wordEnd);
+  const markedText = text.substring(0, wordStart) + '<mark>' + word + '</mark>' + text.substring(wordEnd);
+  textEl.innerHTML = markedText;
+
+}
+
+//-------------------------------xoa text phan duoi------------------------
+function xoaduoi(){
+    document.getElementById('message').value = ""; //xoa text phia tre ra trong
+    document.getElementById('t2').innerHTML = ""; //xoa text phia tre ra trong
+    text_in_textarea = document.getElementById('message').value;
+    text = text_in_textarea
+    document.getElementById('t1').textContent =  text_in_textarea;
+}
+//--dich doc nhom tu khi boi den va click vao------------------------------------------------
+//them su kien click cho phan tu co id "t2" de khi click vao do 
+//thi ham vo danh function() thuc hien nhiem vu cua ham nhu dinh nghia duoi day
+//no se thuc hien ham lay text chon
+document.getElementById('message').addEventListener('copy' , function() {
+    //khi click vao 't2' thi chay ham getSelectedText de lay text roi dan vao t3
+    var selectedRange = window.getSelection();
+    if (selectedRange.rangeCount > 0) {
+        textlay = selectedRange.toString().trim();
+        //dat text vao t3 de no dich
+        document.getElementById('t2').innerHTML = '';
+        document.getElementById('t1').innerHTML = textlay;
+        document.getElementById("t1").style.color = "yellow";
+        //setTimeout(function() {
+        //    console.log(textdichEl.innerHTML);
+
+        //    textdadich = textdichEl.innerHTML;
+        //    chdau='<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">';
+        //    chcuoi='</font></font>';
+        //    chphu='<font style="vertical-align: inherit;">';
+        //    chphu2='</font>';
+        //    textdadich = textdadich.replaceAll(chdau,'');
+        //    textdadich = textdadich.replaceAll(chcuoi,'');
+        //    textdadich = textdadich.replaceAll(chphu,'');
+        //    textdadich = textdadich.replaceAll(chphu2,'');
+        //    alert(textdadich);
+        //}, 1000); 
+    }
+})    
+// doc text dich
+//function ReadTextDich(textdadich){
+//    const utterance = new SpeechSynthesisUtterance(textdadich);
+//    window.speechSynthesis.speak(utterance);
+//}
+
+//-----------------------dang lam
+const vbanInEl = document.getElementById('vanban'); //bien global,vanban la id cua <select>
+const lVanbans=['--Select--','Nhớ mẹ', 'Bài thơ của Thánh Dũng Lạc', 'Thăm Dũng','Nhớ Phước','Đến chết vẫn còn lầm lẫn'];
+lVanbans.forEach((element, key) => {
+    vbanInEl[key] = new Option(element, key);
+
+});
+
+vbanInEl.addEventListener('change', getVanban);
+
+function getVanban(){
+    var keyOfVbchon = document.getElementById("vanban").value;
+    var elTextarea = document.getElementById("mesage");
+    if (keyOfVbchon == 1) {
+        var elTextarea=document.getElementById('message');
+        textduavao = 'Tìm dáng năm xưa bóng mẹ hiền. \n';
+        textduavao=textduavao+'Vòng tay êm ái buổi truân chuyên.  \n';
+        textduavao=textduavao+'Âm thầm gạt lệ buồn muôn thuở. \n';
+        textduavao=textduavao+'Khắc khoải dòng châu khóc vạn niên. \n';
+        textduavao=textduavao+'Lặng lẽ gần con trong giấc điệp.  \n';
+        textduavao=textduavao+'Bồi hồi cạnh trẻ giữa cung tiên.  \n';
+        textduavao=textduavao+'Trần gian con chẳng tìm đâu thấy. \n';
+        textduavao=textduavao+'Thương nhớ bên mồ mẹ ngủ yên. \n';
+        textdua=textduavao;
+        elTextarea.value = textdua;
+    }
+    if (keyOfVbchon == 2) {
+        var elTextarea=document.getElementById('message');
+        textduavao = 'Lạc rầy đã rõ chốn quân quan. \n';
+        textduavao=textduavao+'Bút chép thơ này gửi thở than.  \n';
+        textduavao=textduavao+'Lòng nhớ bạn non còn vất vả. \n';
+        textduavao=textduavao+'Dạ thương khách chạy chưa yên hàn. \n';
+        textduavao=textduavao+'Đông qua tiết lại thời xuân tới.  \n';
+        textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an.  \n';
+        textduavao=textduavao+'Làm kẻ anh hùng chi quản khó. \n';
+        textduavao=textduavao+'Nguyện xin cùng gặp chốn thanh nhàn. \n';
+        textdua=textduavao;
+        elTextarea.value = textdua;
+    }
+    if (keyOfVbchon == 3) {
+        var elTextarea=document.getElementById('message');
+        textduavao = 'Tiến rầy đã rõ Dũng Thanh Xuân.  \n';
+        textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n';
+        textduavao=textduavao+'Bút chép thơ này tí thở than.  \n';
+        textduavao=textduavao+'Dạ thương Dũng đã đi xa rồi.  \n';
+        textduavao=textduavao+'Đông qua tiết lại thời xuân tới.  \n';
+        textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an.  \n';
+        textduavao=textduavao+'Làm người bạn hiền không quản khó.  \n';
+        textduavao=textduavao+'Nguyện xin em hưởng chốn thanh nhàn.  \n';
+        textdua=textduavao;
+        elTextarea.value = textdua;
+    }
+    if (keyOfVbchon == 4) {
+        var elTextarea=document.getElementById('message');
+        textduavao = 'Chúng rầy lại giỗ Phước Mận Môn.  \n';
+        textduavao=textduavao+'Lòng nhớ bạn em đầy tốt xử.  \n';
+        textduavao=textduavao+'Bút chép thơ này tí thở than.  \n';
+        textduavao=textduavao+'Dạ thương Phước đã đi xa rồi.  \n';
+        textduavao=textduavao+'Đông qua tiết lại thời xuân tới.  \n';
+        textduavao=textduavao+'Khổ tạm kinh qua hưởng phúc an.  \n';
+        textduavao=textduavao+'Làm người bạn hiền không quản khó.  \n';
+        textduavao=textduavao+'Nguyện xin người hưởng chốn thanh nhàn.  \n';
+        textdua=textduavao;
+        elTextarea.value = textdua;
+    }
+    if (keyOfVbchon == 5) {
+        var elTextarea=document.getElementById('message');
+        textduavao = "Hai vợ chồng nọ có 5 đứa con: 4 đứa đầu thì trắng trẻo xinh đẹp, chỉ có đứa út đen đủi, xấu xí tệ. Người chồng nghi ngờ lắm nhưng không dám nói ra. Đến lúc lâm chung, mới ra hiệu gọi bà vợ lại hỏi: ";
+        textduavao=textduavao+"- Tôi sắp đi đây, trước khi chết tôi hỏi thật bà một điều. Thằng út… ";
+        textduavao=textduavao+"- Thằng út làm sao - Nó có thật sự… là con của tôi không? ";
+        textduavao=textduavao+"- Đến giờ phút này thì tôi cũng không giấu giếm gì ông. Thằng út… mới thật sự là con của ông. ";
+        textduavao=textduavao+"Ông chồng, tai đã lãng đãng, nên đã mỉm cười ra đi. ";
+        textdua=textduavao;
+        elTextarea.value = textdua;
+
+    }
+
+}
+//--------------tien89talkenvi.github.io------
+//Link toi tra tu dien tieng viet ra tieng khac
+//https://www.lexilogos.com/english/vietnamese_dictionary.htm
 </script>
+<!-- ----------------dem len github khong the hien video duoc
+<br>
+<div id="sophie">
+<video controls loop="true" muted="true">
+    <source src="./Sophie-boi-8124.mp4" type="video/mp4">
+</video>    
+</div>
+
+đây là một cách hack nhanh de loai bo dich.
+JavaScript
+jQuery.removeCookie('googtrans', { path: 'www.baberich.de' });
+jQuery.removeCookie('googtrans', { domain: '.baberich.de' });
+window.document.location.href = "/";
+
+<div>Toi ten la <span class='notranslate'>CON COP</span> co phai khong</div>
+khi dich ra En thi CON COP khong dc dich
+
+chu teacher dem vao <div id='t3'></div> no ra kq nhu sau
+<font style="vertical-align: inherit;"><font style="vertical-align: inherit;">giáo viên.</font></font>
+-------------------------------------------------------- -->
+
+
 
 </body>
 </html>
