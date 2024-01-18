@@ -289,14 +289,14 @@ function khoiDongRecognition(){
     const messageEl = document.getElementById('message');
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
-    let sourceLanguage = document.getElementById("source-languages");
-    const sourceValue = sourceLanguage.value;   //day la ngon ngu chu phai la giong noi. vdu en khi dich ngu, en-US khi phat am, vi vi-VN
-    let vt1 = sourceValue.indexOf('(');
-    let vt2 = sourceValue.indexOf(')');
-    voicelang=sourceValue.substring(vt1+1,vt2);
-    //alert(voicelang);
-    //alert(sourceValue);
-    recognition.lang = voicelang; //ngay sau new SpeechRecognition la start()
+    //let sourceLanguage = document.getElementById("source-languages");
+    //const sourceValue = sourceLanguage.value;   //day la ngon ngu chu phai la giong noi. vdu en khi dich ngu, en-US khi phat am, vi vi-VN
+    //let vt1 = sourceValue.indexOf('(');
+    //let vt2 = sourceValue.indexOf(')');
+    //voicelang=sourceValue.substring(vt1+1,vt2);
+    //alert(voicelang.length);
+    //alert(sourceValue.length);
+    //recognition.lang = voicelang; //ngay sau new SpeechRecognition la start()
     recognition.start();
     
     //cho nen khi click micro thi ham recognition.start() bat dau chay, nen ham sau nghe ngong va nhan thuc
