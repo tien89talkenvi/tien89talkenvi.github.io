@@ -24,6 +24,7 @@ class SpeechRecognitionApi{
         this.speechApi = new SpeechToText();
         this.speechApi.continuous = true;
         this.speechApi.interimResults = false;
+        this.speechApi.lang = 'vn-VN';
         this.output = options.output ? options.output : document.createElement('div');
         console.log(this.output)
         this.speechApi.onresult = (event)=> { 
