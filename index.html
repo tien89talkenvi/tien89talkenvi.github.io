@@ -143,8 +143,7 @@
 <div class="wrapper">
     <table> 
         <tr>
-            <td class="alignL"  translate="no">
-                <img id="butMicro" src="icons/mic.gif" alt="Start"></img>
+            <td class="alignL"  translate="no"><span id="butMicro" style="color:rgb(61, 59, 59)">off🎤</span>
             
                 <select id="source-languages">
                     <option value="zh (zh-CN)">Chinese</option>
@@ -305,6 +304,7 @@ function khoiDongRecognition(){
     recognition.onstart = function(){
         console.log('Listening . . .');
         microEl.style.backgroundColor="pink";
+        microEl.innerHTML="On🎤";
     };
     recognition.onresult = function(event){ //ham nay nhan thuc rra khi co ket qua no se lay kq in vao
         var text = event.results[0][0].transcript;
@@ -316,6 +316,7 @@ function khoiDongRecognition(){
     recognition.onend = () => { //khi bi ngat ket noi thi
         //console.log("Speech recognition service disconnected");
         microEl.style.backgroundColor="#0003";
+        microEl.innerHTML="off🎤";
     };
     recognition.onerror = (event) => {//khi co loi xay ra thi
         //console.error(`Speech recognition error detected: ${event.error}`);
@@ -324,10 +325,12 @@ function khoiDongRecognition(){
     recognition.onnomatch = (event) => {//neu khong nhan ra duoc loi noi
         //diagnostic.textContent = "I didn't recognize that color.";
         microEl.style.backgroundColor="#0003";
+        microEl.innerHTML="off🎤";
     };
     recognition.onerror = (event) => { //neu xay ra loi
         //diagnostic.textContent = `Error occurred in recognition: ${event.error}`;
         microEl.style.backgroundColor="#0003";
+        microEl.innerHTML="off🎤";
     };
 }
 //------------------------------
