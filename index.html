@@ -143,7 +143,7 @@
 <div class="wrapper">
     <table> 
         <tr>
-            <td class="alignL"  translate="no"><label id="butMicro" style="color:rgb(61, 59, 59)">off🎤</label>
+            <td class="alignL"  translate="no"><button id="butMicro" style="color:gray">off</button>🎤
             
                 <select id="source-languages">
                     <option value="zh (zh-CN)">Chinese</option>
@@ -273,6 +273,7 @@
 
 <script>//======================================= javascript tu day ===================================
 var text = ''; //bien global cho vien doc text
+var voicelang='';
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;//global
 const recognition = new SpeechRecognition(); //global
 
@@ -299,12 +300,11 @@ function khoiDongRecognition(){
     //alert(sourceValue.length);
     recognition.lang = voicelang; //ngay sau new SpeechRecognition phai dat lang roi moi den start()
     recognition.start();
-    
     //cho nen khi click micro thi ham recognition.start() bat dau chay, nen ham sau nghe ngong va nhan thuc
     recognition.onstart = function(){
         console.log('Listening . . .');
         microEl.style.backgroundColor="pink";
-        microEl.innerHTML="On🎤";
+        microEl.innerHTML="on";
     };
     recognition.onresult = function(event){ //ham nay nhan thuc rra khi co ket qua no se lay kq in vao
         var text = event.results[0][0].transcript;
@@ -316,7 +316,7 @@ function khoiDongRecognition(){
     recognition.onend = () => { //khi bi ngat ket noi thi
         //console.log("Speech recognition service disconnected");
         microEl.style.backgroundColor="#0003";
-        microEl.innerHTML="off🎤";
+        microEl.innerHTML="off";
     };
     recognition.onerror = (event) => {//khi co loi xay ra thi
         //console.error(`Speech recognition error detected: ${event.error}`);
@@ -325,12 +325,12 @@ function khoiDongRecognition(){
     recognition.onnomatch = (event) => {//neu khong nhan ra duoc loi noi
         //diagnostic.textContent = "I didn't recognize that color.";
         microEl.style.backgroundColor="#0003";
-        microEl.innerHTML="off🎤";
+        microEl.innerHTML="off";
     };
     recognition.onerror = (event) => { //neu xay ra loi
         //diagnostic.textContent = `Error occurred in recognition: ${event.error}`;
         microEl.style.backgroundColor="#0003";
-        microEl.innerHTML="off🎤";
+        microEl.innerHTML="off";
     };
 }
 //------------------------------
