@@ -120,7 +120,7 @@ textarea {
     height:30px;
     border-radius: 50%;
 }
-#start_button {
+#start_button, #listen_button {
     width:40px;
     height:40px;
     border-radius: 50%;
