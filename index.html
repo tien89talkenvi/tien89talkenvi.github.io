@@ -126,8 +126,8 @@
     .alignC { text-align: center; color:pink;}
     .alignR { text-align: right; color:orange;}
     #butMicro {
-        width:30px;
-        height:30px;
+        width:20px;
+        height:20px;
         border-radius: 50%;
     }
     #source-languages{color:lightyellow; background-color: green; }
@@ -143,8 +143,7 @@
 <div class="wrapper">
     <table> 
         <tr>
-            <td class="alignR"  translate="no"><button id="butMicro" style="color:gray">off</button>🎤</td>
-            <td class="alignL"  translate="no">
+            <td class="alignL"  translate="no"><button id="butMicro"></button>🎤
                 <select id="source-languages">
                     <option value="zh (zh-CN)">Chinese</option>
                     <option value="da (da-DK)">Danish</option>
@@ -165,7 +164,7 @@
             </td>
             <td class="alignL" translate="no" id="hoanviLangs">⇄</td>
 
-            <td class="alignC" translate="no">
+            <td class="alignR" translate="no">
                 <select id="target-languages">
                     <option value="zh (zh-CN)">Chinese</option>
                     <option value="da (da-DK)">Danish</option>
@@ -304,7 +303,6 @@ function khoiDongRecognition(){
     recognition.onstart = function(){
         console.log('Listening . . .');
         microEl.style.backgroundColor="pink";
-        microEl.innerHTML="on";
     };
     recognition.onresult = function(event){ //ham nay nhan thuc rra khi co ket qua no se lay kq in vao
         var text = event.results[0][0].transcript;
@@ -316,7 +314,6 @@ function khoiDongRecognition(){
     recognition.onend = () => { //khi bi ngat ket noi thi
         //console.log("Speech recognition service disconnected");
         microEl.style.backgroundColor="#0003";
-        microEl.innerHTML="off";
     };
     recognition.onerror = (event) => {//khi co loi xay ra thi
         //console.error(`Speech recognition error detected: ${event.error}`);
@@ -325,12 +322,10 @@ function khoiDongRecognition(){
     recognition.onnomatch = (event) => {//neu khong nhan ra duoc loi noi
         //diagnostic.textContent = "I didn't recognize that color.";
         microEl.style.backgroundColor="#0003";
-        microEl.innerHTML="off";
     };
     recognition.onerror = (event) => { //neu xay ra loi
         //diagnostic.textContent = `Error occurred in recognition: ${event.error}`;
         microEl.style.backgroundColor="#0003";
-        microEl.innerHTML="off";
     };
 }
 //------------------------------
