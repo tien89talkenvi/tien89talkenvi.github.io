@@ -115,7 +115,7 @@ textarea {
 .alignL { text-align: left; color:lightgreen;}
 .alignC { text-align: center; color:pink;}
 .alignR { text-align: right; color:orange;}
-#start_img {
+#start_img, #listen_img {
     width:30px;
     height:30px;
     border-radius: 50%;
