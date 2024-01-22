@@ -258,7 +258,9 @@ function translate() { //(5)
 }
 //-------------------
 function readTextQuick(){
+  let giong = langs[select_target_language.value][1];
   const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = giong;
   window.speechSynthesis.speak(utterance);
 
 }
