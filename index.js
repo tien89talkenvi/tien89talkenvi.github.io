@@ -237,9 +237,10 @@ function translate() { //(5)
         const outputText = translations.join(" ");
         outputTextEle.textContent = outputText;
         text = outputTextEle.textContent;
+        listen_button.click(); // readTextQuick()
         //play();
         //listen_button.click();
-        readTextQuick();
+        //readTextQuick();
         //const utterance = new SpeechSynthesisUtterance(text);
         //window.speechSynthesis.getVoices().forEach(voice => {
         //  if (voice.lang==='vi-VN' && voice.name.toLowerCase() === 'linh'){
