@@ -13,7 +13,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
 <h1 class="center" id="tieude" translate="no">Text Can Speak</h1>  
-<div class="f-grid" id="wrapper-text">
+<div id="wrapper-text">
   <div  id="info" translate="no"></div>
 </div>
 <br>
@@ -29,15 +29,18 @@
 
       <td class="alignR" translate="no"><select id="select_target_language"></select>
           <select id="select_target_dialect"></select></td>
-      <td class="alignR" translate="no"><button id="listen_button" onclick="play()">🎧</button></td>
+      <td class="alignR" translate="no"><button id="listen_button" onclick="readTextQuick()">🎧</button></td>
     </tr>
   </table>
-  <div id="results">
-    <span id="final_span" class="final"></span>
-    <span id="interim_span" class="interim"></span>
-    <p>
+
+  <div class="f-grid">
+    <div id="results" class="f-grid-coll">
+        <span id="final_span" class="final"></span>
+        <span id="interim_span" class="interim"></span>
+        <p>
+    </div>
+    <div id="resultsdich" class="f-grid-colr"></div>
   </div>
-  
 
 </div> <!--end div class="wrapper"-->
 

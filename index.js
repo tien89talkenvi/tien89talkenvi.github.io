@@ -30,23 +30,23 @@ var messages = {
     "copy": {
       msg: 'Content copy to clipboard successfully.',
       class: 'alert-success'},
-  }
-  //cac bien global
-  var final_transcript = '';
-  var recognizing = false;
-  var ignore_onend;
-  var start_timestamp;
-  var recognition;
+}
+//cac bien global
+var final_transcript = '';
+
+var recognizing = false;
+var ignore_onend;
+var start_timestamp;
+var recognition;
   
-  //cac ham ung voi cac su kien
-  $( document ).ready(function() {
+//cac ham ung voi cac su kien
+$( document ).ready(function() {
     for (var i = 0; i < langs.length; i++) {
       select_source_language.options[i] = new Option(langs[i][0], i);
       select_target_language.options[i] = new Option(langs[i][0], i);
-  
     }
-    select_source_language.selectedIndex = 1;
-    select_target_language.selectedIndex = 10;
+    select_source_language.selectedIndex = 10; //viet
+    select_target_language.selectedIndex = 1;  //english
     updateCountry();
     select_source_dialect.selectedIndex = 0;
     select_target_dialect.selectedIndex = 0;
@@ -54,15 +54,18 @@ var messages = {
     if (!('webkitSpeechRecognition' in window)) {
       upgrade();
     } else {
-      showInfo('start');  
+      showInfo('start'); 
+      resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
       start_button.style.display = 'inline-block';
       recognition = new webkitSpeechRecognition();
       recognition.continuous = true;
       recognition.interimResults = true;
   
       recognition.onstart = function() {
+
         recognizing = true;
         showInfo('speak_now');
+        resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
         start_img.src = 'icons/mic-animation.gif';
       };
   
@@ -70,14 +73,17 @@ var messages = {
         if (event.error == 'no-speech') {
           start_img.src = 'icons/mic.gif';
           showInfo('no_speech');
+          resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
           ignore_onend = true;
         }
         if (event.error == 'audio-capture') {
           start_img.src = 'icons/mic.gif';
           showInfo('no_microphone');
+          resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
           ignore_onend = true;
         }
         if (event.error == 'not-allowed') {
+          resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
           if (event.timeStamp - start_timestamp < 100) {
             showInfo('blocked');
           } else {
@@ -98,32 +104,31 @@ var messages = {
           return;
         }
         showInfo('stop');
-        if (window.getSelection) {
-          window.getSelection().removeAllRanges();
-          var range = document.createRange();
-          range.selectNode(document.getElementById('final_span'));
-          window.getSelection().addRange(range);
-        }
+        translate();
       };
   
       recognition.onresult = function(event) {
         var interim_transcript = '';
+        resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
+        
         for (var i = event.resultIndex; i < event.results.length; ++i) {
           if (event.results[i].isFinal) {
             final_transcript += event.results[i][0].transcript;
           } else {
-            interim_transcript += event.results[i][0].transcript;
+            interim_transcript += event.results[i][0].transcript; 
           }
         }
         final_transcript = capitalize(final_transcript);
         final_span.innerHTML = linebreak(final_transcript);
         interim_span.innerHTML = linebreak(interim_transcript);
+        //resultsdich.innerHTML=translate(final_transcript);     
+        //translate(final_transcript);     
       };
     }
-  });
+});
   
   
-  function updateCountry() {
+function updateCountry() {
       for (var i = select_source_dialect.options.length - 1; i >= 0; i--) {
           select_source_dialect.remove(i);
       }
@@ -142,56 +147,32 @@ var messages = {
       }
       select_target_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
   
-  }
+}
   
   
-  function upgrade() {
+function upgrade() {
     start_button.style.visibility = 'hidden';
     showInfo('upgrade');
-  }
+}
   
-  var two_line = /\n\n/g;
-  var one_line = /\n/g;
-  function linebreak(s) {
+var two_line = /\n\n/g;
+var one_line = /\n/g;
+function linebreak(s) {
     return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
-  }
+}
   
-  var first_char = /\S/;
-  function capitalize(s) {
+var first_char = /\S/;
+function capitalize(s) {
     return s.replace(first_char, function(m) { return m.toUpperCase(); });
-  }
+}
   
-  $("#copy_button").click(function () {
-    if (recognizing) {
-      recognizing = false;
-      recognition.stop();
-    }
-    setTimeout(copyToClipboard, 500);
-    
-  });
-  
-  function copyToClipboard() {
-    if (document.selection) { 
-        var range = document.body.createTextRange();
-        range.moveToElementText(document.getElementById('results'));
-        range.select().createTextRange();
-        document.execCommand("copy"); 
-    
-    } else if (window.getSelection) {
-        var range = document.createRange();
-         range.selectNode(document.getElementById('results'));
-         window.getSelection().addRange(range);
-         document.execCommand("copy");
-    }
-    showInfo('copy');
-  }
-  
-  $("#start_button").click(function () {
+$("#start_button").click(function () {
     if (recognizing) {
       recognition.stop();
       return;
     }
     final_transcript = '';
+    
     recognition.lang = select_source_dialect.value;
     //alert(recognition.lang); //thu cho nay thay dung roi khi nhap nut button start
     recognition.start();
@@ -201,13 +182,13 @@ var messages = {
     start_img.src = 'icons/mic-slash.gif';
     showInfo('allow');
     start_timestamp = event.timeStamp;
-  });
+});
   
-  $("#select_source_language").change(function () {
+$("#select_source_language").change(function () {
     updateCountry();
-  });
+});
   
-  function showInfo(s) {
+function showInfo(s) {
     if (s) {
       var message = messages[s];
       $("#info").html(message.msg);
@@ -218,52 +199,65 @@ var messages = {
       $("#info").removeClass();
       $("#info").addClass('d-none');
     }
-  }
+}
 
-  $("#hoanviLangs").click(function () {
+$("#hoanviLangs").click(function () {
     //1.lay chi so lang ben phai dat no la jp
     let jp = select_target_language.selectedIndex;
     //2. lay chi so lang ben trai dat no la jt
     let jt = select_source_language.selectedIndex;
     //3. di tim ben trai cai phan tu co chi so index la jp va default tai do (tuc la chon phan tu do)
-    //ptL = langs[select_target_language.selectedIndex];
-    //ptR = langs[select_source_language.selectedIndex];
-    //select_source_language.selectedIndex = '';
-    //alert(jt);
-    //alert(jp);
     select_source_language.selectedIndex = jp;
     select_target_language.selectedIndex = jt;
     updateCountry();
+}); 
 
-    //updateCountry();
-        //select_dialect.selectedIndex = 6;
-
-    //let tam = "select_source_language"
-    //langs[select_source_language.selectedIndex]
-
-    //const inputTextEle = document.getElementById("message") ;
-    //const outputTextEle = document.getElementById("t2");
-
-    //let sourceLanguage = document.getElementById("source-languages");
-    //let targetLanguage = document.getElementById("target-languages");
-
-    //const sourceValue = sourceLanguage.value;
-    //const targetValue = targetLanguage.value;
-
-    //sourceLanguage.value = targetValue;
-    //targetLanguage.value = sourceValue;
-
-    //inputTextEle.value = outputTextEle.textContent;
-    //outputTextEle.textContent = "";
-
-    //translate();
-        //for (var i = 0; i < langs.length; i++) {
-        //  select_language.options[i] = new Option(langs[i][0], i);
-        //}
-        //select_language.selectedIndex = 6;
-        //updateCountry();
-        //select_dialect.selectedIndex = 6;
-      
-
-  }); 
 //--end cac bien va ham lquan recognition speech --------------------------------------------
+function translate() { //(5)
+  const inputText = final_transcript;
+  const outputTextEle = document.getElementById("resultsdich");
+  const sourceLanguaget = langs[document.querySelector("#select_source_language").value][0];
+  const targetLanguaget = langs[document.querySelector("#select_target_language").value][0];
+  let vtdL1 = sourceLanguaget.indexOf('(');
+  let vtcL1 = sourceLanguaget.indexOf(')');
+  let sourceLanguage = sourceLanguaget.substring(vtdL1+1,vtcL1);
+  
+  let vtdL2 = targetLanguaget.indexOf('(');
+  let vtcL2 = targetLanguaget.indexOf(')');
+  let targetLanguage = targetLanguaget.substring(vtdL2+1,vtcL2);
+  
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
+
+  const xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200)
+    {
+        const responseReturned = JSON.parse(this.responseText);
+        const translations = responseReturned[0].map((text) => text[0]);
+        const outputText = translations.join(" ");
+        outputTextEle.textContent = outputText;
+        text = outputTextEle.textContent;
+        //play();
+        //listen_button.click();
+        //readTextQuick(text,langread);
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.getVoices().forEach(voice => {
+          if (voice.lang==='vi-VN' && voice.name.toLowerCase() === 'linh'){
+            let giong = voice.lang;
+            utterance.voice = giong;
+          }
+        });
+        window.speechSynthesis.speak(utterance);
+
+      //-----------------------------------------------------------------------------
+    }
+  };
+  xhttp.open("GET", url);
+  xhttp.send();
+}
+//-------------------
+function readTextQuick(){
+  const utterance = new SpeechSynthesisUtterance(text);
+  window.speechSynthesis.speak(utterance);
+
+}
