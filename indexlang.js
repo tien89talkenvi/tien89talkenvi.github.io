@@ -1,12 +1,12 @@
 var langs = //list cac list
-[['Deutsch',       ['de-DE']],
- ['English',       ['en-US']],
- ['Français',      ['fr-FR']],
- ['Italiano',      ['it-IT']],
- ['Nederlands',    ['nl-NL']],
- ['Română',        ['ro-RO']],
- ['Rusian',        ['ru-RU']],
- ['Korean',        ['ko-KR']],
- ['Taiwan',        ['zh-TW']],
- ['Japanese',      ['ja-JP']],
- ['Vietnamese',    ['vi-VN']]];    
+[['German (de)',         ['de-DE']],
+ ['English (en)',        ['en-US']],
+ ['French (fr)',         ['fr-FR']],
+ ['Italiano (it)',       ['it-IT']],
+ ['Japanese (ja)',       ['ja-JP']],
+ ['Korean (ko)',         ['ko-KR']],
+ ['Nederlands (nl)',     ['nl-NL']],
+ ['Rusian (ru)',         ['ru-RU']],
+ ['Taiwan (zh)',         ['zh-TW']],
+ ['Thai (th)',           ['th-TH']],
+ ['Vietnamese (vi)',     ['vi-VN']]];    
