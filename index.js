@@ -1,3 +1,22 @@
+const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
+function updateVoices() {
+    // lay cac voice dat vao cac option
+    window.speechSynthesis.getVoices().forEach(voice => {
+        const isAlreadyAdded = [...voiceInEl.options].some(option => option.value === voice.voiceURI);
+        if (!isAlreadyAdded) {
+            const option = new Option(voice.name, voice.voiceURI, voice.default, voice.default);
+          voiceInEl.add(option);
+        }      
+    });
+}
+//chay ham tren day updateVoices() de lay cac voice vao cac opption cua select
+updateVoices(); //goi chay ham nay voi bien voiceInEl va dinh nghia ham o phia tren
+
+//moi khi thay doi voice thi no cap nhat lai de co gtri moi 
+window.speechSynthesis.onvoiceschanged = updateVoices;
+//vi du de gan gtri voice hien hanh la voiceInEl.value cho dt utterance
+//utterance.voice=window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+
 //cac thong bao nho
 var messages = {
     "start": {
@@ -259,19 +278,15 @@ function translate() { //(5)
 //-------------------
 function readTextQuick(){
   let giong = langs[select_target_language.value][1];
-  let giongTb=timGiongInTbi();
+  if (giong == 'vi-VN'){
+    voiceInEl.selectedIndex = 2;
+  }else{
+    voiceInEl.selectedIndex = 0;
+  }    
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = giongTb;
+  utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
   window.speechSynthesis.speak(utterance);
 }
-//
-function timGiongInTbi(){
-  let giong = langs[select_target_language.value][1];
-  window.speechSynthesis.getVoices().forEach(voice => {
-    if (voice.lang===giong){
-      let giongInTb = voice.lang ;
-      return giongInTb;
-    }
-  });    
-  
-}
+//--------------------------------------
+
+
