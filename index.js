@@ -259,8 +259,19 @@ function translate() { //(5)
 //-------------------
 function readTextQuick(){
   let giong = langs[select_target_language.value][1];
+  let giongTb=timGiongInTbi();
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = giong;
+  utterance.lang = giongTb;
   window.speechSynthesis.speak(utterance);
-
+}
+//
+function timGiongInTbi(){
+  let giong = langs[select_target_language.value][1];
+  window.speechSynthesis.getVoices().forEach(voice => {
+    if (voice.lang===giong){
+      let giongInTb = voice.lang ;
+      return giongInTb;
+    }
+  });    
+  
 }
