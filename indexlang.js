@@ -1,8 +1,8 @@
 var langs = //list cac list
 [['Danish (da)',         ['da-DK']],
- ['German (de)',         ['de-DE']],
  ['English (en)',        ['en-US']],
  ['French (fr)',         ['fr-FR']],
+ ['German (de)',         ['de-DE']],
  ['Italian (it)',        ['it-IT']],
  ['Japanese (ja)',       ['ja-JP']],
  ['Korean (ko)',         ['ko-KR']],
