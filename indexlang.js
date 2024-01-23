@@ -1,4 +1,5 @@
-var langs = //list cac list
+//list cac list
+var langs = 
 [['Danish (da)',         ['da-DK']],
  ['English (en)',        ['en-US']],
  ['French (fr)',         ['fr-FR']],

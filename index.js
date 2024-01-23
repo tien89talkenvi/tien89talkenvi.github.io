@@ -1,16 +1,25 @@
 const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
 function updateVoices() {
+  //lap array lang tu langs trong index.js
+  const voicelangsarr=[];
+  for (let i = 1; i < langs.length ; i++) {
+      console.log(langs[i][1][0]);
+      voicelangsarr.push(langs[i][1][0]);
+  };
+
     // lay cac voice dat vao cac option
     window.speechSynthesis.getVoices().forEach(voice => {
-        const isAlreadyAdded = [...voiceInEl.options].some(option => option.value === voice.voiceURI);
-        if (!isAlreadyAdded) {
-            const option = new Option(voice.name, voice.voiceURI, voice.default, voice.default);
+      //check xem voice.lang co trong  voicelangsarr thi moi lay
+      const isInlangs = voicelangsarr.includes(voice.lang);
+      const isAlreadyAdded = [...voiceInEl.options].some(option => option.value === voice.voiceURI);
+      if (isInlangs && !isAlreadyAdded) {
+          const option = new Option(voice.name, voice.voiceURI, voice.default, voice.default);
           voiceInEl.add(option);
         }      
     });
 }
 //chay ham tren day updateVoices() de lay cac voice vao cac opption cua select
-updateVoices(); //goi chay ham nay voi bien voiceInEl va dinh nghia ham o phia tren
+//updateVoices(); //goi chay ham nay voi bien voiceInEl va dinh nghia ham o phia tren
 
 //moi khi thay doi voice thi no cap nhat lai de co gtri moi 
 window.speechSynthesis.onvoiceschanged = updateVoices;
@@ -278,20 +287,16 @@ function translate() { //(5)
 //-------------------
 function readTextQuick(){
   let giong = langs[select_target_language.value][1];
+  //tim giong trong thiet bi khop voi giong treen
   let voicetimintb = window.speechSynthesis.getVoices().find(voice => voice.lang==giong );
-  //if (voicetimintb==undefined){voicetimintb='en-US'}
-  //alert(window.speechSynthesis.getVoices().indexOf(voicetimintb) );
   //set default in voiceInEl
   voiceInEl.selectedIndex = window.speechSynthesis.getVoices().indexOf(voicetimintb);
-  //if (giong == 'vi-VN'){
-  //  voiceInEl.selectedIndex = 2;
-  //}else{
-  //  voiceInEl.selectedIndex = 0;
-  //}    
   const utterance = new SpeechSynthesisUtterance(text);
-  //lay gia tri mac dinh cua voice tren menu defuault
+  //lay cai defaul tu menu  
   //utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+  //o day ta lay theo voiceInEl.selectedIndex
   utterance.voice = voicetimintb;
+  utterance.volume = 1;
   window.speechSynthesis.speak(utterance);
 }
 //--------------------------------------
