@@ -19,7 +19,8 @@ function updateVoices() {
     });
 }
 //chay ham tren day updateVoices() de lay cac voice vao cac opption cua select
-//updateVoices(); //goi chay ham nay voi bien voiceInEl va dinh nghia ham o phia tren
+updateVoices(); 
+//goi chay ham nay voi bien voiceInEl va dinh nghia ham o phia tren
 
 //moi khi thay doi voice thi no cap nhat lai de co gtri moi 
 window.speechSynthesis.onvoiceschanged = updateVoices;
