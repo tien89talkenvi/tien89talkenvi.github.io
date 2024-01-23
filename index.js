@@ -10,9 +10,9 @@ function updateVoices() {
     // lay cac voice dat vao cac option
     window.speechSynthesis.getVoices().forEach(voice => {
       //check xem voice.lang co trong  voicelangsarr thi moi lay
-      const isInlangs = voicelangsarr.includes(voice.lang);
       const isAlreadyAdded = [...voiceInEl.options].some(option => option.value === voice.voiceURI);
-      if (isInlangs && !isAlreadyAdded) {
+      const isInlangs = voicelangsarr.includes(voice.lang);
+      if (!isAlreadyAdded && isInlangs) {
           const option = new Option(voice.name, voice.voiceURI, voice.default, voice.default);
           voiceInEl.add(option);
         }      
