@@ -278,13 +278,20 @@ function translate() { //(5)
 //-------------------
 function readTextQuick(){
   let giong = langs[select_target_language.value][1];
-  if (giong == 'vi-VN'){
-    voiceInEl.selectedIndex = 2;
-  }else{
-    voiceInEl.selectedIndex = 0;
-  }    
+  let voicetimintb = window.speechSynthesis.getVoices().find(voice => voice.lang==giong );
+  //if (voicetimintb==undefined){voicetimintb='en-US'}
+  //alert(window.speechSynthesis.getVoices().indexOf(voicetimintb) );
+  //set default in voiceInEl
+  voiceInEl.selectedIndex = window.speechSynthesis.getVoices().indexOf(voicetimintb);
+  //if (giong == 'vi-VN'){
+  //  voiceInEl.selectedIndex = 2;
+  //}else{
+  //  voiceInEl.selectedIndex = 0;
+  //}    
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+  //lay gia tri mac dinh cua voice tren menu defuault
+  //utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+  utterance.voice = voicetimintb;
   window.speechSynthesis.speak(utterance);
 }
 //--------------------------------------
