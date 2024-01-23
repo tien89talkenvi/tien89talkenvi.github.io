@@ -64,7 +64,7 @@ $( document ).ready(function() {
       select_source_language.options[i] = new Option(langs[i][0], i);
       select_target_language.options[i] = new Option(langs[i][0], i);
     }
-    select_source_language.selectedIndex = 10; //viet
+    select_source_language.selectedIndex = 12; //viet
     select_target_language.selectedIndex = 1;  //english
     updateCountry();
     select_source_dialect.selectedIndex = 0;
