@@ -287,14 +287,40 @@ function translate() { //(5)
 }
 //-------------------
 function readTextQuick(){
-  let giong = langs[select_target_language.value][1];
+  let giong = langs[select_target_language.value][1][0];
+  let giong2 = giong.substr(0,2);
+  let count = 0;
+  let i = 0;
+  const arrayi = new Array(); 
+  window.speechSynthesis.getVoices().forEach(voice => {
+      i=i+1;
+      if (voice.lang.includes(giong2)){
+          arrayi.push(i-1)
+      }
+  });
+  console.log(arrayi);
+  //lay ngau nhien 1 pt trong arrayi
+  let indexrandom = arrayi[(Math.floor(Math.random() * arrayi.length))];
+  console.log(indexrandom);
+  //vd cho say
+  const utterance = new SpeechSynthesisUtterance(text);
+  voiceInEl.selectedIndex = indexrandom;
+  utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+  window.speechSynthesis.speak(utterance);
+
+}          
+
+
+
+
+  //laygiongstbco(giong.substr(0,2));
   //alert(giong);
   
   //tim giong trong thiet bi khop voi giong treen
   //let voicetimintb = window.speechSynthesis.getVoices().find(voice => voice.lang==giong );
   //set default in voiceInEl
   //voiceInEl.selectedIndex = window.speechSynthesis.getVoices().indexOf(voicetimintb);
-  const utterance = new SpeechSynthesisUtterance(text);
+ // const utterance = new SpeechSynthesisUtterance(text);
   //lay cai defaul tu menu  
   //utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
   //o day ta lay theo voiceInEl.selectedIndex
@@ -304,12 +330,11 @@ function readTextQuick(){
   //dong 2 dat defaul la index cua voice chon tre
   //voiceInEl.selectedIndex = window.speechSynthesis.getVoices().indexOf(voicechon);
   //dong 3 lay voice trinh duyet la cua ele
-  let voicechon = window.speechSynthesis.getVoices().find(voice => voice.lang==giong );
-utterance.voice = voicechon;
-//alert(voicechon.voiceURI);
-voiceInEl.value = voicechon.voiceURI;
-  window.speechSynthesis.speak(utterance);
-}
+ // let voicechon = window.speechSynthesis.getVoices().find(voice => voice.lang === giong );
+ // utterance.voice = voicechon;
+  //alert(voicechon.voiceURI);
+ // voiceInEl.value = voicechon.voiceURI;
+ // window.speechSynthesis.speak(utterance);
+//}
 //--------------------------------------
-
 
