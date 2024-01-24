@@ -1,18 +1,18 @@
 const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
 function updateVoices() {
   //lap array lang tu langs trong index.js
-  const voicelangsarr=[];
-  for (let i = 1; i < langs.length ; i++) {
-      console.log(langs[i][1][0]);
-      voicelangsarr.push(langs[i][1][0]);
-  };
+  //const voicelangsarr=[];
+  //for (let i = 1; i < langs.length ; i++) {
+  //    console.log(langs[i][1][0]);
+  //    voicelangsarr.push(langs[i][1][0]);
+  //};
 
     // lay cac voice dat vao cac option
     window.speechSynthesis.getVoices().forEach(voice => {
       //check xem voice.lang co trong  voicelangsarr thi moi lay
       const isAlreadyAdded = [...voiceInEl.options].some(option => option.value === voice.voiceURI);
-      const isInlangs = voicelangsarr.includes(voice.lang);
-      if (!isAlreadyAdded && isInlangs) {
+      //const isInlangs = voicelangsarr.includes(voice.lang);
+      if (!isAlreadyAdded ) {
           const option = new Option(voice.name, voice.voiceURI, voice.default, voice.default);
           voiceInEl.add(option);
         }      
@@ -288,16 +288,26 @@ function translate() { //(5)
 //-------------------
 function readTextQuick(){
   let giong = langs[select_target_language.value][1];
+  //alert(giong);
+  
   //tim giong trong thiet bi khop voi giong treen
-  let voicetimintb = window.speechSynthesis.getVoices().find(voice => voice.lang==giong );
+  //let voicetimintb = window.speechSynthesis.getVoices().find(voice => voice.lang==giong );
   //set default in voiceInEl
-  voiceInEl.selectedIndex = window.speechSynthesis.getVoices().indexOf(voicetimintb);
+  //voiceInEl.selectedIndex = window.speechSynthesis.getVoices().indexOf(voicetimintb);
   const utterance = new SpeechSynthesisUtterance(text);
   //lay cai defaul tu menu  
   //utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
   //o day ta lay theo voiceInEl.selectedIndex
-  utterance.voice = voicetimintb;
-  utterance.volume = 1;
+  //utterance.voice = voicetimintb;
+  
+
+  //dong 2 dat defaul la index cua voice chon tre
+  //voiceInEl.selectedIndex = window.speechSynthesis.getVoices().indexOf(voicechon);
+  //dong 3 lay voice trinh duyet la cua ele
+  let voicechon = window.speechSynthesis.getVoices().find(voice => voice.lang==giong );
+utterance.voice = voicechon;
+//alert(voicechon.voiceURI);
+voiceInEl.value = voicechon.voiceURI;
   window.speechSynthesis.speak(utterance);
 }
 //--------------------------------------
