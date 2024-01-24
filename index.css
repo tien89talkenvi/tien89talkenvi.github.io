@@ -11,7 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0;
-    padding: 20px;
+    padding: 10px;
     color: #fff;
     font: 1rem/1 'Poppins', sans-serif;
 }
@@ -19,17 +19,17 @@ body {
     display: grid;
     gap: 4px;
     width: 600px;
-    max-width: calc(100vw - 40px);
+    max-width: calc(100vw - 0px);
     padding: 4px;
     font-size: 16px;
-    border-radius: 2px;
+    border-radius: 0px;
     background-color: #0003;
 }
 #wrapper-text {
     display: grid;
     gap: 4px;
     width: 600px;
-    max-width: calc(100vw - 40px);
+    max-width: calc(100vw - 0px);
     padding: 14px;
     background-color: #0003}
 #sophie {
@@ -58,7 +58,7 @@ body {
     gap: 20px;
     padding: 20px;
     background-color: #0005;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 10px;
     color: lightblue;
     }
@@ -131,4 +131,4 @@ textarea {
 .f-grid {display: flex;justify-content: space-between;margin-left:-0.5rem;flex-flow: row wrap;}
 .f-grid-coll {flex: 4 4;background-color: rgba(144, 192, 96, 0.883);margin-left: 0.5rem;margin-bottom: 1rem;padding: 1rem;font-size: 14pt;}
 .f-grid-colr {flex: 4 4;color:yellow;background-color: rgba(144, 192, 96, 0.883);margin-left: 0.5rem;margin-bottom: 1rem;padding: 1rem;font-size: 14pt;}
-#info{color:pink}
+#info{color:pink;}
