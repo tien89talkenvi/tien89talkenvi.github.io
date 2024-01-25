@@ -1,15 +1,15 @@
 //list cac list
 var langs = 
-[['Danish (da)',         ['da-DK']],
- ['English (en)',        ['en-US']],
- ['French (fr)',         ['fr-FR']],
- ['German (de)',         ['de-DE']],
- ['Italian (it)',        ['it-IT']],
- ['Japanese (ja)',       ['ja-JP']],
- ['Korean (ko)',         ['ko-KR']],
- ['Mexico (es)',         ['es-MX']],
- ['Nederlands (nl)',     ['nl-NL']],
- ['Rusian (ru)',         ['ru-RU']],
- ['Taiwan (zh)',         ['zh-TW']],
- ['Thai (th)',           ['th-TH']],
- ['Vietnamese (vi)',     ['vi-VN']]];    
+[['Danish',         ['da-DK']],
+ ['English',        ['en-US']],
+ ['French',         ['fr-FR']],
+ ['German',         ['de-DE']],
+ ['Italian',        ['it-IT']],
+ ['Japanese',       ['ja-JP']],
+ ['Korean',         ['ko-KR']],
+ ['Mexico',         ['es-MX']],
+ ['Nederlands',     ['nl-NL']],
+ ['Rusian',         ['ru-RU']],
+ ['Taiwan',         ['zh-TW']],
+ ['Thai',           ['th-TH']],
+ ['Vietnamese',     ['vi-VN']]];    
