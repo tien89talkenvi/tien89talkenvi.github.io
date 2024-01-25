@@ -1,3 +1,4 @@
+var text='';
 const voiceInEl = document.getElementById('voice');//khai bao voiceInEl la bien toan cuc 
 function updateVoices() {
   //lap array lang tu langs trong index.js
@@ -137,22 +138,26 @@ $( document ).ready(function() {
       };
   
       recognition.onresult = function(event) {
-        var interim_transcript = '';
-        resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
-        
-        for (var i = event.resultIndex; i < event.results.length; ++i) {
-          if (event.results[i].isFinal) {
-            final_transcript += event.results[i][0].transcript;
-          } else {
-            interim_transcript += event.results[i][0].transcript; 
+          var interim_transcript = '';
+          resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
+          //chu y rang van de kq trung gian va cuoi cung hien ra cho ta thay ct dang chay
+          //nhung cuoi cung thi dich moi hien ra 
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+              if (event.results[i].isFinal) {
+                  final_transcript += event.results[i][0].transcript;
+              } else {
+                  interim_transcript += event.results[i][0].transcript; 
+              }
           }
-        }
-        final_transcript = capitalize(final_transcript);
-        final_span.innerHTML = linebreak(final_transcript);
-        interim_span.innerHTML = linebreak(interim_transcript);
+          final_transcript = capitalize(final_transcript);
+          final_span.innerHTML = linebreak(final_transcript);
+          interim_span.innerHTML = linebreak(interim_transcript);
+      
+        //final_transcript la global nen no van ton tai ca cac thay doi, den khi ta click nghe thi moi dich
         //resultsdich.innerHTML=translate(final_transcript);     
         //translate(final_transcript);     
       };
+
     }
 });
   
@@ -229,7 +234,7 @@ function showInfo(s) {
       $("#info").addClass('d-none');
     }
 }
-
+//----------------------------------------------
 $("#hoanviLangs").click(function () {
     //1.lay chi so lang ben phai dat no la jp
     let jp = select_target_language.selectedIndex;
@@ -238,19 +243,17 @@ $("#hoanviLangs").click(function () {
     //3. di tim ben trai cai phan tu co chi so index la jp va default tai do (tuc la chon phan tu do)
     select_source_language.selectedIndex = jp;
     select_target_language.selectedIndex = jt;
-//--
-    //1.lay chi so lang ben phai dat no la jp
-    //let jpt = select_target_dialect.selectedIndex;
-    //2. lay chi so lang ben trai dat no la jt
-    //let jtt = select_source_dialect.selectedIndex;
-    //3. di tim ben trai cai phan tu co chi so index la jp va default tai do (tuc la chon phan tu do)
-    //select_source_dialect.selectedIndex = jpt;
-    //select_target_dialect.selectedIndex = jtt;
-    
-    let texttemp = document.getElementById('results').innerHTML;
-    document.getElementById('results').innerHTML = document.getElementById('resultsdich').innerHTML;
-    document.getElementById('resultsdich').innerHTML=texttemp;
-    text=document.getElementById('resultsdich').innerHTML;
+    //4. hvi 2 lang bc rut ra 2 lang tuong ung 2 jp jt
+    const sourceLanguaget =langs[jp][1][0];
+    const targetLanguaget =langs[jt][1][0];
+    //5. hvi 2 text. vi final_transcript do noi tao ra nen type khac voi van dich nen ko hoan vi
+    //ma phai xoa trong de noi lai
+    final_transcript = '';
+    final_span.innerHTML = '';
+    interim_span.innerHTML = '';
+    document.getElementById("resultsdich").textContent ='';
+    text = '';
+
     updateCountry();
 }); 
 
@@ -258,13 +261,18 @@ $("#hoanviLangs").click(function () {
 function translate() { //(5)
   const inputText = final_transcript;
   const outputTextEle = document.getElementById("resultsdich");
-  const sourceLanguaget = document.querySelector("#select_source_dialect").value;
-  const targetLanguaget = document.querySelector("#select_target_dialect").value;
 
+  const sourceLanguaget =langs[document.querySelector("#select_source_language").value][1][0];
+  const targetLanguaget =langs[document.querySelector("#select_target_language").value][1][0];
+  //document.querySelector("#select_source_language").value la chi so
+  //langs[document.querySelector("#select_target_language").value][1] la phan tu 1 cua list, co dang ['vi-VN']
+  //langs[document.querySelector("#select_target_language").value][1][0] la chuoi 'vi-VN'
+  
   let sourceLanguage = sourceLanguaget.substring(0,2);
   let targetLanguage = targetLanguaget.substring(0,2);
+  //alert(sourceLanguage);
   //alert(targetLanguage);
-  
+
   const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
 
   const xhttp = new XMLHttpRequest();
@@ -275,6 +283,7 @@ function translate() { //(5)
         const translations = responseReturned[0].map((text) => text[0]);
         const outputText = translations.join(" ");
         outputTextEle.textContent = outputText;
+        //text cua kq dich chua fdung trong outputTextEle
         text = outputTextEle.textContent;
         listen_button.click(); // readTextQuick()
         //play();
@@ -296,9 +305,13 @@ function translate() { //(5)
   xhttp.send();
 }
 //-------------------
+//khi nhap nut loa listen_button.click() thi thi thanh ham nay
 function readTextQuick(){
+  
   let giong = langs[select_target_language.value][1][0];
-  let giong2 = giong.substr(0,2);
+  //giong co dang 'vi-VN',khi hoan vi phai xac dinh lai cai nay
+  //alert(giong);
+  let giong2 = giong;
   let count = 0;
   let i = 0;
   const arrayi = new Array(); 
