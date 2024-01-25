@@ -245,15 +245,15 @@ $("#hoanviLangs").click(function () {
 function translate() { //(5)
   const inputText = final_transcript;
   const outputTextEle = document.getElementById("resultsdich");
-  const sourceLanguaget = langs[document.querySelector("#select_source_language").value][0];
-  const targetLanguaget = langs[document.querySelector("#select_target_language").value][0];
-  let vtdL1 = sourceLanguaget.indexOf('(');
-  let vtcL1 = sourceLanguaget.indexOf(')');
-  let sourceLanguage = sourceLanguaget.substring(vtdL1+1,vtcL1);
+  const sourceLanguaget = document.querySelector("#select_source_dialect").value;
+  //alert(sourceLanguaget);
+  let sourceLanguage = sourceLanguaget.substring(0,2);
+  //alert(sourceLanguage);
   
-  let vtdL2 = targetLanguaget.indexOf('(');
-  let vtcL2 = targetLanguaget.indexOf(')');
-  let targetLanguage = targetLanguaget.substring(vtdL2+1,vtcL2);
+  const targetLanguaget = document.querySelector("#select_target_dialect").value;
+  //alert(targetLanguaget);
+  let targetLanguage = targetLanguaget.substring(0,2);
+  //alert(targetLanguage);
   
   const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
 
