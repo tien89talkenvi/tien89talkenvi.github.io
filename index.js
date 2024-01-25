@@ -238,6 +238,19 @@ $("#hoanviLangs").click(function () {
     //3. di tim ben trai cai phan tu co chi so index la jp va default tai do (tuc la chon phan tu do)
     select_source_language.selectedIndex = jp;
     select_target_language.selectedIndex = jt;
+//--
+    //1.lay chi so lang ben phai dat no la jp
+    //let jpt = select_target_dialect.selectedIndex;
+    //2. lay chi so lang ben trai dat no la jt
+    //let jtt = select_source_dialect.selectedIndex;
+    //3. di tim ben trai cai phan tu co chi so index la jp va default tai do (tuc la chon phan tu do)
+    //select_source_dialect.selectedIndex = jpt;
+    //select_target_dialect.selectedIndex = jtt;
+    
+    let texttemp = document.getElementById('results').innerHTML;
+    document.getElementById('results').innerHTML = document.getElementById('resultsdich').innerHTML;
+    document.getElementById('resultsdich').innerHTML=texttemp;
+    text=document.getElementById('resultsdich').innerHTML;
     updateCountry();
 }); 
 
@@ -246,12 +259,9 @@ function translate() { //(5)
   const inputText = final_transcript;
   const outputTextEle = document.getElementById("resultsdich");
   const sourceLanguaget = document.querySelector("#select_source_dialect").value;
-  //alert(sourceLanguaget);
-  let sourceLanguage = sourceLanguaget.substring(0,2);
-  //alert(sourceLanguage);
-  
   const targetLanguaget = document.querySelector("#select_target_dialect").value;
-  //alert(targetLanguaget);
+
+  let sourceLanguage = sourceLanguaget.substring(0,2);
   let targetLanguage = targetLanguaget.substring(0,2);
   //alert(targetLanguage);
   
