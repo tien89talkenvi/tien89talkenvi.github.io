@@ -329,7 +329,8 @@ function readTextQuick(){
   console.log(indexrandom);
   //vd cho say
   const utterance = new SpeechSynthesisUtterance(text);
-  voiceInEl.selectedIndex = indexrandom;
+  //voiceInEl.selectedIndex = indexrandom;
+  voiceInEl.selectedIndex = 2;
   utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
   window.speechSynthesis.speak(utterance);
 
