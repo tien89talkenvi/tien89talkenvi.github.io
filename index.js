@@ -329,8 +329,7 @@ function readTextQuick(){
   console.log(indexrandom);
   //vd cho say
   const utterance = new SpeechSynthesisUtterance(text);
-  //voiceInEl.selectedIndex = indexrandom;
-  voiceInEl.selectedIndex = 2;
+  voiceInEl.selectedIndex = indexrandom;
   utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
   window.speechSynthesis.speak(utterance);
 
@@ -378,6 +377,7 @@ function chongiongfix(){
       }
   });
   console.log(arrayi);
+  alert(arrayi);
   //xet tung giong loop chi so giong trong arrayi
   for (i=0; i < arrayi.length; i++){
     const utterance = new SpeechSynthesisUtterance(text);
