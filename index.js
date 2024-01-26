@@ -330,7 +330,7 @@ function readTextQuick(){
   //vd cho say
   const utterance = new SpeechSynthesisUtterance(text);
   //voiceInEl.selectedIndex = indexrandom;
-  voiceInEl.selectedIndex = 1;
+  voiceInEl.selectedIndex = 41;
   utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
   window.speechSynthesis.speak(utterance);
 
@@ -339,20 +339,15 @@ function readTextQuick(){
 function actchangevoice(){
   //string tren giao dien: voice.value
   //chi so index da chon: voice.selectedIndex
-  //giong noi: langs[voice.selectedIndex][1][0] (vi-VN)
+  let giongnoi: langs[voice.selectedIndex][1][0];
   //ngu : langs[voice.selectedIndex][1][0] (vi-VN).substr(0,2)
   //ten nguoi doc:ko xd 
   
   //alert(voice.selectedIndex);
   //alert(langs[voice.selectedIndex][1][0]);
   let n = voice.selectedIndex;
-  let tb = String(n)+'. '+langs[voice.selectedIndex][1][0];
+  let tb = String(n)+'. '+ giongnoi;
   alert(tb);
-  let text='I am a teacher. Are you a doctor ?';
-  const utterance = new SpeechSynthesisUtterance(text);
-  voiceInEl.selectedIndex = voice.selectedIndex;
-  utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
-  window.speechSynthesis.speak(utterance);
 
 }
 //----------------------
