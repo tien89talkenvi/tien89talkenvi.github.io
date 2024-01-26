@@ -330,7 +330,7 @@ function readTextQuick(){
   //vd cho say
   const utterance = new SpeechSynthesisUtterance(text);
   //voiceInEl.selectedIndex = indexrandom;
-  voiceInEl.selectedIndex = 27;
+  voiceInEl.selectedIndex = 1;
   utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
   window.speechSynthesis.speak(utterance);
 
@@ -348,7 +348,7 @@ function actchangevoice(){
   let n = voice.selectedIndex;
   let tb = String(n)+'. '+langs[voice.selectedIndex][1][0];
   alert(tb);
-  text='I am a teacher. Are you a doctor ?';
+  let text='I am a teacher. Are you a doctor ?';
   const utterance = new SpeechSynthesisUtterance(text);
   voiceInEl.selectedIndex = voice.selectedIndex;
   utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
