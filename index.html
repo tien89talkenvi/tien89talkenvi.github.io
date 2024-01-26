@@ -4,49 +4,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiensg89's App</title>
+    <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <select id="voiceSelect"></select>
 
-<h1 class="center" id="tieude" translate="no">Voice & Text Translator</h1>  
-<select id="voice" onchange="actchangevoice()"></select>
-<div class="center"><img id="icontieude_img" src="icons/freevoicetext.webp" alt=""></div>
-<div class="wrapper">
-  <div  id="info" translate="no" onclick="chongiongfix()"></div>
-</div>
-<br>
-<!--START textarea-----😎🎤🙋‍♂️🎧↩️↪️⇄---recognition.lang = "en-US"; de chi cho js loi noi la ngon ngu en-Us cho le va phan ung mau hon----------------------------------------------->  
-<div class="wrapper">
-  <table> 
-    <tr>
-      <td class="alignL"  translate="no"><button id="start_button"><img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
-      <td class="alignL"  translate="no"><select id="select_source_language" onchange ="act_source_lang()"></select>
-          <select id="select_source_dialect"></select></td>
+<script>
 
-      <td class="alignC" translate="no" id="hoanviLangs">⇄</td>
+function populateVoiceList() {
+  if (typeof speechSynthesis === "undefined") {
+    return;
+  }
 
-      <td class="alignR" translate="no">
-          <select id="select_target_dialect"></select><select id="select_target_language" onchange ="act_target_lang()"></select></td>
-      <td class="alignR" translate="no"><button id="listen_button" onclick="readTextQuick()">🎧</button></td>
-    </tr>
-  </table>
+  const voices = speechSynthesis.getVoices();
 
-  <div class="f-grid">
-    <div id="results" class="f-grid-coll">
-        <span id="final_span" class="final"></span>
-        <span id="interim_span" class="interim"></span>
-        <p>
-    </div>
-    <div id="resultsdich" class="f-grid-colr"></div>
-  </div>
+  for (let i = 0; i < voices.length; i++) {
+    const option = document.createElement("option");
+    option.textContent = `${voices[i].name} (${voices[i].lang})`;
 
-</div> <!--end div class="wrapper"-->
+    if (voices[i].default) {
+      option.textContent += " — DEFAULT";
+    }
 
-<script src="indexlang.js"></script>
-<script src="index.js"></script>
+    option.setAttribute("data-lang", voices[i].lang);
+    option.setAttribute("data-name", voices[i].name);
+    document.getElementById("voiceSelect").appendChild(option);
+  }
+}
+//-------------------
+populateVoiceList();
+if (typeof speechSynthesis !== "undefined" && speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
+
+}
+</script>
+    
 </body>
 </html>
