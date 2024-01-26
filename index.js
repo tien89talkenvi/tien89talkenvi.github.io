@@ -344,7 +344,15 @@ function actchangevoice(){
   
   //alert(voice.selectedIndex);
   //alert(langs[voice.selectedIndex][1][0]);
-  alert('dl');
+  let n = voice.selectedIndex;
+  let tb = String(n)+'. '+langs[voice.selectedIndex][1][0];
+  alert(tb);
+  text='I am a teacher. Are you a doctor ?';
+  const utterance = new SpeechSynthesisUtterance(text);
+  voiceInEl.selectedIndex = voice.selectedIndex;
+  utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+  window.speechSynthesis.speak(utterance);
+
 }
 //----------------------
 function act_source_lang(){
