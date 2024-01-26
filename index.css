@@ -136,11 +136,12 @@ textarea {
 .f-grid {display: flex;justify-content: space-between;margin-left:-0.5rem;flex-flow: row wrap;}
 .f-grid-coll {flex: 4 4;background-color:none; margin-left: 0.5rem;margin-bottom: 1rem;padding: 1rem;font-size: 14pt;}
 .f-grid-colr {flex: 4 4;color:yellow;background-color: none; margin-left: 0.5rem;margin-bottom: 1rem;padding: 1rem;font-size: 14pt;}
-#info{color:pink;}
+#info{color:pink;margin-left: 1rem;}
 #icontieude_img{
     width:100%;
     height:6%;
     border-radius: 0%;
 }
+#voice{padding-left: 1rem;}
 /* xanh la cay mo cho f-grid-lr = rgba(144, 192, 96, 0.883) */
 /* vang nghe lat cho f-grid-collr = #f7e6cd */

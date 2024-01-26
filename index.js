@@ -7,7 +7,9 @@ function updateVoices() {
   //    console.log(langs[i][1][0]);
   //    voicelangsarr.push(langs[i][1][0]);
   //};
-
+  //neu khong co array tren thi chi tieng Thai la khong phat am dc
+  //con ney lap array thi den nhieu tieng ko the phat am
+  //Do do nen bo di 
     // lay cac voice dat vao cac option
     window.speechSynthesis.getVoices().forEach(voice => {
       //check xem voice.lang co trong  voicelangsarr thi moi lay
@@ -318,7 +320,7 @@ function readTextQuick(){
   window.speechSynthesis.getVoices().forEach(voice => {
       i=i+1;
       if (voice.lang.includes(giong2)){
-          arrayi.push(i-1)
+          arrayi.push(i-1);
       }
   });
   console.log(arrayi);
@@ -332,8 +334,59 @@ function readTextQuick(){
   window.speechSynthesis.speak(utterance);
 
 }          
-
-
+//-------------------
+function actchangevoice(){
+  //string tren giao dien: voice.value
+  //chi so index da chon: voice.selectedIndex
+  //giong noi: langs[voice.selectedIndex][1][0] (vi-VN)
+  //ngu : langs[voice.selectedIndex][1][0] (vi-VN).substr(0,2)
+  //ten nguoi doc:ko xd 
+  
+  //alert(voice.selectedIndex);
+  //alert(langs[voice.selectedIndex][1][0]);
+  alert('dl');
+}
+//----------------------
+function act_source_lang(){
+  //lang vd vi-VN
+  //alert(langs[select_source_language.selectedIndex][1][0]);
+  final_transcript = '';
+  final_span.innerHTML = '';
+  interim_span.innerHTML = '';
+  document.getElementById("resultsdich").textContent ='';
+  text = '';
+}
+//-------------------------
+function act_target_lang(){
+  //lang vd vi-VN
+  //alert(langs[select_target_language.selectedIndex][1][0]);
+  translate();
+}
+//-------------------
+function chongiongfix(){
+  //xac dinh giong de set la giong hien chon trong menu phai
+  let giongset = langs[select_target_language.selectedIndex][1][0];
+  //co bao nhieu giong nay trong may?
+  let count = 0;
+  let i = 0;
+  const arrayi = new Array(); 
+  window.speechSynthesis.getVoices().forEach(voice => {
+      i=i+1;
+      if (voice.lang.includes(giongset)){
+          arrayi.push(i-1);
+      }
+  });
+  console.log(arrayi);
+  //xet tung giong loop chi so giong trong arrayi
+  for (i=0; i < arrayi.length; i++){
+    const utterance = new SpeechSynthesisUtterance(text);
+    voiceInEl.selectedIndex = i;
+    utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+    window.speechSynthesis.speak(utterance);
+  
+  }
+  
+}
 
 
   //laygiongstbco(giong.substr(0,2));

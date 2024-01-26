@@ -12,11 +12,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
-<h1 class="center" id="tieude" translate="no">Free Voice & Text Translator</h1>  
-<select id="voice"></select>
+<h1 class="center" id="tieude" translate="no">Voice & Text Translator</h1>  
+<select id="voice" onchange="actchangevoice()"></select>
 <div class="center"><img id="icontieude_img" src="icons/freevoicetext.webp" alt=""></div>
 <div class="wrapper">
-  <div  id="info" translate="no"></div>
+  <div  id="info" translate="no" onclick="chongiongfix()"></div>
 </div>
 <br>
 <!--START textarea-----😎🎤🙋‍♂️🎧↩️↪️⇄---recognition.lang = "en-US"; de chi cho js loi noi la ngon ngu en-Us cho le va phan ung mau hon----------------------------------------------->  
@@ -24,13 +24,13 @@
   <table> 
     <tr>
       <td class="alignL"  translate="no"><button id="start_button"><img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
-      <td class="alignL"  translate="no"><select id="select_source_language"></select>
+      <td class="alignL"  translate="no"><select id="select_source_language" onchange ="act_source_lang()"></select>
           <select id="select_source_dialect"></select></td>
 
       <td class="alignC" translate="no" id="hoanviLangs">⇄</td>
 
-      <td class="alignR" translate="no"><select id="select_target_language"></select>
-          <select id="select_target_dialect"></select></td>
+      <td class="alignR" translate="no">
+          <select id="select_target_dialect"></select><select id="select_target_language" onchange ="act_target_lang()"></select></td>
       <td class="alignR" translate="no"><button id="listen_button" onclick="readTextQuick()">🎧</button></td>
     </tr>
   </table>
