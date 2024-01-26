@@ -330,7 +330,6 @@ function readTextQuick(){
   //vd cho say
   const utterance = new SpeechSynthesisUtterance(text);
   voiceInEl.selectedIndex = indexrandom;
-  
   utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
   window.speechSynthesis.speak(utterance);
 
@@ -339,16 +338,16 @@ function readTextQuick(){
 function actchangevoice(){
   //string tren giao dien: voice.value
   //chi so index da chon: voice.selectedIndex
-  let giongnoi: langs[voice.selectedIndex][1][0];
+  //giong noi: langs[voice.selectedIndex][1][0] (vi-VN)
   //ngu : langs[voice.selectedIndex][1][0] (vi-VN).substr(0,2)
   //ten nguoi doc:ko xd 
   
   //alert(voice.selectedIndex);
   //alert(langs[voice.selectedIndex][1][0]);
   let n = voice.selectedIndex;
-  let tb = String(n)+'. '+ giongnoi;
+  let tb = String(n)+'. '+langs[voice.selectedIndex][1][0];
   alert(tb);
-
+  
 }
 //----------------------
 function act_source_lang(){
