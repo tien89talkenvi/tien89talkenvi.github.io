@@ -257,6 +257,163 @@ $("#hoanviLangs").click(function () {
 
     updateCountry();
 }); 
+//xu li pit/rate/vol ----------------------------------------------------------------------------------
+//khai bao cac bien toan cuc va gan gitri dau
+const pitchInEl = document.getElementById('pitch');
+const rateInEl = document.getElementById('rate');
+const volumeInEl = document.getElementById('volume');
+
+const pitchOutEl = document.querySelector('output[for="pitch"]');
+const rateOutEl = document.querySelector('output[for="rate"]');
+const volumeOutEl = document.querySelector('output[for="volume"]');
+
+function updateOutputs() {//---------
+    // display current values of all range inputs, phoi bay gtri hien huu
+    pitchOutEl.textContent = pitchInEl.value;
+    rateOutEl.textContent = rateInEl.value;
+    volumeOutEl.textContent = volumeInEl.value;
+}
+
+// add UI event handlers, khi pit/rate/vol thay doi thi chay ham updateOutputs() o tren de lay gt moi
+pitchInEl.addEventListener('change', updateOutputs);
+rateInEl.addEventListener('change', updateOutputs);
+volumeInEl.addEventListener('change', updateOutputs);
+
+//----------------------------------------
+//Xu li 3 nut play/pause/stop2 phia duoi 
+
+// grab the UI elements to work with
+const textEl = document.getElementById('resultsdich');
+
+const playEl = document.getElementById('play');
+const pauseEl = document.getElementById('pause');
+const stopEl = document.getElementById('stop');
+
+// add UI event handlers
+playEl.addEventListener('click', play);
+pauseEl.addEventListener('click', pause);
+stopEl.addEventListener('click', stop);
+
+// set text
+textEl.innerHTML = text;
+//-----------------------
+function play() {
+  if (window.speechSynthesis.speaking) {
+    // there's an unfinished utterance
+    window.speechSynthesis.resume();
+  } else {
+    // start new utterance
+    if (text==''){return;}  // de tranh giat giat khi text trong
+    
+    //text nay la text dich o phan translate
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    utterance.addEventListener('start', handleStart);
+    utterance.addEventListener('pause', handlePause);
+    utterance.addEventListener('resume', handleResume);
+    utterance.addEventListener('end', handleEnd);
+    utterance.addEventListener('boundary', handleBoundary);
+    
+    let giong = langs[select_target_language.value][1][0];
+    //giong co dang 'vi-VN',khi hoan vi phai xac dinh lai cai nay
+    let count = 0;
+    let i = 0;
+    const arrayi = new Array(); 
+    window.speechSynthesis.getVoices().forEach(voice => {
+        i=i+1;
+        //alert(chongiongenUS);
+        if (giong === 'en-US'){
+            if (voice.lang.includes(giong) && voice.name.includes('Samantha') ){
+              arrayi.push(i-1);
+            }
+        }else{
+          if (voice.lang.includes(giong)){
+            arrayi.push(i-1);
+          }
+        }
+  
+    });
+    console.log(arrayi);
+    //lay ngau nhien 1 pt trong arrayi
+    let indexrandom = arrayi[(Math.floor(Math.random() * arrayi.length))];
+   
+    console.log(indexrandom);
+    //vd cho say
+    //const utterance = new SpeechSynthesisUtterance(text);
+    voiceInEl.selectedIndex = indexrandom;
+    //neu la giong en-US thi buoc noi giong en-US Zira ung voi voiceInEl.selectedIndex = 2, th khac binh tthuong
+     let selectedVoice = voiceInEl.selectedOptions[0].getAttribute('data-lang');
+    //alert(selectedVoice);
+    utterance.lang = selectedVoice;
+    //utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+  
+    utterance.pitch = pitchInEl.value;
+    utterance.rate = rateInEl.value;
+    utterance.volume = volumeInEl.value;
+    
+    window.speechSynthesis.speak(utterance);
+    //------
+
+  }
+}
+
+function pause() {
+  window.speechSynthesis.pause();
+}
+
+function stop() {
+  window.speechSynthesis.cancel();
+  // Safari doesn't fire the 'end' event when cancelling, so call handler manually
+  handleEnd();
+}
+
+function handleStart() {
+  playEl.disabled = true;
+  pauseEl.disabled = false;
+  stopEl.disabled = false;
+}
+
+function handlePause() {
+  playEl.disabled = false;
+  pauseEl.disabled = true;
+  stopEl.disabled = false;
+}
+
+function handleResume() {
+  playEl.disabled = true;
+  pauseEl.disabled = false;
+  stopEl.disabled = false;
+}
+
+function handleEnd() {
+  playEl.disabled = false;
+  pauseEl.disabled = true;
+  stopEl.disabled = true;
+  
+  // reset text to remove mark
+  textEl.innerHTML = text;
+}
+
+function handleBoundary(event) {
+  if (event.name === 'sentence') {
+    // we only care about word boundaries
+    return;
+  }
+
+  const wordStart = event.charIndex;
+  let wordLength = event.charLength;
+  if (wordLength === undefined) {
+    // Safari doesn't provide charLength, so fall back to a regex to find the current word and its length (probably misses some edge cases, but good enough for this demo)
+    const match = text.substring(wordStart).match(/^[a-z\d']*/i);
+    wordLength = match[0].length;
+  }
+  // wrap word in <mark> tag
+  const wordEnd = wordStart + wordLength;
+  const word = text.substring(wordStart, wordEnd);
+  const markedText = text.substring(0, wordStart) + '<mark>' + word + '</mark>' + text.substring(wordEnd);
+  textEl.innerHTML = markedText;
+
+}
 
 //--end cac bien va ham lquan recognition speech --------------------------------------------
 function translate() { //(5)
@@ -286,27 +443,18 @@ function translate() { //(5)
         outputTextEle.textContent = outputText;
         //text cua kq dich chua fdung trong outputTextEle
         text = outputTextEle.textContent;
-        listen_button.click(); // readTextQuick()
-        //play();
-        //listen_button.click();
-        //readTextQuick();
-        //const utterance = new SpeechSynthesisUtterance(text);
-        //window.speechSynthesis.getVoices().forEach(voice => {
-        //  if (voice.lang==='vi-VN' && voice.name.toLowerCase() === 'linh'){
-        //    let giong = voice.lang;
-        //    utterance.voice = giong;
-        //  }
-        //});
-        //window.speechSynthesis.speak(utterance);
-
-      //-----------------------------------------------------------------------------
+        listen_button.click(); //co play() trong nay; text nay la text dich se di theo
     }
   };
+  //---------------------
   xhttp.open("GET", url);
   xhttp.send();
 }
-//-------------------
+
+//-------------------------------xoa text phan duoi------------------------
+
 //khi nhap nut loa listen_button.click() thi thi thanh ham nay
+//bay gio la play()
 function readTextQuick(){
   
   let giong = langs[select_target_language.value][1][0];
@@ -341,6 +489,8 @@ function readTextQuick(){
   //alert(selectedVoice);
   utterance.lang = selectedVoice;
   //utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+
+  
   window.speechSynthesis.speak(utterance);
 
 }          
@@ -382,4 +532,7 @@ function chongiongfix(){
   alert(chongiongenUS%2);
 }
 //--------------------------------------
-
+function xoaduoi(){
+  act_source_lang();
+}
+//--------------------

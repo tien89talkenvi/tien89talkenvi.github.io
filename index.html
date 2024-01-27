@@ -13,17 +13,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
 <h1 class="center" id="tieude" translate="no">Voice & Text Translator</h1>  
+
 <select id="voicegiong" onchange="actchange_voice()"></select>
+
 <div class="center"><img id="icontieude_img" src="icons/freevoicetext.webp" alt=""></div>
+
 <div class="wrapper">
   <div  id="info" translate="no" onclick="chongiongfix()"></div>
 </div>
 <br>
+
 <!--START textarea-----😎🎤🙋‍♂️🎧↩️↪️⇄---recognition.lang = "en-US"; de chi cho js loi noi la ngon ngu en-Us cho le va phan ung mau hon----------------------------------------------->  
 <div class="wrapper">
-  <table> 
-    <tr>
-      <td class="alignL"  translate="no"><button id="start_button"><img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
+  <table > 
+    <tr class="center">
+      <td class="alignC"  translate="no"><button id="start_button"><img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
       <td class="alignL"  translate="no"><select id="select_source_language" onchange ="act_source_lang()"></select>
           <select id="select_source_dialect"></select></td>
 
@@ -31,7 +35,7 @@
 
       <td class="alignR" translate="no">
           <select id="select_target_dialect"></select><select id="select_target_language" onchange ="act_target_lang()"></select></td>
-      <td class="alignR" translate="no"><button id="listen_button" onclick="readTextQuick()">🎧</button></td>
+      <td class="alignC" translate="no"><button id="listen_button" onclick="play()">🎧</button></td>
     </tr>
   </table>
 
@@ -44,7 +48,34 @@
     <div id="resultsdich" class="f-grid-colr"></div>
   </div>
 
+
+
 </div> <!--end div class="wrapper"-->
+
+<hr>
+<div class="properties">
+  <label for="pitch" translate="no">Pitch:</label>
+  <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
+  <output for="pitch" translate="no">1</output>
+  
+  <label for="rate" translate="no">Rate:</label>
+  <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
+  <output for="rate" translate="no">1</output>
+  
+  <label for="volume" translate="no">Volume:</label>
+  <input id="volume" type="range" min="0" max="1" step="0.1" value="1" translate="no">
+  <output for="volume" translate="no">1</output>
+</div>
+
+<div class="wrapper">
+<div class="buttons4">
+  <button id="play" onclick="play()" translate="no"><span style="color:yellow">Play</span></button>
+  <button id="pause" disabled translate="no">Pause</button>
+  <button id="stop" disabled translate="no">Stop</button>
+  <button onclick="xoaduoi()" translate="no"><span style="color:lightblue">Clear</span></button>
+</div>
+</div>
+
 
 <script src="indexlang.js"></script>
 <script src="index.js"></script>
