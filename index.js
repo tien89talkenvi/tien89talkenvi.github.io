@@ -318,7 +318,7 @@ function readTextQuick(){
       i=i+1;
       //alert(chongiongenUS);
       if (giong === 'en-US'){
-          if (voice.lang.includes(giong) && voice.name.includes('Samantha') && chongiongenUS%2 == 0){
+          if (voice.lang.includes(giong) && voice.name.includes('Samantha') ){
             arrayi.push(i-1);
           }
       }else{
