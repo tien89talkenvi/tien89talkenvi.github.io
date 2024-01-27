@@ -1,4 +1,5 @@
 var text='';
+var chongiongenUS=0;
 const voiceInEl = document.getElementById('voicegiong');//khai bao voiceInEl la bien toan cuc 
 
 function populateVoiceList() {
@@ -315,11 +316,11 @@ function readTextQuick(){
   const arrayi = new Array(); 
   window.speechSynthesis.getVoices().forEach(voice => {
       i=i+1;
+      //alert(chongiongenUS);
       if (giong === 'en-US'){
-        if (voice.lang.includes(giong) && voice.name.includes('Samantha')){
+          if (voice.lang.includes(giong) && voice.name.includes('Samatha') && chongiongenUS%2 == 0){
             arrayi.push(i-1);
-      
-        }
+          }
       }else{
         if (voice.lang.includes(giong)){
           arrayi.push(i-1);
@@ -377,31 +378,8 @@ function act_target_lang(){
 //-------------------
 //<div  id="info" translate="no" onclick="chongiongfix()"></div>
 function chongiongfix(){
-  //xac dinh giong de set la giong hien 
-  //chon trong menu phai canh loa
-  let giongset = langs[select_target_language.selectedIndex][1][0];
-  alert(giongset);
-  //co bao nhieu giong nay trong may?
-  let count = 0;
-  let i = 0;
-  const arrayi = new Array(); 
-  window.speechSynthesis.getVoices().forEach(voice => {
-      i=i+1;
-      if (voice.lang.includes(giongset)){
-          arrayi.push(i-1);
-      }
-  });
-  console.log(arrayi);
-  
-  //xet tung giong loop chi so giong trong arrayi
-  for (i=0; i < arrayi.length; i++){
-    const utterance = new SpeechSynthesisUtterance(text);
-    voiceInEl.selectedIndex = i;
-    utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
-    window.speechSynthesis.speak(utterance);
-  
-  }
-  
+  chongiongenUS = chongiongenUS + 1;
+  alert(chongiongenUS%2);
 }
 //--------------------------------------
 
