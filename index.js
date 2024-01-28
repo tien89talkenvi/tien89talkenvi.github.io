@@ -318,7 +318,7 @@ function play() {
     //voiceInEl.selectedIndex = 12;
     //let idexdachon = voiceInEl.selectedIndex;
     //utterance.voice = window.speechSynthesis.getVoices().find(voice => voiceInEl.value.includes(voice.voiceURI));
-    utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+    utterance.voice = window.speechSynthesis.getVoices().find(voice => voiceInEl.value.includes(voice.name));
   
     //alert(utterance.voice);
     
@@ -560,8 +560,11 @@ function chongiongfix(){
   //alert(chongiongenUS%2);
 }
 //--------------------------------------
-function xoaduoi(){
+function closeWindow(){
   act_source_lang();
+  let new_window = open(location,'_self');
+  new_window.close();
+  return false;
 }
 //--------------------
 function hdansd(){
