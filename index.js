@@ -553,7 +553,7 @@ function act_target_lang(){
 //<div  id="info" translate="no" onclick="chongiongfix()"></div>
 function chongiongfix(){
   chongiongenUS = chongiongenUS + 1;
-  alert(chongiongenUS%2);
+  //alert(chongiongenUS%2);
 }
 //--------------------------------------
 function xoaduoi(){
