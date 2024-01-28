@@ -12,7 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
-<h1 class="center" id="tieude" translate="no">Voice & Text Translator</h1>  
+<h1 class="center" id="tieude" translate="no" onclick="hdansd()">Voice & Text Translator</h1>  
 
 <select id="voicegiong" onchange="actchange_voice()"></select>
 
@@ -35,7 +35,7 @@
 
       <td class="alignR" translate="no">
           <select id="select_target_dialect"></select><select id="select_target_language" onchange ="act_target_lang()"></select></td>
-      <td class="alignC" translate="no"><button id="listen_button" onclick="play()">🎧</button></td>
+      <td class="alignC" translate="no"><button id="listen_button" onclick="readTextQuick()">🎧</button></td>
     </tr>
   </table>
 

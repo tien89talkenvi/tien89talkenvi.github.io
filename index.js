@@ -305,7 +305,7 @@ function play() {
     // start new utterance
     if (text==''){return;}  // de tranh giat giat khi text trong
     
-    //text nay la text dich o phan translate
+    //text nay la text dich o phan translate qua
     const utterance = new SpeechSynthesisUtterance(text);
     
     utterance.addEventListener('start', handleStart);
@@ -314,37 +314,16 @@ function play() {
     utterance.addEventListener('end', handleEnd);
     utterance.addEventListener('boundary', handleBoundary);
     
-    let giong = langs[select_target_language.value][1][0];
-    //giong co dang 'vi-VN',khi hoan vi phai xac dinh lai cai nay
-    let count = 0;
-    let i = 0;
-    const arrayi = new Array(); 
-    window.speechSynthesis.getVoices().forEach(voice => {
-        i=i+1;
-        //alert(chongiongenUS);
-        if (giong === 'en-US'){
-            if (voice.lang.includes(giong) && voice.name.includes('Samantha') ){
-              arrayi.push(i-1);
-            }
-        }else{
-          if (voice.lang.includes(giong)){
-            arrayi.push(i-1);
-          }
-        }
-  
-    });
-    console.log(arrayi);
-    //lay ngau nhien 1 pt trong arrayi
-    let indexrandom = arrayi[(Math.floor(Math.random() * arrayi.length))];
-   
-    console.log(indexrandom);
-    //vd cho say
-    //const utterance = new SpeechSynthesisUtterance(text);
-    voiceInEl.selectedIndex = indexrandom;
-    //neu la giong en-US thi buoc noi giong en-US Zira ung voi voiceInEl.selectedIndex = 2, th khac binh tthuong
-     let selectedVoice = voiceInEl.selectedOptions[0].getAttribute('data-lang');
+    //let giong = langs[select_target_language.value][1][0];
+    //voiceInEl.selectedIndex = 12;
+    //let idexdachon = voiceInEl.selectedIndex;
+    utterance.voice = window.speechSynthesis.getVoices().find(voice => voiceInEl.value.includes(voice.voiceURI));
+    
+    //alert(utterance.voice);
+    
+    //let selectedVoice = voiceInEl.selectedOptions[0].getAttribute('data-lang');
     //alert(selectedVoice);
-    utterance.lang = selectedVoice;
+    //utterance.lang = selectedVoice;
     //utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
   
     utterance.pitch = pitchInEl.value;
@@ -352,6 +331,51 @@ function play() {
     utterance.volume = volumeInEl.value;
     
     window.speechSynthesis.speak(utterance);
+
+    //giong co dang 'vi-VN',khi hoan vi phai xac dinh lai cai nay
+    //let count = 0;
+    //let i = 0;
+    //const arrayi = new Array(); 
+    //window.speechSynthesis.getVoices().forEach(voice => {
+    //    i=i+1;
+        //alert(chongiongenUS);
+    //    if (voice.lang.includes(giong.substr(0,2))){
+    //      arrayi.push(i-1);
+    //      voiceInEl.selectedIndex = i-1;
+          //neu la giong en-US thi buoc noi giong en-US Zira ung voi voiceInEl.selectedIndex = 2, th khac binh tthuong
+     //      let selectedVoice = voiceInEl.selectedOptions[0].getAttribute('data-lang');
+          //alert(selectedVoice);
+     //     utterance.lang = selectedVoice;
+          //utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+        
+     //     utterance.pitch = pitchInEl.value;
+     //     utterance.rate = rateInEl.value;
+     //     utterance.volume = volumeInEl.value;
+          
+    //      window.speechSynthesis.speak(utterance);
+      
+     //   }
+    //});
+    //let number = arrayi.length;
+    //console.log(number.toString() +' voice(s) '+giong.substr(0,2)+' in local.')
+    //lay ngau nhien 1 pt trong arrayi
+    //let indexrandom = arrayi[(Math.floor(Math.random() * arrayi.length))];
+   
+    //console.log(indexrandom);
+    //vd cho say
+    //const utterance = new SpeechSynthesisUtterance(text);
+    //voiceInEl.selectedIndex = indexrandom;
+    //neu la giong en-US thi buoc noi giong en-US Zira ung voi voiceInEl.selectedIndex = 2, th khac binh tthuong
+     //let selectedVoice = voiceInEl.selectedOptions[0].getAttribute('data-lang');
+    //alert(selectedVoice);
+    //utterance.lang = selectedVoice;
+    //utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+  
+    //utterance.pitch = pitchInEl.value;
+    //utterance.rate = rateInEl.value;
+    //utterance.volume = volumeInEl.value;
+    
+    //window.speechSynthesis.speak(utterance);
     //------
 
   }
@@ -536,3 +560,25 @@ function xoaduoi(){
   act_source_lang();
 }
 //--------------------
+function hdansd(){
+  let texhd ='';
+  texhd = texhd + 'App này dùng để dịch tiếng nói và văn bản giữa hai ngôn ngữ trong 14 ngôn ngữ được chọn. ';
+  texhd = texhd + 'Nó phục vụ cho việc đàm thoại có thông dịch và việc học tiếng Anh, tiếng Việt là chính. \n';
+  texhd = texhd + '\n';
+  texhd = texhd + 'Việc dịch qua lại giữa các thứ tiếng được lấy từ các dịch vụ miễn phí của Google Translation. Nó chạy rất ổn định trên trình duyệt Chrome Laptop và Safari Iphone.\n';
+  texhd = texhd + 'Cái hay nhất là tiếng nói phát ra ngay khi văn bản được dịch mà không cần tương tác của người dùng, ngoại trừ lần đầu tiên. \n';
+  texhd = texhd + '\n';
+  texhd = texhd + 'Vắn tắt cách sử dụng như sau: \n';
+  texhd = texhd + '\n';
+  
+  texhd = texhd + '1. Chọn ngôn ngữ nói và ngôn ngữ nghe (mặc định là Việt-Anh).\n';
+  texhd = texhd + '2. Nhấp vào biểu tương micro rồi nói. Micro sẽ nhấp nháy. Văn bản nói sẽ hiện ra. Nhấp vào thì nó ngưng và bắt đầu dịch. Văn bàn dịch sẽ hiện ra và tự động phát âm (trừ lân đầu phải nhấp vào micro.\n';
+  texhd = texhd + 'Phía dải trên cúng sẽ hiện ra giọng phát âm và thông tin các giọng có trong máy.\n';
+  texhd = texhd + 'Muốn nghe lại thì nhấp vào biểu tượng loa.\n';
+  texhd = texhd + 'Nếu muốn đổi vai ngôn ngữ nói và nghe thì nhấp mũi tên ở giũa. Để tiếp tục nói lại nhấp micro...\n';
+  texhd = texhd + '3. Phần bên dưới là để "Chơi thêm" giọng phát ra loa nhanh/chậm/cao/trầm... \n';
+  texhd = texhd + 'Chọn giọng nào trên dải phía trên cùng thì văn bản dịch ra sẽ phát giong đó cho đến khi dùng lại phần giữa. \n';
+  
+  
+  alert(texhd);
+}
