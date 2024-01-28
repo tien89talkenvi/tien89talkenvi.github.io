@@ -514,7 +514,10 @@ function readTextQuick(){
   utterance.lang = selectedVoice;
   //utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
 
-  
+  utterance.pitch = pitchInEl.value;
+  utterance.rate = rateInEl.value;
+  utterance.volume = volumeInEl.value;
+
   window.speechSynthesis.speak(utterance);
 
 }          
@@ -572,12 +575,12 @@ function hdansd(){
   texhd = texhd + '\n';
   
   texhd = texhd + '1. Chọn ngôn ngữ nói và ngôn ngữ nghe (mặc định là Việt-Anh).\n';
-  texhd = texhd + '2. Nhấp vào biểu tương micro rồi nói. Micro sẽ nhấp nháy. Văn bản nói sẽ hiện ra. Nhấp vào thì nó ngưng và bắt đầu dịch. Văn bàn dịch sẽ hiện ra và tự động phát âm (trừ lân đầu phải nhấp vào micro.\n';
+  texhd = texhd + '2. Nhấp vào biểu tương micro rồi nói. Micro sẽ nhấp nháy. Văn bản nói sẽ hiện ra. Nhấp vào nữa thì nó ngưng và bắt đầu dịch. Văn bàn dịch sẽ hiện ra và tự động phát âm (trừ lân đầu phải nhấp vào micro).\n';
   texhd = texhd + 'Phía dải trên cúng sẽ hiện ra giọng phát âm và thông tin các giọng có trong máy.\n';
   texhd = texhd + 'Muốn nghe lại thì nhấp vào biểu tượng loa.\n';
-  texhd = texhd + 'Nếu muốn đổi vai ngôn ngữ nói và nghe thì nhấp mũi tên ở giũa. Để tiếp tục nói lại nhấp micro...\n';
+  texhd = texhd + 'Nếu muốn đổi vai ngôn ngữ nói và nghe thì nhấp mũi tên ở giữa. Để tiếp tục nói lại nhấp micro...\n';
   texhd = texhd + '3. Phần bên dưới là để "Chơi thêm" giọng phát ra loa nhanh/chậm/cao/trầm... \n';
-  texhd = texhd + 'Chọn giọng nào trên dải phía trên cùng thì văn bản dịch ra sẽ phát giong đó cho đến khi dùng lại phần giữa. \n';
+  texhd = texhd + 'Chọn giọng nào trên dải phía trên cùng thì văn bản dịch ra sẽ phát giọng đó cho đến khi dùng lại phần giữa. \n';
   
   
   alert(texhd);
