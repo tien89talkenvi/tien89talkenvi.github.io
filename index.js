@@ -317,8 +317,9 @@ function play() {
     //let giong = langs[select_target_language.value][1][0];
     //voiceInEl.selectedIndex = 12;
     //let idexdachon = voiceInEl.selectedIndex;
-    utterance.voice = window.speechSynthesis.getVoices().find(voice => voiceInEl.value.includes(voice.voiceURI));
-    
+    //utterance.voice = window.speechSynthesis.getVoices().find(voice => voiceInEl.value.includes(voice.voiceURI));
+    utterance.voice = window.speechSynthesis.getVoices().find(voice => voice.voiceURI === voiceInEl.value);
+  
     //alert(utterance.voice);
     
     //let selectedVoice = voiceInEl.selectedOptions[0].getAttribute('data-lang');
