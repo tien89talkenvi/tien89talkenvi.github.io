@@ -560,11 +560,9 @@ function chongiongfix(){
   //alert(chongiongenUS%2);
 }
 //--------------------------------------
-function closeWindow(){
+function xoaduoi(){
   act_source_lang();
-  let new_window = open(location,'_self');
-  new_window.close();
-  return false;
+
 }
 //--------------------
 function hdansd(){
