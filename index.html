@@ -19,6 +19,7 @@
 
 <select id="voicegiong" onchange="actchange_voice()"></select>
 
+
 <div class="center"><img id="icontieude_img" src="icons/freevoicetext.webp" alt=""></div>
 
 <div class="wrapper">
@@ -78,6 +79,18 @@
   <button onclick="xoaduoi()" translate="no"><span style="color:lightblue">Clear</span></button>
 </div>
 </div>
+
+<select name="chon_vkhac" id="chon_vkhac" onclick="chon_vkhacf()">
+  <option value="">-- Plus: Choose one and then on link appear--</option>
+  <option >1. Youtube with translation</option>
+  <option >2. Let's learn Englist on VOA</option>
+  <option >3. Giáo lý Công giáo cho người dự tòng</option>
+  <option >4. Learning English with Streamlines</option>
+  <option >5. Learning English on Tran Cao Boi's book</option>
+  <option >6. Web Linh tinh</option>
+  <option >7. Nghi thức Phát biểu</option>
+</select>
+<p id="demo_viec_chon"></p>
 
 
 <script src="indexlang.js"></script>
