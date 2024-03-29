@@ -569,37 +569,37 @@ function chon_vkhacf() {
   var x = document.getElementById("chon_vkhac").selectedIndex;
   var y = document.getElementById("chon_vkhac").options;
   
-  if (y[x].text=="1. Youtube with translation") {
+  if (y[x+1].text=="1. Youtube with translation") {
     let text = "1. Youtube with translation";
     let result = text.link("https://tien89.streamlit.app");
     document.getElementById("demo_viec_chon").innerHTML = result;
 
-  } else if (y[x].text=="2. Let's learn Englist on VOA") {
+  } else if (y[x+1].text=="2. Let's learn Englist on VOA") {
     let text = "2. Let's learn Englist on VOA";
     let result = text.link("https://cahoan.github.io");
     document.getElementById("demo_viec_chon").innerHTML = result;
 
-  } else if (y[x].text=="3. Giáo lý Công giáo cho người dự tòng") {
+  } else if (y[x+1].text=="3. Giáo lý Công giáo cho người dự tòng") {
     let text = "3. Giáo lý Công giáo cho người dự tòng";
     let result = text.link("https://tienapc.github.io");
     document.getElementById("demo_viec_chon").innerHTML = result;
 
-  } else if (y[x].text=="4. Learning English with Streamlines") {
+  } else if (y[x+1].text=="4. Learning English with Streamlines") {
     let text = "4. Learning English with Streamlines";
     let result = text.link("https://huaanshoang.github.io");
     document.getElementById("demo_viec_chon").innerHTML = result;
 
-  } else if (y[x].text=="5. Learning English on Tran Cao Boi's book") {
+  } else if (y[x+1].text=="5. Learning English on Tran Cao Boi's book") {
     let text = "5. Learning English on Tran Cao Boi's book";
     let result = text.link("https://tiengs.github.io");
     document.getElementById("demo_viec_chon").innerHTML = result;
 
-  } else if (y[x].text=="6. Web Linh tinh") {
+  } else if (y[x+1].text=="6. Web Linh tinh") {
     let text = "6. Web Linh tinh";
     let result = text.link("https://kyhoang.github.io");
     document.getElementById("demo_viec_chon").innerHTML = result;
 
-  } else if (y[x].text=="7. Nghi thức Phát biểu") {
+  } else if (y[x+1].text=="7. Nghi thức Phát biểu") {
     let text = "7. Nghi thức Phát biểu";
     let result = text.link("");
     document.getElementById("demo_viec_chon").innerHTML = result;
