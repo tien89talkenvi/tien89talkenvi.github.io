@@ -329,7 +329,8 @@ function play() {
   
     utterance.pitch = pitchInEl.value;
     utterance.rate = rateInEl.value;
-    utterance.volume = volumeInEl.value;
+    //utterance.volume = volumeInEl.value;
+    utterance.volume = 1;
     
     window.speechSynthesis.speak(utterance);
 
