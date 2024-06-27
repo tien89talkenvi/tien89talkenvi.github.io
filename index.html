@@ -1,99 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiensg89's App</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="index.css">
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Tesseract.js OCR demo</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/ocr.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://kit.fontawesome.com/4414288e8e.js"></script>
+	<script src='js/tesseract.min.js'></script>
 </head>
-<body>
-<!--  
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
--->
-
-<h1 class="center" id="tieude" translate="no" onclick="hdansd()">Voice & Text Translator</h1>  
-
-<select id="voicegiong" onchange="actchange_voice()"></select>
-
-
-<div class="center"><img id="icontieude_img" src="icons/freevoicetext.webp" alt=""></div>
-
-<div class="wrapper">
-  <div  id="info" translate="no" onclick="chongiongfix()"></div>
-</div>
-<br>
-
-<!--START textarea-----😎🎤🙋‍♂️🎧↩️↪️⇄---recognition.lang = "en-US"; de chi cho js loi noi la ngon ngu en-Us cho le va phan ung mau hon----------------------------------------------->  
-<div class="wrapper">
-  <table > 
-    <tr class="center">
-      <td class="alignC"  translate="no"><button id="start_button"><img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
-      <td class="alignL"  translate="no"><select id="select_source_language" onchange ="act_source_lang()"></select>
-          <select id="select_source_dialect"></select></td>
-
-      <td class="alignC" translate="no" id="hoanviLangs">⇄</td>
-
-      <td class="alignR" translate="no">
-          <select id="select_target_dialect"></select><select id="select_target_language" onchange ="act_target_lang()"></select></td>
-      <td class="alignC" translate="no"><button id="listen_button" onclick="readTextQuick()">🎧</button></td>
-    </tr>
-  </table>
-
-  <div class="f-grid">
-    <div id="results" class="f-grid-coll">
-        <span id="final_span" class="final"></span>
-        <span id="interim_span" class="interim"></span>
-        <p>
-    </div>
-    <div id="resultsdich" class="f-grid-colr"></div>
-  </div>
-
-
-
-</div> <!--end div class="wrapper"-->
-
-<hr>
-<div class="properties">
-  <label for="pitch" translate="no">Pitch:</label>
-  <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
-  <output for="pitch" translate="no">1</output>
-  
-  <label for="rate" translate="no">Rate:</label>
-  <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
-  <output for="rate" translate="no">1</output>
-  
-  <label for="volume" translate="no">Volume:</label>
-  <input id="volume" type="range" min="0" max="1" step="0.1" value="1" translate="no">
-  <output for="volume" translate="no">1</output>
-</div>
-
-<div class="wrapper">
-<div class="buttons4">
-  <button id="play" onclick="play()" translate="no"><span style="color:yellow">Play</span></button>
-  <button id="pause" disabled translate="no">Pause</button>
-  <button id="stop" disabled translate="no">Stop</button>
-  <button onclick="xoaduoi()" translate="no"><span style="color:lightblue">Clear</span></button>
-</div>
-</div>
-
-<select name="chon_vkhac" id="chon_vkhac" onchange = "chon_vkhacf()" ondblclick = "chon_vkhacf()">
-  <option >-- Plus: Choose one and then on link appear--</option>
-  <option >1. Youtube with translation</option>
-  <option >2. Let's learn Englist on VOA</option>
-  <option >3. Giáo lý Công giáo cho người dự tòng</option>
-  <option >4. Learning English with Streamlines</option>
-  <option >5. Learning English on Tran Cao Boi's book</option>
-  <option >6. Web Linh tinh</option>
-  <option >7. Nghi thức Phát biểu</option>
-</select>
-<a id="demo_viec_chon" href=""></a>
-
-
-<script src="indexlang.js"></script>
-<script src="index.js"></script>
-</body>
+  <body>
+      <main>
+          <div class="container mt-3">
+			  <div class="row">
+				  <div class="col-12 col-md-4 ">
+						<select id="langsel">
+							<option value='afr'     > Afrikaans             </option>
+							<option value='ara'     > Arabic                </option>
+							<option value='aze'     > Azerbaijani           </option>
+							<option value='bel'     > Belarusian            </option>
+							<option value='ben'     > Bengali               </option>
+							<option value='bul'     > Bulgarian             </option>
+							<option value='cat'     > Catalan               </option>
+							<option value='ces'     > Czech                 </option>
+							<option value='chi_sim' > Chinese               </option>
+							<option value='chi_tra' > Traditional Chinese   </option>
+							<option value='chr'     > Cherokee              </option>
+							<option value='dan'     > Danish                </option>
+							<option value='deu'     > German                </option>
+							<option value='ell'     > Greek                 </option>
+							<option value='eng'     selected> English       </option>
+							<option value='enm'     > English (Old)         </option>
+							<option value='meme'    > Internet Meme         </option>
+							<option value='epo'     > Esperanto             </option>
+							<option value='epo_alt' > Esperanto alternative </option>
+							<option value='equ'     > Math                  </option>
+							<option value='est'     > Estonian              </option>
+							<option value='eus'     > Basque                </option>
+							<option value='fin'     > Finnish               </option>
+							<option value='fra'     > French                </option>
+							<option value='frk'     > Frankish              </option>
+							<option value='frm'     > French (Old)          </option>
+							<option value='glg'     > Galician              </option>
+							<option value='grc'     > Ancient Greek         </option>
+							<option value='heb'     > Hebrew                </option>
+							<option value='hin'     > Hindi                 </option>
+							<option value='hrv'     > Croatian              </option>
+							<option value='hun'     > Hungarian             </option>
+							<option value='ind'     > Indonesian            </option>
+							<option value='isl'     > Icelandic             </option>
+							<option value='ita'     > Italian               </option>
+							<option value='ita_old' > Italian (Old)         </option>
+							<option value='jpn'     > Japanese              </option>
+							<option value='kan'     > Kannada               </option>
+							<option value='kor'     > Korean                </option>
+							<option value='lav'     > Latvian               </option>
+							<option value='lit'     > Lithuanian            </option>
+							<option value='mal'     > Malayalam             </option>
+							<option value='mkd'     > Macedonian            </option>
+							<option value='mlt'     > Maltese               </option>
+							<option value='msa'     > Malay                 </option>
+							<option value='nld'     > Dutch                 </option>
+							<option value='nor'     > Norwegian             </option>
+							<option value='pol'     > Polish                </option>
+							<option value='por'     > Portuguese            </option>
+							<option value='ron'     > Romanian              </option>
+							<option value='rus'     > Russian               </option>
+							<option value='slk'     > Slovakian             </option>
+							<option value='slv'     > Slovenian             </option>
+							<option value='spa'     > Spanish               </option>
+							<option value='spa_old' > Old Spanish           </option>
+							<option value='sqi'     > Albanian              </option>
+							<option value='srp'     > Serbian (Latin)       </option>
+							<option value='swa'     > Swahili               </option>
+							<option value='swe'     > Swedish               </option>
+							<option value='tam'     > Tamil                 </option>
+							<option value='tel'     > Telugu                </option>
+							<option value='tgl'     > Tagalog               </option>
+							<option value='tha'     > Thai                  </option>
+							<option value='tur'     > Turkish               </option>
+							<option value='ukr'     > Ukrainian             </option>
+							<option value='vie'     > Vietnamese            </option>
+						</select>
+				  </div>
+				  <div class="col-12 col-md-4 mt-3 mt-md-0">
+						<div class="box">
+							<input type="file" name="file-1[]" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+							<label for="file-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Choose a file&hellip;</span></label>
+						</div>
+				  </div>
+			  </div>
+			  <div class="row">
+				  <div class="col-12 col-md-5">
+					<div class="image-container"><img id="selected-image"  src="images/Funny-Minion-Quotes.jpg" class="col-12 p-0" /></div>
+				  </div>
+				  <div class="col-12 col-md-1">
+					<i id="arrow-right" class="fas fa-arrow-right d-none d-md-block"></i>
+					<i id="arrow-down" class="fas fa-arrow-down d-block d-md-none"></i>
+				  </div>
+				  <div class="col-12 col-md-6">
+					<div id="log">
+							<span id="startPre">	
+								<a id="startLink" href="#">Click here to recognize text in the demo</a>
+								<br/> or choose your own image
+							</span>
+					</div>
+				</div>
+			  </div>
+		</div>
+	  </main>
+	  <script src="js/tesseract-ocr.js"></script>
+	</body>
 </html>
