@@ -4,15 +4,96 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tiensg89's App</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<h1>Tien test</h1>    
+<!--  
 
-<script type="module">
-    import {sayHi} from './modu2.js';
-    document.body.innerHTML = sayHi('Tien');
-</script>
-    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+-->
+
+<h1 class="center" id="tieude" translate="no" onclick="hdansd()">Voice & Text Translator</h1>  
+
+<select id="voicegiong" onchange="actchange_voice()"></select>
+
+
+<div class="center"><img id="icontieude_img" src="icons/freevoicetext.webp" alt=""></div>
+
+<div class="wrapper">
+  <div  id="info" translate="no" onclick="chongiongfix()"></div>
+</div>
+<br>
+
+<!--START textarea-----😎🎤🙋‍♂️🎧↩️↪️⇄---recognition.lang = "en-US"; de chi cho js loi noi la ngon ngu en-Us cho le va phan ung mau hon----------------------------------------------->  
+<div class="wrapper">
+  <table > 
+    <tr class="center">
+      <td class="alignC"  translate="no"><button id="start_button"><img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
+      <td class="alignL"  translate="no"><select id="select_source_language" onchange ="act_source_lang()"></select>
+          <select id="select_source_dialect"></select></td>
+
+      <td class="alignC" translate="no" id="hoanviLangs">⇄</td>
+
+      <td class="alignR" translate="no">
+          <select id="select_target_dialect"></select><select id="select_target_language" onchange ="act_target_lang()"></select></td>
+      <td class="alignC" translate="no"><button id="listen_button" onclick="readTextQuick()">🎧</button></td>
+    </tr>
+  </table>
+
+  <div class="f-grid">
+    <div id="results" class="f-grid-coll">
+        <span id="final_span" class="final"></span>
+        <span id="interim_span" class="interim"></span>
+        <p>
+    </div>
+    <div id="resultsdich" class="f-grid-colr"></div>
+  </div>
+
+
+
+</div> <!--end div class="wrapper"-->
+
+<hr>
+<div class="properties">
+  <label for="pitch" translate="no">Pitch:</label>
+  <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
+  <output for="pitch" translate="no">1</output>
+  
+  <label for="rate" translate="no">Rate:</label>
+  <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
+  <output for="rate" translate="no">1</output>
+  
+  <label for="volume" translate="no">Volume:</label>
+  <input id="volume" type="range" min="0" max="1" step="0.1" value="1" translate="no">
+  <output for="volume" translate="no">1</output>
+</div>
+
+<div class="wrapper">
+<div class="buttons4">
+  <button id="play" onclick="play()" translate="no"><span style="color:yellow">Play</span></button>
+  <button id="pause" disabled translate="no">Pause</button>
+  <button id="stop" disabled translate="no">Stop</button>
+  <button onclick="xoaduoi()" translate="no"><span style="color:lightblue">Clear</span></button>
+</div>
+</div>
+
+<select name="chon_vkhac" id="chon_vkhac" onchange = "chon_vkhacf()" ondblclick = "chon_vkhacf()">
+  <option >-- Plus: Choose one and then on link appear--</option>
+  <option >1. Youtube with translation</option>
+  <option >2. Let's learn Englist on VOA</option>
+  <option >3. Giáo lý Công giáo cho người dự tòng</option>
+  <option >4. Learning English with Streamlines</option>
+  <option >5. Learning English on Tran Cao Boi's book</option>
+  <option >6. Web Linh tinh</option>
+  <option >7. Nghi thức Phát biểu</option>
+</select>
+<a id="demo_viec_chon" href=""></a>
+
+
+<script src="indexlang.js"></script>
+<script src="index.js"></script>
 </body>
 </html>
