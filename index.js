@@ -599,8 +599,8 @@ function chon_vkhacf() {
     document.getElementById("demo_viec_chon").click();
 
   }  
-  if (y[x].text=="6. Web Linh tinh") {
-    let result = "https://kyhoang.github.io";
+  if (y[x].text=="6. Whisper-Jax app") {
+    let result = "https://sanchit-gandhi-whisper-jax.hf.space";
     document.getElementById("demo_viec_chon").href = result;
     document.getElementById("demo_viec_chon").click();
   }  
