@@ -572,7 +572,7 @@ function chon_vkhacf() {
   var y = document.getElementById("chon_vkhac").options;
   
   if (y[x].text=="1. Youtube with translation") {
-    let result = "https://tien89.streamlit.app";
+    let result = "https://tiensg89.streamlit.app";
     document.getElementById("demo_viec_chon").href = result;
     document.getElementById("demo_viec_chon").click();
   }  
