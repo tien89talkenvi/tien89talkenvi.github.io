@@ -597,19 +597,29 @@ function chon_vkhacf() {
     let result = "https://tiengs.github.io";
     document.getElementById("demo_viec_chon").href = result;
     document.getElementById("demo_viec_chon").click();
-
+    
   }  
   if (y[x].text=="6. Whisper-Jax app") {
     let result = "https://sanchit-gandhi-whisper-jax.hf.space";
     document.getElementById("demo_viec_chon").href = result;
     document.getElementById("demo_viec_chon").click();
   }  
-  if (y[x].text=="7. Nghi thức Phát biểu") {
-    let text = "7. Nghi thức Phát biểu";
-    let result = "";
+  if (y[x].text=="7. Music for Sophie") {
+    let result = "https://youtu.be/Q5i3rlDyvCg";
     document.getElementById("demo_viec_chon").href = result;
     document.getElementById("demo_viec_chon").click();
   }
+  if (y[x].text=="8. Light all body work out") {
+    let result = "https://youtu.be/abRF23t-Y5I?si=MGnlUufQ7o_ZL6fh";
+    document.getElementById("demo_viec_chon").href = result;
+    document.getElementById("demo_viec_chon").click();
+  }
+  if (y[x].text=="9. Heavy all body work out") {
+    let result = "https://youtu.be/uT9leOlRfn0?si=zrBF4bE67g3KFqPd";
+    document.getElementById("demo_viec_chon").href = result;
+    document.getElementById("demo_viec_chon").click();
+  }
+
 }
 
 //--------------------

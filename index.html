@@ -17,7 +17,19 @@
 
 <h1 class="center" id="tieude" translate="no" onclick="hdansd()">Voice & Text Translator</h1>  
 
-<select id="voicegiong" onchange="actchange_voice()"></select>
+<select name="chon_vkhac" id="chon_vkhac" onchange = "chon_vkhacf()" ondblclick = "chon_vkhacf()">
+  <option >HOME</option>
+  <option >1. Youtube with translation</option>
+  <option >2. Let's learn Englist on VOA</option>
+  <option >3. Giáo lý Công giáo cho người dự tòng</option>
+  <option >4. Learning English with Streamlines</option>
+  <option >5. Learning English on Tran Cao Boi's book</option>
+  <option >6. Whisper-Jax app</option>
+  <option >7. Music for Sophie</option>
+  <option >8. Light all body work out</option>
+  <option >9. Heavy all body work out</option>
+</select>
+<a id="demo_viec_chon" href=""></a>
 
 
 <div class="center"><img id="icontieude_img" src="icons/freevoicetext.webp" alt=""></div>
@@ -79,17 +91,7 @@
   <button onclick="xoaduoi()" translate="no"><span style="color:lightblue">Clear</span></button>
 </div>
 </div>
-
-<select name="chon_vkhac" id="chon_vkhac" onchange = "chon_vkhacf()" ondblclick = "chon_vkhacf()">
-  <option >-- Plus: Choose one and then on link appear--</option>
-  <option >1. Youtube with translation</option>
-  <option >2. Let's learn Englist on VOA</option>
-  <option >3. Giáo lý Công giáo cho người dự tòng</option>
-  <option >4. Learning English with Streamlines</option>
-  <option >5. Learning English on Tran Cao Boi's book</option>
-  <option >6. Whisper-Jax app</option>
-</select>
-<a id="demo_viec_chon" href=""></a>
+<select id="voicegiong" onchange="actchange_voice()"></select>
 
 
 <script src="indexlang.js"></script>
