@@ -145,4 +145,17 @@ textarea {
 mark {color: #000; background-color: lightgreen}
 #voice{padding-left: 1rem;}
 /* xanh la cay mo cho f-grid-lr = rgba(144, 192, 96, 0.883) */
+
 /* vang nghe lat cho f-grid-collr = #f7e6cd */
+
+header {
+/* background-image: linear-gradient(-45deg, #f4d03f, #160223);  */
+position: sticky;
+top: 0;
+z-index: 999;
+background-color: #ffffff;
+padding: 0px;
+padding-bottom: 0%;
+/*text-align: center;*/
+border-bottom: 2px solid #d4af37; /* vàng ánh kim */
+}
