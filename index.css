@@ -159,4 +159,11 @@ padding-bottom: 0%;
 /*text-align: center;*/
 border-bottom: 2px solid #d4af37; /* vàng ánh kim */
 }
+#chon_vkhac{
+display: block;
+margin-left: auto;
+margin-right: auto; /* hoặc margin: 0 auto; */
+    text-align: center;
+}
+
 
