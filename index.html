@@ -1,120 +1,660 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+#https://github.com/hoangco89/hoangco89.github.io/index.html
+#tai xuong 15-01-26
+-->
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiensg89's App</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Import SweetAlert2 -->
+  <title>Tiensg89 Play Youtube</title>
+   <!--<link rel="stylesheet" href="index.css">-->
+   <style>
+    
+/* ĐỂ MỌI THỨ CO LẠI ĐÚNG CÁCH */
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+html,body {
+    border-top: 2px solid #d4af37; /* vàng ánh kim */
+
+    height: 140%;
+   /* background-image: linear-gradient(60deg,black, rgb(241, 239, 245));*/
+   /* background-image: linear-gradient(45deg, #4158d0, #c850c0, #ffcc70); */
+    /*background-image: linear-gradient(-180deg, #b0c008ca, #254735); */
+    /*background-image: linear-gradient(90deg,rgb(23, 23, 1),#d4af37); */
+    background-image:url("icons/photo5.avif");  
+    /*background-image:url("icons/nendep.png");*/
+   /*background-image:url("Icons/banner5.png");  */
+    color: #fff;
+    font: 1rem/1 'Poppins', sans-serif;
+    max-width: 800px;
+    /*flex-direction: column;*/
+    /*padding-bottom: env(safe-area-inset-bottom);*/
+    background-size: cover;
+    background-position: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* hoặc margin: 0 auto; */
+    /*margin-bottom: 20%;*/
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    /* ép không co lại */
+    padding-bottom: 56.25%;
+    /*height: 0;*/
+    overflow: hidden;
+    background: #000;
+    
+}
+
+iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    /* tránh Safari thêm khoảng trắng */
+    background: transparent !important;
+
+}
+
+.menu-group {
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.group-3element{
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 30px 0px 30px;
+    width: 100%;
+    box-sizing: border-box;
+    height:30px;
+    line-height: 30px;
+
+}
+.butp1,.butp2{
+font-size: 1.4rem;
+}
+#voiceSelect{
+width: 30%; 
+display: block;
+margin-left: 0;
+font-size: 1.4rem;
+background-color: transparent;
+color:black;
+border-color: #000;
+border-bottom: 3px solid black;
+}
+#rateRead{
+font-size: 1.4rem;
+background-color: transparent;
+}
+#selectChude {
+width: 75%; 
+display: block;
+margin-left: auto;
+margin-right: auto; /* hoặc margin: 0 auto; */
+font-size: 1.1rem;
+font-weight:bolder ;
+background: transparent;
+color:rgb(155, 155, 242);
+background-color : transparent;
+border: none;
+}
+#selectVideo {
+width: 75%; 
+display: block;
+margin-left: auto;
+margin-right: auto; /* hoặc margin: 0 auto; */
+font-size: 1.1rem;
+background: transparent;
+color:orange;
+background-color : transparent;
+border: none;
+
+}
+
+h3{
+display: block;
+margin-left: auto;
+margin-right: auto;
+width: 75%; 
+font-weight:bolder;
+font-size: 1.2rem;
+text-align: center;
+color: gainsboro;
+}
+h4{
+font-weight:bolder;
+font-size: 1.2rem;
+margin-left:20px;
+color:rgb(223, 231, 223);
+width: 75%; 
+}
+h4,h5{
+display: block;
+margin-left: auto;
+margin-right: auto;
+font-size: 1.1rem;
+color:rgb(193, 193, 239);
+width: 75%; 
+}
+h4,h5{
+text-align: center;
+}
+#voiceSelect, #rateRead,.butp1,.butp2,#playBtn{
+width: 19%;
+font-size: 0.9rem;
+background-color: transparent;
+color:rgb(231, 225, 225);
+border-color: #000;
+border-bottom: 3px solid black;
+}
+
+#currentSubtitle{
+text-align: right;
+margin-left:10px;
+margin-right:10px;
+font-size: 1.0rem;
+height:4rem;
+color:rgb(200, 200, 243);
+overflow-y: auto;
+}
+
+#subdich{
+text-align: left;
+color:rgb(191, 224, 247);
+font-size: 1.1rem;
+height:4rem;
+margin-left:10px;
+margin-right:10px;
+font-style: italic;
+overflow-y: auto;
+}
+
+#playBtn{
+color:darkblue;
+font-weight:bolder;
+font-size: 1.1rem;
+}
+
+#loa_button{
+margin-left:10px;
+margin-bottom:4px;
+}
+.outiframe{
+margin-bottom:100%;
+}
+#tbao_pde , #click_khi_bichan{
+display: block;
+margin: 0 auto;
+width:50%;
+background-color: transparent;
+border:transparent;
+height: 20px;
+}
+#inputurl{
+width: 75%; 
+display: block;
+margin-left: auto;
+margin-right: auto; /* hoặc margin: 0 auto; */
+font-size: 1.1rem;
+color: black;
+background:#d2caca;
+}
+#OK{
+display: block;
+margin-left: auto;
+margin-right: auto; /* hoặc margin: 0 auto; */
+font-size: 1rem;
+color:whitesmoke;
+width: 40px; 
+height: 40px; 
+border-radius: 50%;
+background: #014f05;
+}
+#radio-container{
+margin-left:40px;
+color:darkblue;
+width: 75%; 
+}
+#radio-container label {
+display: block;
+padding: 4px 0;      /* tăng khoảng cách trên/dưới */
+}
+#videochon{
+color:rgb(231, 225, 225);
+text-align: center;
+}
+
+
+
+header {
+ background-image: linear-gradient(-45deg, #f4d03f, #160223); 
+    /*background-image: linear-gradient(-180deg, #b0c008ca, #254735); */
+position: sticky;
+top: 0;
+z-index:1;
+background-color: #ffffff;
+padding: 0px;
+padding-bottom: 0%;
+/*text-align: center;*/
+border-bottom: 2px solid #d4af37; /* vàng ánh kim */
+border-top: 2px solid #d4af37; /* vàng ánh kim */
+}
+
+/* Footer */
+footer {
+/*background-image: linear-gradient(-180deg, #b0c008ca, #254735); */
+border-bottom: 2px solid #d4af37; /* vàng ánh kim */
+border-top: 2px solid #d4af37; /* vàng ánh kim */
+/*background-color: #2f2f2f;*/
+color: #d4af37;
+text-align: center;
+padding: 10px;
+}
+
+footer p, footer a {
+color: rgb(225, 219, 206);
+font-size: 0.9em;
+}
+
+footer a:hover {
+color: #d4af37;
+}
+.buttonD{
+color:whitesmoke;
+background: linear-gradient(to bottom, #247b27 0%, #014f05 100%); /* Màu gradient 3D */
+border: none;
+border-radius: 8px;
+cursor: pointer;
+box-shadow: 0px 5px 0px #1B5E20; /* Đổ bóng để tạo hiệu ứng nổi */
+transition: all 0.2s ease-in-out;
+width: 75%; 
+
+display: block;
+margin-left: auto;
+margin-right: auto; /* hoặc margin: 0 auto; */
+font-size: 1.1rem;
+
+}
+
+#chatbox { 
+    border: transparent;
+  /*border: 1px solid #ccc; */
+  padding: 0px; 
+  height: auto; 
+  overflow-y: scroll; 
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  transition: opacity 0.3s ease;
+  position:relative ; 
+  
+}
+
+#playerContainer iframe {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+
+.preview-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  z-index: 10;
+  transition: opacity 0.4s ease;
+}
+.chinh-speed{
+  width:40px;
+  height:40px;
+  border: none;
+  background: transparent;
+}
+
+#hthispeed , #hthireplay{
+    width:30px;
+    height:30px;
+    line-height: 30px;
+    border-radius:50%;
+    text-align: center;
+    background: darkgreen;
+    color:yellow;
+  font-size: 0.7rem;
+  border-color: #000;
+  border-bottom: 4px solid black;
+}
+
+.hidden {
+  opacity: 0;        /* Ẩn hoàn toàn */
+  /*pointer-events: auto;  Vẫn cho phép click */
+  pointer-events: none;
+position: absolute;  /* Không chiếm chỗ */
+
+}
+#sourceCap, #transCap{
+  background: transparent;
+  color:rgb(231, 225, 225);
+  border-color: #000;
+  border-bottom: 3px solid black;
+  font-size: 0.7rem;
+  width:60px;
+  height:30px;
+}
+
+   </style>
 </head>
 <body>
-<header class="sticky">
-    <!--  
+<!-- Header -->
+<header class="sticky"> 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
--->
-
-<h1 class="center" id="tieude" translate="no" onclick="hdansd()">Voice & Text Translator</h1>  
-
-<select name="chon_vkhac" id="chon_vkhac" onchange = "chon_vkhacf()" ondblclick = "chon_vkhacf()">
-  <option >HOME</option>
-  <option >1. Youtube with translation</option>
-  <option >2. Let's learn Englist on VOA</option>
-  <option >3. Giáo lý Công giáo cho người dự tòng</option>
-  <option >4. Learning English with Streamlines</option>
-  <option >5. Learning English on Tran Cao Boi's book</option>
-  <option >6. Whisper-Jax app</option>
-  <option >7. Music for Sophie</option>
-  <option >8. Light all body work out</option>
-  <option >9. Heavy all body work out</option>
-</select>
-<a id="demo_viec_chon" href=""></a>
-
-
-<div class="center"><img id="icontieude_img" src="icons/freevoicetext.webp" alt=""></div>
-
-<div class="wrapper">
-  <div  id="info" translate="no" onclick="chongiongfix()"></div>
-</div>
-<br>
-
-<!--START textarea-----😎🎤🙋‍♂️🎧↩️↪️⇄---recognition.lang = "en-US"; de chi cho js loi noi la ngon ngu en-Us cho le va phan ung mau hon----------------------------------------------->  
-<div class="wrapper">
-  <table > 
-    <tr class="center">
-      <td class="alignC"  translate="no"><button id="start_button"><img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
-      <td class="alignL"  translate="no"><select id="select_source_language" onchange ="act_source_lang()"></select>
-          <select id="select_source_dialect"></select></td>
-
-      <td class="alignC" translate="no" id="hoanviLangs">⇄</td>
-
-      <td class="alignR" translate="no">
-          <select id="select_target_dialect"></select><select id="select_target_language" onchange ="act_target_lang()"></select></td>
-      <td class="alignC" translate="no"><button id="listen_button" onclick="readTextQuick()">🎧</button></td>
-    </tr>
-  </table>
-
-  <div class="f-grid">
-    <div id="results" class="f-grid-coll">
-        <span id="final_span" class="final"></span>
-        <span id="interim_span" class="interim"></span>
-        <p>
-    </div>
-    <div id="resultsdich" class="f-grid-colr"></div>
+  <div class="video-container">
+    <img id="preview" class="preview-image" src="https://i.ytimg.com/vi_webp/SyJlbqiZABQ/hq720.webp">
+    <div id="playerContainer"></div>
   </div>
 
+  <div class="menu-group">
+    <select id="voiceSelect"></select>
+    <button id='rateRead' onclick="tocDoDoc()">Rate: 1</button>
 
+    <button id="playBtn">▶️</button>
 
-</div> <!--end div class="wrapper"-->
+    <button class='butp1' onclick="btnReadSub()">Sub only</button>
+    <button class='butp2' onclick="btnYoutubeSound()">Yt only</button>
+  </div>
+  <!-- <hr> -->
+  </header>
 
-<hr>
-</header>    
-<div class="properties">
-  <label for="pitch" translate="no">Pitch:</label>
-  <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
-  <output for="pitch" translate="no">1</output>
-  
-  <label for="rate" translate="no">Rate:</label>
-  <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
-  <output for="rate" translate="no">1</output>
-  
-  <label for="volume" translate="no">Volume:</label>
-  <input id="volume" type="range" min="0" max="1" step="0.1" value="1" translate="no">
-  <output for="volume" translate="no">1</output>
-</div>
-
-<div class="wrapper">
-<div class="buttons4">
-  <button id="play" onclick="play()" translate="no"><span style="color:yellow">Play</span></button>
-  <button id="pause" disabled translate="no">Pause</button>
-  <button id="stop" disabled translate="no">Stop</button>
-  <button onclick="xoaduoi()" translate="no"><span style="color:lightblue">Clear</span></button>
-</div>
-</div>
-<select id="voicegiong" onchange="actchange_voice()"></select>
-<br>
-<br>
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <div id="currentSubtitle">[source subtitles]</div>
+    <div class="group-3element">
+      <div id="loa_button">🔊</div>
+      <div id="state_rep"></div>
+    </div><br>
+    <div id="subdich">[translated subtitles ]</div>
     
 
-<script src="indexlang.js"></script>
+    <hr>
+    <div class="group-3element">
+      Loop:<div class="box visible" id="hthireplay">1</div>
+      Speed:<div class="box visible" id="hthispeed">1</div>
+
+      <button id='transCap' onclick="an_hien_pd_dich()">T.Cap</button>
+
+      <div class="box hidden" id="videochon" onclick="them_Http()">uckcR0Zl_2Q</div>
+      <button id='sourceCap' onclick="an_hien_pd_goc()">S.Cap</button>
+    </div>
+    <hr>
+    <br>
+
+
+    <button class="buttonD"><select id="selectVideo"></select> </button>
+    
+    <br><button id="tbao_pde" onclick="lay_phudejson_byst()"></button>
+
+    <h4>Chọn Chủ đề ⬇ và video ⬆</h4>
+    <button class="buttonD"><select id="selectChude"></select></button><br>
+
+    <br><br><input type="text" id="inputurl" placeholder="Enter your youtube url then ok" style="width:60%;">
+    <br><button id="OK" onclick="xuLiUrlInput()">OK</button><br><br>
+
+    <br><br><button class="buttonD" onclick="tom_tat_ndvideo()" style="width:60%;">Hiển thị toàn văn bản dịch </button><br>
+    <div id="chatbox" aria-hidden="false"></div>
+
+
+    <!--<h4><a href="https://tien89.streamlit.app" style="background: transparent;text-align: center; ">.</a></h4>
+    <h4><a href="z.py" style="background: transparent;text-align: center; ">.</a></h4>-->
+
+
+
+<!-- Footer -->
+<footer>
+  <p><a id="gledich">GTL</a> ||| <a href="https://www.bbc.co.uk/learningenglish" target="_blank">BBC</a> ||| <a href="https://learningenglish.voanews.com" target="_blank">VOA</a> ||| <a href="https://spotlightenglish.com" target="_blank">SLE</a></p>
+  <p>&copy; From tiensg89@gmail.com at Houston 2026</p>
+  <!-- <p>2318 Cartesian St, Katy, Houston, TX 77494, USA</p>
+  <p><a href="https://adunglacchurch.github.io" target="_blank">About</a> | <a href="https://tiensgus.github.io" target="_blank">App1</a>| <a href="https://loan991958.github.io" target="_blank">App2</a>| <a href="https://hoangco89.github.io" target="_blank">App3</a></p>-->
+</footer>
+
+<!-- YouTube API================================================================================= -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+    const videochon = document.getElementById("videochon");
+    const playBtn = document.getElementById("playBtn");
+    const selectChude = document.getElementById("selectChude");
+    const selectVideo = document.getElementById("selectVideo");
+    const currentSubtitle = document.getElementById("currentSubtitle");
+    const subdich = document.getElementById("subdich");
+    const tbao_pde = document.getElementById("tbao_pde");
+    const inputurl = document.getElementById("inputurl");
+    const chatbox = document.getElementById("chatbox");
+    const hthispeed = document.getElementById("hthispeed");
+    const gledich = document.getElementById("gledich");
+    const voiceSelect = document.getElementById("voiceSelect");
+    const hthireplay = document.getElementById("hthireplay");
+
+    
+    chatbox.innerHTML = "";
+    let player = null;
+    let videoId = videochon.textContent;
+    let subtitles = [];
+    let lastTime = 0;
+    
+    let replayCount = 0;
+    
+    let  maxReplay = parseInt(hthireplay.textContent);
+ 
+let list_speed = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+let index_speed = 3; // Bắt đầu từ tốc độ 1x
+
+    
+document.getElementById("preview").addEventListener("click", function () {
+    this.style.display = "none"; // Ẩn ảnh
+});
+//---------them theo GPT---
+
+
+
+
+//---------
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player("playerContainer", {
+        height: "315",
+        width: "560",
+        videoId: `${videoId}`,
+        playerVars: { autoplay: 1, controls: 1 },
+        events: {
+
+          onReady: () => { },
+          onStateChange: (e) => {
+            // Your original subtitle-sync behavior
+            if (e.data === YT.PlayerState.PAUSED) stopReading();
+            if (e.data === YT.PlayerState.PLAYING) resumeSync();
+            if (e.data === YT.PlayerState.ENDED) {
+              replayCount++;
+              if (replayCount < maxReplay) {
+                player.seekTo(0);   // tua về đầu
+                player.playVideo(); // phát lại
+              }
+            }
+          }
+        }
+    });
+  }
+
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+      // ==========================
+      // 5. PLAY BUTTON
+      // ==========================
+      playBtn.addEventListener("click", async () => {
+
+      replayCount = 0;
+      maxReplay = parseInt(hthireplay.textContent);
+
+
+        document.getElementById("preview").click();
+
+        //alert("Playing video ID: " + videochon.textContent);
+        videoId = videochon.textContent;
+        subtitles = await fetchSubtitles(videoId);
+
+        if (subtitles.length>0){
+          translateFullJson(subtitles);
+          tbao_pde.textContent = ""
+        }else{
+          currentSubtitle.innerHTML="[source subtitles]";
+          subdich.innerHTML="[translated subtitles]";
+          tbao_pde.textContent = "No subtites. Click here to get!"
+        }
+
+        player.loadVideoById(videoId);
+        player.playVideo();
+        startSync();
+      });
+
+      // ==========================
+      // 6. AUTO PLAY WHEN CHANGE VIDEO
+      // ==========================
+    
+      selectVideo.addEventListener("change", async () => {
+              document.getElementById("preview").click();
+        const chudeId = selectChude.value;
+        const key = "bai_" + chudeId;
+        localStorage.setItem(key, selectVideo.value);
+        videochon.textContent = selectVideo.value;
+        videoId = videochon.textContent;
+
+        subtitles = await fetchSubtitles(videoId);
+
+        // 🔥 DỊCH TOÀN BỘ JSON
+        if (subtitles.length>0){
+          translateFullJson(subtitles);
+          tbao_pde.textContent = ""
+        }else{
+          currentSubtitle.innerHTML="[source subtitles]";
+          subdich.innerHTML="[translated subtitles]";
+          tbao_pde.textContent = "No subtites. Click here to get!"
+
+
+        }
+
+        player.loadVideoById(videoId);
+        player.playVideo();
+
+        startSync();
+
+      });
+
+      selectVideo.addEventListener("dblclick", async () => {
+              document.getElementById("preview").click();
+        const chudeId = selectChude.value;
+        const key = "bai_" + chudeId;
+        localStorage.setItem(key, selectVideo.value);
+        videochon.textContent = selectVideo.value;
+        videoId = videochon.textContent;
+
+        subtitles = await fetchSubtitles(videoId);
+
+        // 🔥 DỊCH TOÀN BỘ JSON
+        if (subtitles.length>0){
+          translateFullJson(subtitles);
+          tbao_pde.textContent = ""
+        }else{
+          currentSubtitle.innerHTML="[source subtitles]";
+          subdich.innerHTML="[translated subtitles]";
+          tbao_pde.textContent = "No subtites. Click here to get!"
+
+
+        }
+
+        player.loadVideoById(videoId);
+        player.playVideo();
+
+        startSync();
+
+      });
+
+// Save current time
+let i_an_hien_pd_goc = 0;
+function an_hien_pd_goc() {
+  i_an_hien_pd_goc++;
+  if (i_an_hien_pd_goc % 2 === 1) {
+    currentSubtitle.style.color = "transparent"; // Ẩn phụ đề gốc
+    sourceCap.style.color = "black";
+  }else{
+    currentSubtitle.style.color = "rgb(231, 225, 225)"; // Hiển thị phụ đề gốc
+    sourceCap.style.color = "rgb(231, 225, 225)";
+  }  
+}
+
+// Repeat last marked time
+let i_an_hien_pd_dich = 0;
+function an_hien_pd_dich() {
+  i_an_hien_pd_dich++;
+  if (i_an_hien_pd_dich % 2 === 1) {
+    subdich.style.color = "transparent"; // Ẩn phụ đề dịch 
+    transCap.style.color = "black";
+  } else {
+    subdich.style.color = "rgb(231, 225, 225)"; // Hiển thị phụ đề dịch
+    transCap.style.color = "rgb(231, 225, 225)";
+  }
+}
+
+hthispeed.addEventListener("click", function() {
+  index_speed = (index_speed + 1) % list_speed.length;
+  sp = list_speed[index_speed];
+  player.setPlaybackRate(sp);
+  if (index_speed === 3||index_speed === 7) {
+    hthispeed.textContent = sp.toFixed(0);
+  } else {
+    hthispeed.textContent = sp.toFixed(2);
+  }
+});
+hthireplay.addEventListener("click", function() {
+  maxReplay = parseInt(hthireplay.textContent);
+  maxReplay = (maxReplay + 1)%6; 
+  if (maxReplay === 0){
+    maxReplay = 1;
+  } 
+  hthireplay.textContent = maxReplay;
+});
+
+
+
+</script>
+<script>
+//-----------------
+</script>
+
+
 <script src="index.js"></script>
+<script src="index2.js"></script>
+
+
 </body>
 </html>
-
-
